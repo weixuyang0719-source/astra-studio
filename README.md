@@ -1,4 +1,4 @@
-# Astra Studio
+# Astra Studio｜钢琴扒谱与乐谱编辑
 
 Astra Studio 是一个在本机运行的扒谱与编辑工具。它把音频分轨、钢琴 MIDI 转录、拍点与小节编辑、谱面预览与出版连接在同一个工作台里。
 
