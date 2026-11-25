@@ -1,0 +1,133 @@
+/* A single reading column works in both the narrow sidebar and standalone view. */
+#note-inspector.note-inspector {
+  display:grid;grid-template-columns:minmax(0,1fr) 28px;align-items:start;
+  gap:10px 6px;min-width:0;min-height:0;margin:0;padding:12px;
+  border:0;border-radius:0;background:var(--surface);color:var(--text);
+  font-size:13px;line-height:1.5;
+}
+#note-inspector .note-inspector-heading{display:flex;flex-wrap:wrap;align-items:baseline;gap:3px 8px;min-width:0;grid-column:1;grid-row:1}
+#note-inspector .note-inspector-heading strong{font-size:16px;font-weight:600;line-height:1.5}
+#note-inspector .note-inspector-heading small{font-size:13px;color:var(--muted)}
+#note-inspector .note-inspector-empty{grid-column:1 / -1;margin:0;font-size:13px;color:var(--muted)}
+#note-inspector .note-inspector-values{grid-column:1 / -1;display:grid;gap:5px;margin:0;min-width:0}
+#note-inspector .note-inspector-value{display:grid;grid-template-columns:3em minmax(0,1fr);align-items:baseline;gap:8px;min-width:0}
+#note-inspector .note-inspector-value dt,#note-inspector .note-inspector-value dd{margin:0;font-size:13px;line-height:1.5}
+#note-inspector .note-inspector-value dt{color:var(--muted)}
+#note-inspector .note-inspector-value dd{color:var(--text);font-variant-numeric:tabular-nums;white-space:normal;overflow-wrap:anywhere;min-width:0;text-align:right}
+#note-inspector .note-inspector-clear{grid-column:2;grid-row:1;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;min-height:28px;margin:0;padding:0;border:1px solid var(--line);border-radius:8px;background:transparent;color:var(--muted);line-height:1}
+#note-inspector .note-inspector-clear svg{width:16px;height:16px}
+#note-inspector .note-inspector-clear:hover{color:var(--text);background:var(--raised)}
+/* Musical summary: a quiet surface, not a wall of equal-weight labels. */
+#note-inspector.note-inspector{position:relative;display:flex;flex-direction:column;gap:12px;padding:14px 12px;background:var(--c-n-25)}
+#note-inspector .note-summary{display:flex;align-items:center;gap:9px;padding-right:22px;min-width:0}
+#note-inspector .note-summary-icon{display:flex;align-items:center;justify-content:center;width:36px;height:40px;flex:none;border-radius:12px;background:var(--c-n-100);color:var(--c-a-500);box-shadow:inset 0 1px 0 var(--c-n-0)}
+#note-inspector .note-summary-icon svg{width:21px;height:21px}
+#note-inspector .note-inspector-heading{display:flex;flex-direction:column;gap:0;align-items:flex-start}
+#note-inspector .note-inspector-heading strong{font-size:23px;line-height:1.35;font-weight:500;color:var(--c-a-700);letter-spacing:.02em}
+#note-inspector .note-inspector-heading small{font-size:10px;color:var(--c-n-500);white-space:nowrap}
+#note-inspector .note-readonly{margin-left:5px;padding-left:5px;border-left:1px solid var(--c-n-200)}
+#note-inspector .note-inspector-clear{position:absolute;right:9px;top:12px;width:24px;height:24px;min-height:24px;border:0;color:var(--c-n-400);background:transparent}
+#note-inspector .note-velocity-card,#note-inspector .note-timing-card{padding:10px 11px;border:1px solid var(--c-n-150);border-radius:12px;background:var(--c-n-0);min-width:0;box-shadow:0 2px 5px color-mix(in srgb,var(--c-a-600) 7.1%,transparent)}
+#note-inspector .note-section-label{display:flex;align-items:center;justify-content:space-between;gap:5px;margin-bottom:8px;color:var(--c-a-500);font-size:11px}
+#note-inspector .note-section-label>span{display:flex;align-items:center;gap:5px}
+#note-inspector .note-section-label svg{width:12px;height:12px}
+#note-inspector .note-section-label strong{font-size:16px;font-weight:500;color:var(--c-a-600);font-variant-numeric:tabular-nums}
+#note-inspector .note-section-label small{font-size:9px;color:var(--c-n-400);font-weight:400}
+#note-inspector .note-velocity-track{height:7px;border-radius:5px;overflow:hidden;background:repeating-linear-gradient(to right,var(--c-n-100) 0,var(--c-n-100) 9px,var(--c-n-0) 9px,var(--c-n-0) 11px)}
+#note-inspector .note-velocity-track>span{display:block;height:100%;border-radius:5px;min-width:0}
+#note-inspector .note-inspector-values{display:grid;gap:7px;margin:0;width:100%}
+#note-inspector .note-inspector-value{grid-template-columns:2.5em minmax(0,1fr);gap:6px}
+#note-inspector .note-inspector-value dt{font-size:11px;color:var(--c-n-500)}
+#note-inspector .note-inspector-value dd{font-size:12px;color:var(--c-a-700)}
+#note-inspector .note-duration{display:flex;align-items:center;justify-content:space-between;gap:8px;border-top:1px solid var(--c-n-100);margin-top:9px;padding-top:8px;font-size:11px;color:var(--c-n-500)}
+#note-inspector .note-duration strong{font-size:13px;font-weight:500;color:var(--c-a-500);font-variant-numeric:tabular-nums}
+#note-inspector .note-duration small{font-size:10px;font-weight:400}
+#note-inspector .note-secondary-values{padding:0 5px;box-sizing:border-box}
+#note-inspector .note-secondary-values dd{font-size:11px;color:var(--c-n-500)}
+#note-inspector .note-inspector-empty{font-size:12px;line-height:1.7;padding:12px;background:var(--c-n-0);border:1px dashed var(--c-n-150);border-radius:12px}
+#note-inspector.note-inspector{align-items:stretch;gap:10px;padding:12px}
+#note-inspector .note-velocity-card,#note-inspector .note-timing-card{width:100%;box-sizing:border-box}
+#note-inspector .note-inspector-values{gap:5px}
+#note-inspector .note-duration{margin-top:7px;padding-top:6px}
+@media(max-height:740px){#note-inspector.note-inspector{gap:8px;padding:10px}#note-inspector .note-summary-icon{height:34px;width:32px}#note-inspector .note-inspector-heading strong{font-size:21px}#note-inspector .note-velocity-card,#note-inspector .note-timing-card{padding:8px 10px}#note-inspector .note-section-label{margin-bottom:6px}}
+/* Secondary metadata belongs to the same card system, not loose footer text. */
+#note-inspector .note-secondary-values{padding:9px 11px;border:1px solid var(--c-n-150);border-radius:12px;background:var(--c-n-50);gap:6px}
+.editor-inspector .editor-event-properties{display:flex;flex-direction:column;align-items:stretch;gap:10px;padding:12px;background:var(--c-n-25);min-width:0}
+.editor-inspector .editor-event-properties>h3{display:none}
+.object-summary{display:flex;align-items:center;gap:9px;min-width:0}
+.object-summary-icon{display:flex;align-items:center;justify-content:center;flex:none;width:34px;height:38px;background:var(--c-n-100);color:var(--c-a-500);border-radius:12px}
+.object-summary-icon svg{width:20px;height:20px}
+.object-summary>div{display:flex;flex-direction:column;gap:2px;min-width:0}
+.object-summary strong{font-size:20px;font-weight:500;line-height:1.35;color:var(--c-a-700);overflow-wrap:anywhere}
+.object-summary small{font-size:10px;color:var(--c-n-500)}
+.object-property-card{min-width:0;padding:10px;border:1px solid var(--c-n-150);border-radius:12px;background:var(--c-n-0);box-shadow:0 2px 5px color-mix(in srgb,var(--c-a-600) 7.1%,transparent)}
+.object-card-label{font-size:11px;line-height:1.4;color:var(--c-a-500);margin-bottom:7px}
+.editor-inspector .object-property-card label,.editor-inspector .object-technical label{display:flex;align-items:center;justify-content:space-between;gap:7px;margin:5px 0;font-size:11px;color:var(--c-n-500);min-width:0}
+.editor-inspector .object-property-card input,.editor-inspector .object-technical input{width:100px;max-width:70%;min-width:0;text-align:right;min-height:28px;height:28px;font:12px AstraSans,sans-serif;border:1px solid var(--c-n-150);border-radius:7px;background:var(--c-n-25);color:var(--c-a-700);font-variant-numeric:tabular-nums;padding:3px 6px}
+.object-value-track{height:6px;margin-top:9px;background:var(--c-n-100);border-radius:6px;overflow:hidden}
+.object-value-track>span{display:block;height:100%;background:var(--c-a-400);border-radius:6px}
+.object-duration{display:flex;justify-content:space-between;border-top:1px solid var(--c-n-100);padding-top:7px;margin-top:7px;font-size:11px;color:var(--c-n-500)}
+.object-duration strong{font-size:12px;font-weight:500;color:var(--c-a-500)}
+.object-actions{display:flex;gap:5px;flex-wrap:wrap}
+.editor-inspector .object-actions button{flex:1;min-width:0;min-height:28px;padding:5px;font-size:11px;border-radius:8px;border-color:var(--c-n-150);background:var(--c-n-50);color:var(--c-a-600)}
+.editor-inspector .object-actions [data-do=editorNoteApply],.editor-inspector .object-actions [data-do=editorCCApply]{background:var(--c-n-150);border-color:var(--c-n-200)}
+.object-technical{border:1px solid var(--c-n-150);border-radius:10px;padding:6px 9px;background:var(--c-n-50)}
+.object-technical summary{font-size:11px;color:var(--c-n-500);cursor:pointer}
+.object-footnote{font-size:11px;line-height:1.6;color:var(--c-n-500);overflow-wrap:anywhere}
+.object-empty{margin:0;padding:13px 10px;border:1px dashed var(--c-n-150);border-radius:12px;background:var(--c-n-0);font-size:12px;line-height:1.6;color:var(--c-a-500)}
+.object-empty small{font-size:10px;color:var(--c-n-400)}
+/* Keep the approved transport shape; tighten internal grouping only. */
+#transport.compact-transport:not(.stem-transport) .play-controls{gap:5px}
+#transport.compact-transport:not(.stem-transport) .transport-source{padding-inline:8px;border-left:1px solid var(--c-n-100)}
+#transport.compact-transport:not(.stem-transport) .transport-locators{padding-right:8px}
+
+/* Beat and meter objects share the note summary/card hierarchy. */
+.editor-side .rhythm-selection-card{display:flex;flex-direction:column;gap:10px;min-width:0;font-size:13px;color:var(--c-a-700)}
+.editor-side .rhythm-summary{display:flex;align-items:center;gap:9px;min-width:0}
+.editor-side .rhythm-summary-icon{display:flex;align-items:center;justify-content:center;width:34px;height:38px;flex:none;border-radius:12px;background:var(--c-n-100);color:var(--c-a-500);box-shadow:inset 0 1px 0 var(--c-n-0)}
+.editor-side .rhythm-summary-icon svg{width:20px;height:20px}
+.editor-side .rhythm-summary strong{display:block;font-size:19px;line-height:1.35;font-weight:500;color:var(--c-a-700)}
+.editor-side .rhythm-summary small{display:block;font-size:11px;line-height:1.5;color:var(--c-n-500)}
+.editor-side .rhythm-timing-card{padding:10px 11px;border:1px solid var(--c-n-150);border-radius:12px;background:var(--c-n-0);min-width:0;box-shadow:0 2px 5px color-mix(in srgb,var(--c-a-600) 7.1%,transparent)}
+.editor-side .rhythm-timing-card dl{display:grid;gap:6px;margin:0;min-width:0}
+.editor-side .rhythm-property{display:grid;grid-template-columns:2.5em minmax(0,1fr);align-items:baseline;gap:6px}
+.editor-side .rhythm-property dt,.editor-side .rhythm-property dd{margin:0;font-size:13px;line-height:1.5}
+.editor-side .rhythm-property dt{color:var(--c-n-500)}
+.editor-side .rhythm-property dd{text-align:right;font-variant-numeric:tabular-nums;white-space:normal;overflow-wrap:anywhere;color:var(--c-a-700)}
+.editor-side .rhythm-selection-card .rhythm-completion-hint{border-top:1px solid var(--c-n-100);margin-top:8px;padding-top:7px;font-size:12px;line-height:1.5;color:var(--c-a-500)}
+.editor-side .rhythm-selection-card .rhythm-object-actions{display:flex;flex-wrap:wrap;gap:5px}
+.editor-side .rhythm-selection-card .rhythm-object-actions button{flex:1;min-width:36px}
+.editor-side .rhythm-duration-action button{width:100%;white-space:normal;line-height:1.5}
+.editor-side .rhythm-selection-card .rhythm-compact-help{font-size:11px;line-height:1.5;color:var(--c-n-500)}
+.editor-side .rhythm-selection-empty p{margin:0;padding:10px;border:1px dashed var(--c-n-150);border-radius:12px;background:var(--c-n-0);font-size:12px;line-height:1.6;color:var(--c-a-500)}
+.studio-ui .editor-inspector .object-property-card label,.studio-ui .editor-inspector .object-technical label{flex-direction:row;align-items:center;text-align:left}
+.studio-ui .editor-inspector .object-property-card input,.studio-ui .editor-inspector .object-technical input{margin:0;flex:none;text-align:right}
+.studio-ui .editor-inspector .object-summary strong{font-size:20px;line-height:1.35}
+/* Empty rhythm section stays compact while another object is being edited. */
+.editor-beat-tools:has(.rhythm-inspector-empty) .rhythm-inspector-summary{display:none}
+.editor-beat-tools:has(.rhythm-selection-empty) .rhythm-summary{display:none}
+.editor-beat-tools:has(.rhythm-selection-card)>h3{display:none}
+.editor-inspector:has(.rhythm-selection-card:not(.rhythm-selection-empty)) .editor-event-properties:has(.object-empty){display:none}
+.editor-beat-tools .rhythm-selection-empty p{padding:8px 10px;margin:0;font-size:11px}
+.editor-inspector:has(.object-summary) .editor-beat-tools:has(.rhythm-selection-empty){display:none}
+@media(max-height:740px){
+ .studio-ui .editor-inspector .editor-event-properties{gap:6px;padding:8px}
+ .studio-ui .editor-inspector .object-summary-icon{width:28px;height:30px;border-radius:9px}
+ .studio-ui .editor-inspector .object-summary strong{font-size:18px}
+ .studio-ui .editor-inspector .object-property-card{padding:6px 8px;border-radius:10px}
+ .studio-ui .editor-inspector .object-card-label{margin-bottom:3px;font-size:10px}
+ .studio-ui .editor-inspector .object-property-card label{margin:2px 0}
+ .studio-ui .editor-inspector .object-property-card input{height:24px;min-height:24px;padding:2px 5px}
+ .studio-ui .editor-inspector .object-value-track{height:4px;margin-top:5px}
+ .studio-ui .editor-inspector .object-duration{margin-top:4px;padding-top:4px}
+ .studio-ui .editor-inspector .object-technical{padding:3px 8px}
+ .studio-ui .editor-inspector .object-actions button{min-height:25px;padding:3px}
+}
+/* Editing actions stay reachable while long attributes scroll in the inspector. */
+.editor-inspector .object-actions{position:sticky;bottom:0;z-index:2;padding-block:5px;background:var(--c-n-25);box-shadow:0 -6px 10px var(--c-n-25)}
+#note-inspector .inspector-idle{display:flex;align-items:center;gap:9px;padding:6px 2px;color:var(--c-n-400)}
+#note-inspector .inspector-idle>span{display:grid;place-items:center;flex:none;width:30px;height:34px;background:var(--c-n-100);border-radius:10px}
+#note-inspector .inspector-idle svg{width:16px;height:16px}
+#note-inspector .inspector-idle>div{display:flex;flex-direction:column;gap:3px;min-width:0}
+#note-inspector .inspector-idle strong{font-size:12px;font-weight:500;color:var(--c-a-500)}
+#note-inspector .inspector-idle small{font-size:10px;line-height:1.5;color:var(--c-n-400)}

@@ -1,0 +1,134 @@
+/* Read/edit uses one underlying raster viewport. This panel never resizes it. */
+.astra-native-workspace{position:relative}
+.astra-inspector-toggle{position:absolute;right:12px;top:8px;z-index:12;padding:3px 10px;border-radius:5px;border:1px solid var(--ns-line,#ddddec);background:#fff;color:var(--ns-fg,#2a2940);font:inherit}
+.astra-inline-inspector{position:absolute;right:10px;top:39px;z-index:13;width:min(326px,80%);max-height:calc(100% - 49px);display:flex;flex-direction:column;overflow:hidden;box-sizing:border-box;border:1px solid var(--ns-line,#ddddec);border-radius:7px;background:#fff;color:var(--ns-fg,#2a2940);box-shadow:0 6px 22px #2a294021}
+.astra-inline-inspector[hidden],.astra-inspector-toggle[hidden]{display:none}
+.astra-inspector-head{display:flex;align-items:center;justify-content:space-between;padding:5px 8px;border-bottom:1px solid var(--ns-line,#ddddec)}
+.astra-inspector-head h3,.astra-inspector-section h4{margin:0;font-size:13px;line-height:1.4}
+.astra-inspector-head button{font-size:16px;border:0;background:none;color:inherit;cursor:pointer;padding:2px 7px}
+.astra-inspector-fields{overflow:auto;min-height:0}
+.astra-inspector-section{padding:5px 8px}
+.astra-inspector-section+.astra-inspector-section{border-top:1px solid var(--ns-line,#ddddec)}
+.astra-inspector-section h4{font-size:12px;color:var(--ns-fg2,#5e5970)}
+.astra-inspector-field{display:grid;grid-template-columns:minmax(70px,1fr) minmax(84px,1.45fr) 22px;gap:4px;align-items:center;min-height:31px;font-size:11px}
+.astra-inspector-label{min-width:0;overflow-wrap:anywhere}
+.astra-inspector-control{min-width:0;display:flex;align-items:center;gap:4px}
+.astra-inspector-control input:not([type=checkbox]),.astra-inspector-control select{flex:1;min-width:0;width:100%;padding:3px;border:1px solid var(--ns-line,#ddddec);border-radius:3px;background:#fff;color:inherit;font:inherit}
+.astra-inspector-control button,.astra-inspector-reset{border:1px solid var(--ns-line,#ddddec);border-radius:3px;padding:3px;background:#fff;color:inherit;white-space:nowrap;font:inherit}
+.astra-inspector-reset:disabled{opacity:.4}
+.astra-inspector-swatch{width:12px;height:12px;flex:none;border:1px solid var(--ns-line,#ddddec);border-radius:3px}
+.astra-inspector-notice{margin:0;padding:4px 8px;font-size:11px;color:var(--ns-fg2,#5e5970)}
+.astra-inspector-notice:empty{display:none}
+.astra-inspector-control input[type=number]{font-variant-numeric:tabular-nums}
+.astra-inspector-toggle:focus-visible,.astra-inline-inspector :is(button,input,select):focus-visible{outline:2px solid var(--ns-focus,#375da5);outline-offset:1px}
+
+/* ---- MuseScore Inspector look (inspector/view/qml): sections, 2x2 flags,
+   labels above controls, spin boxes with steppers, reset on the right ---- */
+.astra-native-score .astra-ms-section{border-bottom:1px solid var(--ns-sep,#d9d9e3)}
+.astra-native-score .astra-ms-section.is-sub{border-bottom:0;margin-top:4px}
+.astra-native-score .astra-ms-section-head{display:flex;align-items:center;gap:6px;width:100%;padding:10px 8px;border:0;border-radius:0;
+  background:transparent;color:var(--ns-fg,#262433);font:600 13px/1.2 "Segoe UI","Microsoft YaHei UI",sans-serif;text-align:start;cursor:default}
+.astra-native-score .astra-ms-section.is-sub>.astra-ms-section-head{padding:6px 2px;font-weight:500;font-size:12px}
+.astra-native-score .astra-ms-section-head:hover{background:var(--ns-hover,#e6e7ef)}
+.astra-native-score .astra-ms-section-body{display:grid;gap:10px;padding:2px 12px 14px}
+.astra-native-score .astra-ms-section.is-sub>.astra-ms-section-body{padding:2px 0 6px}
+.astra-native-score .astra-ms-flag-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px}
+.astra-native-score .astra-ms-flag-grid .astra-inspector-field{display:block}
+.astra-native-score .astra-inline-inspector .astra-inspector-field{display:grid;grid-template-columns:minmax(0,1fr);gap:4px;min-width:0;min-height:0;align-items:start;font-size:12px}
+.astra-native-score .astra-inspector-label{font-size:12px;color:var(--ns-fg2,#5e5970)}
+.astra-native-score .astra-inspector-control{display:flex;align-items:center;gap:6px;min-width:0}
+.astra-native-score .astra-inspector-control>:first-child{flex:1;min-width:0}
+.astra-native-score .astra-ms-check{display:flex;align-items:center;gap:6px;font-size:12px;cursor:default}
+.astra-native-score .astra-ms-spin{display:flex;align-items:center;height:28px;border:1px solid var(--ns-sep,#cfd0da);border-radius:3px;background:#fff;min-width:0}
+.astra-native-score .astra-ms-spin input{flex:1;min-width:0;height:100%;border:0;background:transparent;padding:0 6px;font:inherit;font-size:12px;-moz-appearance:textfield}
+.astra-native-score .astra-ms-spin input::-webkit-inner-spin-button,.astra-native-score .astra-ms-spin input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+.astra-native-score .astra-ms-spin-unit{padding-inline-end:4px;font-size:11px;color:var(--ns-fg2,#5e5970)}
+.astra-native-score .astra-ms-spin-arrows{display:grid;grid-template-rows:1fr 1fr;height:100%;border-inline-start:1px solid var(--ns-sep,#cfd0da)}
+.astra-native-score .astra-ms-spin-arrows button{width:18px;padding:0;border:0;border-radius:0;background:transparent;font-size:9px;line-height:1;color:var(--ns-fg,#262433)}
+.astra-native-score .astra-ms-spin-arrows button:hover:enabled{background:var(--ns-hover,#e6e7ef)}
+.astra-native-score .astra-ms-pair{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1;min-width:0}
+.astra-native-score .astra-ms-pair-item{display:grid;gap:3px;font-size:11px;color:var(--ns-fg2,#5e5970);min-width:0}
+.astra-native-score .astra-ms-dropdown{height:28px;min-width:0;border:1px solid var(--ns-sep,#cfd0da);border-radius:3px;background:#fff;font-size:12px;padding:0 6px}
+.astra-native-score .astra-ms-color{position:relative;display:block;height:28px;border:1px solid var(--ns-sep,#cfd0da);border-radius:3px;overflow:hidden;cursor:pointer}
+.astra-native-score .astra-ms-color-chip{position:absolute;inset:3px;border-radius:2px}
+.astra-native-score .astra-ms-color input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;border:0;padding:0}
+.astra-native-score .astra-inspector-reset{flex:none;width:28px;height:28px;padding:0;border:0;border-radius:3px;background:transparent;color:var(--ns-fg,#262433);font-size:14px}
+.astra-native-score .astra-inspector-reset:disabled{opacity:.25}
+.astra-native-score .astra-inspector-reset:hover:enabled{background:var(--ns-hover,#e6e7ef)}
+.astra-native-score .astra-ms-tabs{display:flex;gap:2px;border-bottom:1px solid var(--ns-sep,#d9d9e3);margin:0 -2px}
+.astra-native-score .astra-ms-tab{padding:6px 10px;border:0;border-bottom:2px solid transparent;border-radius:0;background:transparent;font-size:12px;color:var(--ns-fg2,#5e5970)}
+.astra-native-score .astra-ms-tab[aria-selected=true]{color:var(--ns-fg,#262433);border-bottom-color:var(--ui-accent,#3b5bdb);font-weight:600}
+.astra-native-score .astra-ms-tab-page{display:grid;gap:10px}
+/* ---- MuseScore Layout panel (instrumentsscene LayoutPanel) ---- */
+.astra-native-score .astra-ms-layout{display:grid;padding:6px 0}
+.astra-native-score .astra-ms-layout-row{display:flex;align-items:center;gap:2px;height:36px;padding-inline:calc(6px + var(--level,0)*22px) 6px;font-size:13px;color:var(--ns-fg,#262433)}
+.astra-native-score .astra-ms-layout-row:hover{background:var(--ns-hover,#e6e7ef)}
+.astra-native-score .astra-ms-layout-row.is-hidden .astra-ms-layout-title{opacity:.45}
+.astra-native-score .astra-ms-layout-row button{display:inline-grid;place-items:center;width:28px;height:28px;padding:0;border:0;border-radius:3px;background:transparent;color:inherit;font-size:15px}
+.astra-native-score .astra-ms-layout-row button:hover:enabled{background:var(--ns-hover-strong,#d9dbe8)}
+.astra-native-score .astra-ms-layout-row button:disabled{opacity:.4}
+.astra-native-score .astra-ms-layout-arrow{font-size:11px!important}
+.astra-native-score .astra-ms-layout-title{flex:1;min-width:0;padding-inline-start:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.astra-native-score .astra-ms-layout-gear{opacity:0}
+.astra-native-score .astra-ms-layout-row:hover .astra-ms-layout-gear,.astra-native-score .astra-ms-layout-gear[aria-expanded=true],.astra-native-score .astra-ms-layout-gear:focus-visible{opacity:1}
+.astra-native-score .astra-ms-layout-popup{display:grid;gap:10px;margin:2px 10px 8px;padding:12px;border:1px solid var(--ns-sep,#cfd0da);border-radius:4px;background:#fff;box-shadow:0 4px 14px #1e214b22;font-size:12px}
+.astra-native-score .astra-ms-popup-field{display:grid;gap:4px;color:var(--ns-fg2,#5e5970)}
+.astra-native-score .astra-ms-popup-field input,.astra-native-score .astra-ms-popup-field select{height:28px;border:1px solid var(--ns-sep,#cfd0da);border-radius:3px;padding:0 6px;font-size:12px;color:var(--ns-fg,#262433);background:#fff}
+.astra-native-score .astra-ms-popup-check{display:flex;align-items:center;gap:6px}
+.astra-native-score .astra-ms-popup-note{margin:0;color:var(--ns-fg2,#5e5970)}
+
+/* ---- Astra skin for the score's left dock: Astra colors, type and corners on
+   MuseScore's layout. Sizes, paddings and positions are unchanged. ---- */
+.studio-ui .astra-native-score .astra-native-palette{
+  --ns-sep:var(--ui-line);--ns-line:var(--ui-line-soft);--ns-soft:var(--ui-surface);
+  --ns-hover:var(--ui-accent-softer);--ns-hover-strong:var(--ui-accent-soft);
+  --ns-on:var(--ui-accent-soft);--ns-on-line:var(--ui-accent-line);--ns-on-fg:var(--ui-accent-ink);
+  --ns-accent:var(--ui-accent);--ns-focus:var(--ui-focus);--ns-fg:var(--ui-text);--ns-fg2:var(--ui-text-2);
+  --pl-line:var(--ui-line-soft);
+  background:var(--ui-surface);font-family:var(--ui-font);color:var(--ui-text)
+}
+/* tabs: one weight for all; the open one carries the accent */
+.studio-ui .astra-native-score .astra-native-palette-header{background:var(--ui-inset)}
+.studio-ui .astra-native-score .astra-native-palette-header .astra-native-palette-tab{
+  color:var(--ui-text-2);font-family:var(--ui-font);font-weight:var(--fw-medium);
+  transition:color var(--dur-fast) var(--ease),background-color var(--dur-fast) var(--ease)}
+.studio-ui .astra-native-score .astra-native-palette-header .astra-native-palette-tab:hover{color:var(--ui-text);background:color-mix(in srgb,var(--ui-surface) 60%,transparent)}
+.studio-ui .astra-native-score .astra-native-palette-header .astra-native-palette-tab[aria-selected=true]{
+  color:var(--ui-accent-ink);background:var(--ui-surface);box-shadow:inset 0 2px 0 var(--ui-accent)}
+.studio-ui .astra-native-score .astra-native-palette-header .astra-ms-palette-tab-wrap:has(>[aria-selected=true])>.astra-ms-palette-settings{
+  background:var(--ui-surface);border-bottom:1px solid var(--ui-surface);margin-bottom:-1px;box-shadow:inset 0 2px 0 var(--ui-accent)}
+.studio-ui .astra-native-score .astra-native-palette-header .astra-ms-palette-settings{color:var(--ui-text-3)}
+.studio-ui .astra-native-score .astra-native-palette-header .astra-ms-palette-settings:hover{color:var(--ui-accent-ink)}
+/* palette controls and headings */
+.studio-ui .astra-native-score .astra-ms-palette-controls button{
+  background:var(--ui-inset);color:var(--ui-text);border-radius:var(--r-ctl);box-shadow:inset 0 0 0 1px var(--ui-line-soft);
+  font-family:var(--ui-font);transition:background-color var(--dur-fast) var(--ease),box-shadow var(--dur-fast) var(--ease)}
+.studio-ui .astra-native-score .astra-ms-palette-controls button:hover:enabled{background:var(--ui-accent-softer);box-shadow:inset 0 0 0 1px var(--ui-accent-line);color:var(--ui-accent-ink)}
+.studio-ui .astra-native-score .astra-native-palette-search-toggle[aria-expanded=true]{background:var(--ui-accent-soft);color:var(--ui-accent-ink);box-shadow:inset 0 0 0 1px var(--ui-accent-line)}
+.studio-ui .astra-native-score .astra-native-catalogue-search{border-color:var(--ui-line);border-radius:var(--r-ctl);font-family:var(--ui-font)}
+.studio-ui .astra-native-score .astra-native-palette-head{font-family:var(--ui-font);color:var(--ui-text)}
+.studio-ui .astra-native-score .astra-native-palette-head .astra-ms-glyph{color:var(--ui-text-3)}
+.studio-ui .astra-native-score .astra-ms-palette-heading:hover .astra-native-palette-head .astra-ms-glyph{color:var(--ui-accent)}
+.studio-ui .astra-native-score .astra-native-palette-scroll:hover,
+.studio-ui .astra-native-score .astra-native-palette-scroll:focus-within{scrollbar-color:var(--c-n-300) transparent}
+/* layout tree */
+.studio-ui .astra-native-score .astra-ms-layout-row{font-family:var(--ui-font);color:var(--ui-text);border-radius:var(--r-dense)}
+.studio-ui .astra-native-score .astra-ms-layout-row button{color:var(--ui-text-2);border-radius:var(--r-dense)}
+.studio-ui .astra-native-score .astra-ms-layout-row button:hover:enabled{color:var(--ui-accent-ink)}
+.studio-ui .astra-native-score .astra-ms-layout-popup{border-color:var(--ui-line);border-radius:var(--r-panel);box-shadow:var(--shadow-1)}
+/* properties */
+.studio-ui .astra-native-score .astra-native-palette .astra-inspector-head h3,
+.studio-ui .astra-native-score .astra-native-palette .astra-ms-section-head{font-family:var(--ui-font);color:var(--ui-text)}
+.studio-ui .astra-native-score .astra-native-palette :is(.astra-ms-spin,.astra-ms-dropdown,.astra-ms-color,.astra-ms-popup-field input,.astra-ms-popup-field select,.astra-inspector-control input:not([type=checkbox]),.astra-inspector-control select){
+  border-color:var(--ui-line);border-radius:var(--r-dense);background:var(--ui-surface)}
+.studio-ui .astra-native-score .astra-native-palette :is(.astra-ms-spin,.astra-ms-dropdown):hover{border-color:var(--ui-accent-line)}
+.studio-ui .astra-native-score .astra-native-palette .astra-ms-spin:focus-within{border-color:var(--ui-accent)}
+.studio-ui .astra-native-score .astra-native-palette .astra-ms-tab[aria-selected=true]{color:var(--ui-accent-ink);border-bottom-color:var(--ui-accent)}
+/* selection filter */
+.studio-ui .astra-native-score .astra-native-filter-dock fieldset{border:1px solid var(--ui-line-soft);border-radius:var(--r-panel);background:var(--ui-surface)}
+.studio-ui .astra-native-score .astra-native-filter-dock legend{padding-inline:4px;color:var(--ui-text-2);font:var(--fw-strong) 12px/1.4 var(--ui-font)}
+.studio-ui .astra-native-score .astra-native-filter-dock label{border-radius:var(--r-dense);font-family:var(--ui-font);color:var(--ui-text)}
+.studio-ui .astra-native-score .astra-native-filter-dock label:hover{background:var(--ui-accent-softer)}
+.studio-ui .astra-native-score .astra-native-palette input[type=checkbox]{accent-color:var(--ui-accent)}
+/* keyboard focus, as elsewhere in Astra */
+.studio-ui .astra-native-score .astra-native-palette :is(button,input,select,[tabindex]):focus-visible{outline:2px solid var(--ui-focus);outline-offset:-2px}

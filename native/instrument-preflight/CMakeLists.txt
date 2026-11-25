@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.25)
+project(AstraInstrumentStart LANGUAGES CXX)
+add_library(astra_instrument_start SHARED instrument_start.cpp)
+target_compile_features(astra_instrument_start PRIVATE cxx_std_17)
+target_compile_definitions(astra_instrument_start PRIVATE NOMINMAX _CRT_SECURE_NO_WARNINGS)
+target_compile_options(astra_instrument_start PRIVATE /W4 /utf-8)

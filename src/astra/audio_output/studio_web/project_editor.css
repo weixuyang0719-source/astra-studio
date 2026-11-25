@@ -1,0 +1,344 @@
+/* A compact working editor: fixed tools, left inspector, unobstructed note canvas. */
+.workbench[data-view=notes] .instrument-sidebar{display:none}
+.workbench[data-view=notes] .workbench-grid{grid-template-columns:minmax(0,1fr)}
+.workbench[data-view=notes] .session-body{overflow:hidden}
+.project-editor-tools{flex:none;background:var(--c-n-900);border:1px solid var(--c-n-800);border-radius:4px 4px 0 0;padding:0 8px;font-size:12px;margin:0}
+.editor-heading,.editor-tools,.editor-heading-actions{display:flex;align-items:center;gap:6px;min-width:0}
+.editor-heading{height:32px;border-bottom:1px solid var(--c-n-800)}.editor-heading>strong{font-size:12px;color:var(--c-n-150)}.editor-heading>span{font-size:11px;color:var(--c-n-400)}
+.editor-heading-actions{margin-left:auto}.editor-tools{min-height:35px;gap:7px;flex-wrap:wrap;padding:3px 0}
+.editor-tools label{display:flex;align-items:center;gap:5px;white-space:nowrap;color:var(--c-n-400)}.editor-tools select.control{width:auto;min-width:55px;max-width:137px}
+.editor-tool-pair{display:flex;gap:2px;border-right:1px solid var(--c-n-700);padding-right:7px}.editor-tool-pair button{width:29px;font-size:16px}
+.editor-heading-actions button,.editor-tools button,.editor-side button{min-height:27px;font-size:12px;padding:3px 7px;white-space:nowrap}
+.editor-tools .control,.editor-side .control{height:27px;min-height:27px;font-size:12px;padding:3px 5px;background:var(--c-n-900);border-color:var(--c-n-800)}
+.editor-tools button[aria-pressed=true],.editor-side button[aria-pressed=true]{background:var(--c-n-800);color:var(--c-n-150);border-color:var(--c-a-500)}
+.editor-tools button:focus-visible,.editor-heading-actions button:focus-visible,.editor-side button:focus-visible{outline:2px solid var(--c-a-300);outline-offset:1px}
+.editor-snap-status{font-size:10px;color:var(--c-n-400);white-space:nowrap;margin-left:auto;padding:3px;border-radius:3px}
+.editor-snap-status[data-bypass=true]{color:var(--c-w-200);background:var(--c-n-800)}
+.editor-workspace{display:grid;grid-template-columns:190px minmax(0,1fr);min-height:270px;flex:1;gap:0;border:1px solid var(--c-n-800);border-top:0;overflow:hidden;background:var(--c-n-900)}
+.editor-workspace.has-correction{grid-template-columns:300px minmax(0,1fr)}
+.editor-side{min-width:0;min-height:0;overflow:auto;border-right:1px solid var(--c-n-800);background:var(--c-n-900);user-select:none;-webkit-user-select:none}
+.editor-side :is(input:not([type=range]):not([type=checkbox]):not([type=radio]):not([type=button]):not([type=submit]),textarea,[contenteditable=true]){user-select:text;-webkit-user-select:text}
+.editor-workspace:not(.inspector-collapsed)>.editor-side{scrollbar-gutter:stable}
+.editor-main{min-width:0;min-height:0;display:flex;flex-direction:column}
+.workbench[data-view=notes] .editor-main .midi-editor{flex:1;min-height:220px;border:0;border-radius:0}
+.editor-inspector{font-size:12px;margin:0;padding:0;border:0;background:transparent;display:block}
+.editor-inspector h3{font-size:12px;font-weight:600;margin:0 0 9px;color:var(--c-n-200)}.editor-inspector strong{font-size:12px}
+.editor-event-properties,.editor-side-section{padding:11px 9px;border-bottom:1px solid var(--c-n-800)}
+.editor-event-properties{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.editor-event-properties h3,.editor-event-properties>strong,.editor-event-properties>p,.editor-event-properties>span{grid-column:1/-1}
+.editor-event-properties label{display:flex;flex-direction:column;gap:3px;color:var(--c-n-400);font-size:11px;min-width:0}
+.editor-event-properties input{width:100%;min-width:0;font-variant-numeric:tabular-nums}.editor-inspector p{color:var(--c-n-400);line-height:1.6;margin:3px 0;font-size:11px}
+.editor-side-section summary{cursor:pointer;color:var(--c-n-300);font-weight:500;font-size:12px;list-style-position:inside}.editor-side-section small{color:var(--c-a-400);font-size:10px;line-height:1.5}
+.editor-range-row{display:grid;grid-template-columns:1fr 1fr;gap:5px;align-items:center;margin-bottom:6px}.editor-range-row label{display:flex;gap:4px;align-items:center;color:var(--c-g-300);font-size:11px}.editor-range-row input{width:100%;min-width:0;font-variant-numeric:tabular-nums}.editor-range-row .unit{font-size:10px;color:var(--c-n-400)}.editor-range-row button[aria-pressed=true]{background:var(--c-n-800);color:var(--c-g-200);border-color:var(--c-g-400)}
+.editor-position{display:block;font-size:10px;color:var(--c-a-400);margin:5px 0;overflow-wrap:anywhere}.editor-side-section>button{margin:3px 3px 0 0}
+.editor-extra{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}.editor-extra>label{display:flex;align-items:center;gap:6px;width:100%;justify-content:space-between;color:var(--c-n-400);font-size:11px}.editor-extra select{max-width:110px}
+.editor-meter-list{margin:8px 0 5px;max-height:180px;overflow:auto;display:grid;gap:3px}.editor-meter-item{display:flex;justify-content:space-between;text-align:left;width:100%;background:var(--c-n-900);border:1px solid var(--c-n-800);color:var(--c-n-300)}.editor-meter-item span{font-size:10px;font-variant-numeric:tabular-nums}
+.editor-notice{padding:4px 9px;margin:0;font-size:11px;color:var(--c-n-300);line-height:1.5}.editor-notice:empty{display:none}
+.editor-main .midi-footer{padding:4px 8px;font-size:11px;min-height:24px;background:var(--c-n-900);border-top:1px solid var(--c-n-800);margin:0}.editor-main .midi-footer .shortcut-guide{display:none}
+.editor-workspace #ruler-canvas{cursor:crosshair;touch-action:none}.editor-workspace #midi-canvas,.editor-workspace #pedal-canvas,.editor-workspace #velocity-canvas{touch-action:none}
+.project-editor-tools[data-tool=draw]+.editor-workspace #midi-canvas,.project-editor-tools[data-tool=draw]+.editor-workspace #pedal-canvas{cursor:crosshair}
+.project-editor-tools[data-tool]:not([data-tool=readonly])+.editor-workspace .roll-ruler{height:62px}
+.studio-ui .workbench[data-view=notes] .midi-bar{margin:0 0 5px;gap:5px;min-height:32px}.studio-ui .workbench[data-view=notes] .midi-bar button,.studio-ui .workbench[data-view=notes] .midi-bar .control{min-height:29px;height:29px;font-size:12px}.studio-ui .workbench[data-view=notes] .midi-file-group select{max-width:270px}
+/* Shared node is non-modal here and occupies the inspector's reserved column. */
+#dialog.editor-docked[open]{position:fixed;inset:auto;margin:0;padding:0;max-width:none;max-height:none;border:1px solid var(--c-a-700);border-radius:0;background:var(--c-n-900);box-shadow:none;display:flex;flex-direction:column;z-index:20;overflow:hidden;box-sizing:border-box}
+.editor-workspace.has-correction .editor-inspector{visibility:hidden}
+#dialog.editor-docked .dialog-head{padding:8px 9px;min-height:37px;background:var(--c-n-900);border-bottom:1px solid var(--c-n-700);gap:4px}
+#dialog.editor-docked .dialog-head h2{font-size:13px;margin:0;line-height:1.3}
+#dialog.editor-docked .dialog-head button{min-width:23px;width:23px;min-height:23px;height:23px}
+#dialog.editor-docked .dialog-body{padding:9px;overflow:auto;min-height:0;flex:1;font-size:12px}
+#dialog.editor-docked .dialog-foot{padding:8px 9px;gap:4px;border-top:1px solid var(--c-n-700);display:flex;flex-wrap:wrap;background:var(--c-n-900)}
+#dialog.editor-docked .dialog-foot button{font-size:11px;min-height:29px;padding:4px 7px}
+#dialog.editor-docked .field{font-size:11px;gap:5px;margin-bottom:10px;color:var(--c-n-300)}
+#dialog.editor-docked .control{font-size:12px;min-height:29px;height:29px;padding:4px 5px;width:100%;max-width:100%}
+#dialog.editor-docked #editor-operation{height:34px;font-size:12px;font-weight:500}
+#dialog.editor-docked #editor-operation-summary{font-size:11px;line-height:1.6;color:var(--c-n-300);border-left:2px solid var(--c-a-400);padding-left:7px;margin:0 0 12px}
+#dialog.editor-docked .checkbox-line{font-size:11px;line-height:1.5}
+.editor-operation-fields{display:grid;grid-template-columns:1fr 1fr;gap:7px}.editor-operation-fields label{min-width:0}.editor-operation-fields [hidden],#dialog label[hidden]{display:none}
+#dialog.editor-docked .editor-operation-fields{grid-template-columns:1fr}
+.editor-correction-help{font-size:11px;color:var(--c-n-400);margin:8px 0;line-height:1.6}.editor-correction-help summary{cursor:pointer}.editor-correction-help .form-note{font-size:11px;margin:6px 0;color:var(--c-n-400)}.editor-correction-help[hidden]{display:none}
+#editor-preview-detail-text{white-space:pre-wrap;margin-top:5px;overflow-wrap:anywhere}
+.editor-preview-status{font-size:12px;line-height:1.65;margin:10px 0;color:var(--c-n-300)}.editor-preview-status:empty{display:none}.editor-preview-status[data-status=ready]{color:var(--c-g-300);border-left:2px solid var(--c-g-400);padding-left:7px}.editor-preview-status[data-status=error]{color:var(--c-r-300)}.editor-preview-status[data-status=running]{color:var(--c-a-300)}
+.editor-map-choice{grid-column:1/-1}.editor-map-choice select{width:100%;max-width:100%;text-overflow:ellipsis}
+.editor-point-preview{padding:7px;border:1px solid var(--c-n-800);border-radius:3px;background:var(--c-n-900);margin:8px 0;font-size:11px;line-height:1.6}.editor-point-preview[hidden]{display:none}.editor-point-preview strong{display:block;color:var(--c-n-150);font-weight:500}.editor-point-preview svg{display:block;width:100%;height:auto;max-height:148px;margin-top:6px;fill:none;stroke:none}.editor-point-preview svg text{fill:var(--c-n-300);font-size:11px;font-family:Segoe UI,sans-serif}.editor-point-preview>span{color:var(--c-n-400)}
+.editor-anchor-list>div{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px solid var(--c-n-800)}
+.editor-score-stale{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 12px;background:var(--c-n-900);color:var(--c-w-200);border-radius:5px;font-size:12px;margin-bottom:10px}
+.audio-editor-range{position:absolute;top:0;bottom:0;background:rgba(123,185,166,.13);border-left:1px solid var(--c-g-400);border-right:1px solid var(--c-g-400);pointer-events:none}.audio-editor-anchor{position:absolute;top:0;bottom:0;width:1px;background:var(--c-g-300);pointer-events:none}.editor-advanced-tools{font-size:12px;color:var(--c-n-400);margin:8px 0 12px}.editor-advanced-tools>p{max-width:65ch}.editor-advanced-tools>summary{cursor:pointer}
+@media(max-width:1100px){.editor-workspace{grid-template-columns:174px minmax(0,1fr)}.editor-workspace.has-correction{grid-template-columns:270px minmax(0,1fr)}.editor-tools{gap:5px}.editor-snap-status{display:none}.editor-snap-status[data-bypass=true]{display:inline}.editor-heading-actions{gap:3px}.editor-heading-actions button{padding:3px 5px}}
+@media(max-height:760px){.editor-workspace{min-height:250px}.workbench[data-view=notes] .editor-main .midi-editor{min-height:190px}.editor-event-properties,.editor-side-section{padding:8px}}
+
+#editor-shortcut-error[data-status=pending]{color:var(--c-a-300)}#editor-shortcut-error[data-status=saved]{color:var(--c-g-300)}
+
+.editor-diagnostic-item{display:grid;gap:5px;padding:8px 0;border-top:1px solid var(--c-n-800)}.editor-diagnostic-item strong{font-size:11px;font-weight:500;color:var(--c-n-300)}.editor-diagnostic-item small{line-height:1.5}.editor-diagnostic-item button{justify-self:start}
+
+/* Shared seconds-axis audio context and explicit mapping-point tool. */
+.editor-wave-lane,.editor-map-lane{display:grid;grid-template-columns:52px minmax(0,1fr);flex:none;border-bottom:1px solid var(--line);overflow:hidden}
+.editor-wave-lane{height:64px}.editor-map-lane{height:26px}.editor-map-lane[hidden]{display:none}
+.editor-wave-lane>span,.editor-map-lane>span{display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:10px;border-right:1px solid var(--line);white-space:nowrap}
+.editor-wave-surface{position:relative;overflow:hidden}.editor-wave-surface canvas,.editor-map-lane canvas{display:block;cursor:crosshair;touch-action:none}
+.editor-wave-surface .playhead{position:absolute;top:0;bottom:0;left:0;pointer-events:none}
+.editor-tool-pair button[data-do=editorMapTool]{width:auto;font-size:12px;min-width:40px}
+.project-editor-tools[data-tool=map]+.editor-workspace #midi-canvas,.project-editor-tools[data-tool=map]+.editor-workspace #pedal-canvas{cursor:default}
+/* Keep CC64 in the working viewport at desktop zoom; never grow the whole page. */
+.studio-ui .workbench.session[data-view=notes]{height:100%;min-height:0}
+.studio-ui .workbench[data-view=notes] .session-body{overflow:hidden}
+.studio-ui .workbench[data-view=notes] .editor-workspace{min-height:0}
+@media(max-height:560px) {
+  /* Keep the short-window scrolling floor, but let the editor grow into space
+     reclaimed from the footer instead of pinning it to a 390px box. */
+  .studio-ui .workbench[data-view=notes] .editor-workspace { min-height:390px; }
+}
+.studio-ui .workbench[data-view=notes] .editor-main .midi-editor{flex:1;height:auto;min-height:0}
+@media(max-width:920px),(max-height:700px){
+ .studio-ui .workbench[data-view=notes] .session-head{padding:5px 12px;gap:4px 10px}
+ .studio-ui .workbench[data-view=notes] .session-title{max-width:none;min-width:0}
+ .studio-ui .workbench[data-view=notes] .session-title h1{font-size:16px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+ .studio-ui .workbench[data-view=notes] .project-facts{font-size:12px}
+ .studio-ui .workbench[data-view=notes] .session-actions button{font-size:12px;padding:4px 6px;min-height:30px}
+ .studio-ui .workbench[data-view=notes] .tabs{margin-bottom:5px}
+ .studio-ui .workbench[data-view=notes] .tabs button{min-height:34px}
+ .studio-ui .workbench[data-view=notes] .midi-bar{margin-bottom:5px}
+}
+
+.editor-workspace.has-score-range{grid-template-columns:360px minmax(0,1fr)}
+.editor-score-range-pages{display:flex;align-items:center;gap:10px;justify-content:space-between;font-size:12px;margin:10px 0}
+.editor-score-range-paper{overflow:auto;background:var(--c-n-0);min-height:80px}.editor-score-range-paper img{display:block;width:100%;height:auto}.editor-score-range-paper img[hidden]{display:none}
+@media(max-width:1100px){.editor-workspace.has-score-range{grid-template-columns:290px minmax(0,1fr)}}
+
+.editor-score-range-zoom{display:flex;align-items:center;gap:6px;font-size:11px;margin-bottom:8px}.editor-score-range-zoom button{min-height:26px;padding:3px 8px}.editor-score-range-paper img{max-width:none}
+.score-review-layout{display:grid;grid-template-columns:minmax(230px,290px) minmax(0,1fr);gap:16px;align-items:start}.ornament-review{padding:16px;border:1px solid var(--line,var(--c-n-800));border-radius:10px;background:var(--panel,var(--c-n-900));max-height:72vh;overflow:auto;min-width:0}.ornament-review h3{margin:0 0 10px}.ornament-review p{line-height:1.5;overflow-wrap:anywhere}.ornament-review>button{margin:0 6px 8px 0}.ornament-candidate{border-top:1px solid var(--c-n-800);padding:12px 0}.ornament-candidate>p{margin:6px 0}.ornament-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.ornament-actions button{padding:6px 10px}.ornament-pending{color:var(--c-w-300)}.ornament-preview{margin:14px 0 0}.ornament-preview img{width:100%;background:white;cursor:var(--astra-cursor-zoom-in,zoom-in)}.ornament-preview figcaption{font-size:12px;color:var(--c-n-300);margin-bottom:8px}.score-review-layout .paper-area{min-width:0}.score-review-layout .paper-area img{max-width:100%}@media(max-width:850px){.score-review-layout{grid-template-columns:1fr}.ornament-review{max-height:320px}}
+/* Per-lane view controls: pitch scale and CC height never change event values. */
+.editor-workspace .midi-roll{grid-template-columns:52px minmax(0,1fr) 27px}
+.pitch-zoom-rail{display:flex;align-items:center;flex-direction:column;gap:5px;padding:5px 2px;background:var(--c-n-900);border-left:1px solid var(--c-n-800);min-height:0}
+.pitch-zoom-rail button,.pedal-size-buttons button{min-width:20px;min-height:22px;padding:1px 4px;font-size:12px}
+.pitch-zoom-rail input{writing-mode:vertical-lr;direction:rtl;width:20px;min-height:40px;height:120px;flex:1;max-height:180px;accent-color:var(--c-w-300)}
+.pedal-divider{height:7px;flex:none;background:var(--c-n-900);cursor:var(--astra-cursor-resize-y,ns-resize);touch-action:none;border-block:1px solid var(--c-n-800)}
+.pedal-divider:hover,.pedal-divider:focus-visible{background:var(--c-a-600);outline:1px solid var(--c-a-400)}
+.pedal-size-buttons{display:flex;gap:2px;justify-content:center;margin-top:4px}
+.editor-workspace #midi-canvas,.editor-workspace #pedal-canvas,.editor-workspace #ruler-canvas{cursor:default}
+.note-toolbar { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:4px 8px; align-items:center; flex:none; background:var(--surface); border:1px solid var(--line); padding:4px 7px; }
+.studio-ui .workbench[data-view=notes] .note-toolbar:has(.editor-heading) :is(.midi-bar,#project-editor-tools) { display:contents; }
+.note-toolbar:has(.editor-heading) .midi-file-group { grid-area:1 / 1; }
+.note-toolbar .editor-heading { grid-area:1 / 2; }
+.note-toolbar .editor-tools { grid-area:2 / 1; }
+.note-toolbar:has(.editor-heading) .midi-tools { grid-area:2 / 2; }
+.note-toolbar .editor-heading { height:auto; min-height:30px; border-bottom:0; }
+.note-toolbar .editor-heading>strong { display:none; }
+.note-toolbar .editor-tools { padding:2px 0 0; }
+.note-toolbar .editor-tools .control { max-width:100px; }
+.note-toolbar .midi-tools { gap:3px; flex-wrap:wrap; }
+.note-toolbar .midi-tools input { width:43px; }
+.note-toolbar .midi-tools :is(.quiet,.secondary) { padding-inline:4px; }
+.note-toolbar .midi-file-group select { min-width:0; max-width:174px; }
+.note-toolbar:has([data-tool=draw])+.editor-workspace :is(#midi-canvas,#pedal-canvas) { cursor:crosshair; }
+.note-toolbar:has([data-tool=map])+.editor-workspace :is(#midi-canvas,#pedal-canvas) { cursor:default; }
+.note-toolbar:has([data-tool]:not([data-tool=readonly]))+.editor-workspace .roll-ruler { height:56px; }
+.studio-ui .workbench[data-view=notes] .editor-workspace { grid-template-columns:200px minmax(0,1fr); }
+.studio-ui .workbench[data-view=notes] .editor-workspace.has-correction { grid-template-columns:216px minmax(0,1fr); }
+.studio-ui .workbench[data-view=notes] .editor-workspace.has-score-range { grid-template-columns:minmax(240px,29%) minmax(0,1fr); }
+.editor-side { background:var(--surface); border-color:var(--line); }
+.editor-inspector p,.editor-position,.editor-side-section small { font-size:12px; color:var(--muted); }
+.editor-side-section summary,.editor-inspector h3 { color:var(--text); }
+.editor-tools button[aria-pressed=true],.editor-side button[aria-pressed=true] { background:var(--c-n-800); color:var(--text); border-color:var(--accent); }
+.studio-ui #dialog .dialog-head,.studio-ui #dialog .dialog-foot { background:var(--surface); }
+.studio-ui #dialog button.primary:disabled { background:var(--c-n-800); border-color:transparent; color:var(--muted); }
+.editor-wave-lane { height:32px; }
+.editor-wave-lane[data-collapsed=true] { height:20px; }
+.editor-wave-lane > button { font-size:11px; color:var(--muted); background:var(--surface); border:0; border-right:1px solid var(--line); padding:0; }
+.editor-wave-lane > button::before { content:"− "; }
+.editor-wave-lane[data-collapsed=true] > button::before { content:"+ "; }
+.editor-wave-lane > button:focus-visible { outline-offset:-2px; }
+.editor-wave-lane>span,.editor-map-lane>span { font-size:12px; }
+.editor-workspace :is(.roll-ruler,.editor-wave-lane,.editor-beat-flags) { border-bottom-color:var(--soft-line); }
+.editor-workspace :is(.roll-ruler,.editor-wave-lane,.editor-beat-flags)>span { background:var(--surface); color:var(--muted); }
+.pitch-zoom-rail input { accent-color:var(--accent); }
+.editor-workspace .midi-roll { grid-template-columns:52px minmax(0,1fr) 32px; }
+.pitch-zoom-rail { gap:4px; background:var(--surface); }
+.pitch-zoom-rail button { min-height:24px; min-width:24px; }
+.editor-range-tools { margin-top:6px; }
+.editor-range-tools summary { cursor:pointer; color:var(--muted); padding-block:3px; }
+.editor-range-tools button { margin:3px 2px 0 0; }
+.editor-inspector-toggle { width:100%; display:flex; align-items:center; gap:5px; text-align:left; color:var(--muted); background:transparent; border:0; border-bottom:1px solid var(--soft-line); padding-inline:8px; }
+.editor-inspector-toggle::before { content:"▾"; }
+.editor-inspector-toggle[aria-expanded=false]::before { content:"▸"; }
+.editor-inspector-toggle:focus-visible { outline-offset:-2px; }
+.editor-side:has(.editor-inspector-toggle) .editor-event-properties > h3:first-child { display:none; }
+.studio-ui .workbench[data-view=notes] .editor-workspace.inspector-collapsed { grid-template-columns:31px minmax(0,1fr); }
+.inspector-collapsed #editor-inspector { display:none; }
+.inspector-collapsed .editor-inspector-toggle { writing-mode:vertical-rl; min-height:80px; padding:7px 4px; }
+.has-correction .editor-inspector-toggle { visibility:hidden; }
+@media(max-width:810px) {
+  .note-toolbar { grid-template-columns:1fr; }
+  .note-toolbar:has(.editor-heading) :is(.midi-file-group,.editor-heading,.editor-tools,.midi-tools) { grid-area:auto; }
+  .studio-ui .workbench[data-view=notes] .editor-workspace { grid-template-columns:158px minmax(0,1fr); }
+  .studio-ui .workbench[data-view=notes] .editor-workspace.has-correction { grid-template-columns:minmax(170px,32%) minmax(0,1fr); }
+}
+.project-editor-tools[data-tool=draw]+.editor-workspace #midi-canvas,.project-editor-tools[data-tool=draw]+.editor-workspace #pedal-canvas{cursor:crosshair}
+
+.editor-beat-flags canvas{cursor:default;touch-action:none}.editor-beat-flags>span{font-size:11px;color:var(--c-n-300)}.editor-beat-flags{border-bottom:1px solid var(--c-n-800)}
+
+/* Structure editing shares the compact inspector; pending objects stay on the old seconds axis. */
+.structure-scope{border-left:2px solid var(--c-g-300);padding-left:9px;font-size:12px;line-height:1.5}
+.structure-status{font-size:13px;line-height:1.5;color:var(--c-g-300)}.structure-status.error{color:var(--c-r-300)}
+.structure-target{padding-block:12px;margin-block:10px;border-block:1px solid var(--c-n-800);display:grid;gap:9px}
+.structure-actions{display:flex;gap:6px;flex-wrap:wrap}.structure-meter{display:grid;grid-template-columns:1fr 12px 1fr;align-items:center;gap:5px}
+.structure-meter .control{min-width:0}.structure-conflict{margin:10px 0;padding:10px;border-left:2px solid var(--c-w-400);background:var(--c-n-900);font-size:12px;line-height:1.5}
+.structure-conflict strong{font-weight:500}.structure-conflict p{margin:7px 0}.structure-conflict>div{display:flex;gap:5px;flex-wrap:wrap}
+#structure-body>.checkbox-line{align-items:start}#structure-body>.form-note{margin-top:6px}
+/* Musical tools are named controls, not icon-width buttons. */
+.editor-tool-pair button[data-do=editorDrawTool],
+.editor-tool-pair button[data-do=editorBeatTool],
+.editor-tool-pair button[data-do=editorMeterTool]{width:auto;min-width:54px;font-size:12px;padding:4px 8px}
+.editor-tool-pair{flex-wrap:wrap}
+.editor-beat-tools>small{display:block;line-height:1.5;margin:6px 0;color:var(--c-n-300)}
+#beat-flags-canvas{touch-action:none}
+.editor-musical-range{display:grid;grid-template-columns:minmax(0,1fr);gap:6px}
+.editor-musical-range label{display:flex;align-items:center;gap:8px;font-weight:600}
+.editor-musical-range .control{width:100%;min-width:0;font-variant-numeric:tabular-nums;font-family:Consolas,"Microsoft YaHei UI",monospace}
+.editor-musical-range input[aria-invalid=true]{border-color:var(--c-w-400)}
+.editor-locator-error{margin:0 0 4px 18px;color:var(--c-t-300);font-size:12px;line-height:1.45;overflow-wrap:anywhere}
+.editor-locator-error[hidden]{display:none}
+/* Cubase-inspired grouping, without changing the existing playback engine. */
+.studio-ui .transport.has-musical-transport{display:flex;flex-wrap:wrap;height:auto;min-height:116px;align-content:center}
+#musical-transport{flex:1 0 100%;display:flex;align-items:flex-start;gap:12px;padding-top:6px;border-top:1px solid var(--c-n-800)}
+#musical-transport[hidden]{display:none}
+.transport-locators{display:flex;align-items:center;gap:6px}
+.transport-location{display:grid;grid-template-columns:auto minmax(90px,145px);align-items:center;gap:3px 6px;font-size:12px}
+.transport-location .control{width:100%;min-width:0;font:12px Consolas,"Microsoft YaHei UI",monospace;font-variant-numeric:tabular-nums}
+.transport-location small,.transport-location .editor-locator-error{grid-column:2;margin:0;font-size:11px}
+.transport-musical-actions{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.transport-musical-actions button[aria-pressed=true]{background:var(--c-a-300);color:var(--c-n-900)}
+.transport-options{position:relative;font-size:12px}.transport-options summary{cursor:pointer;padding:6px}
+.transport-options-body{position:absolute;right:0;bottom:32px;width:310px;max-height:65vh;overflow:auto;background:var(--c-n-900);border:1px solid var(--c-n-700);padding:14px;z-index:100;box-shadow:0 6px 24px color-mix(in srgb,var(--c-n-900) 53.3%,transparent);line-height:1.6}
+.transport-options-body label{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+.transport-options-body input{max-width:140px}
+@media(max-width:1000px){#musical-transport{flex-wrap:wrap;gap:7px}.studio-ui .transport.has-musical-transport{min-height:150px}.transport-location{grid-template-columns:auto minmax(85px,120px)}}
+
+/* Unified compact transport, same geometry in edit and read-only modes. */
+.studio-ui #transport.compact-transport{display:flex;flex-wrap:nowrap;align-items:center;gap:8px;min-height:64px;height:auto;padding:5px 10px}
+#transport.compact-transport #musical-transport{display:contents}
+.compact-transport .transport-source{order:0;width:110px;max-width:110px}
+.compact-transport .play-controls{order:1;display:flex;gap:3px}
+.compact-transport #musical-transport>.transport-location{order:2;width:155px;flex:none}
+.compact-transport .transport-locators{order:3;display:flex;flex-direction:column;gap:2px;width:170px;flex:none}
+.compact-transport .transport-locators>div{display:flex;gap:3px;align-items:center;width:100%}
+.compact-transport .transport-location{position:relative;display:grid;grid-template-columns:14px minmax(0,1fr);gap:1px 5px;font-size:11px;min-width:0;width:100%}
+.compact-transport #musical-transport>.transport-location{grid-template-columns:1fr}
+.compact-transport .transport-location input.control{height:25px;min-height:25px;border:1px solid var(--c-n-800);border-radius:3px;background:var(--c-n-900);color:var(--c-n-150);font:12px Consolas,monospace;padding:2px 5px;width:100%;min-width:0}
+.compact-transport .transport-location small{grid-column:1/-1;font-size:10px;color:var(--c-n-400)}
+.compact-transport .transport-locators small{display:none}
+.compact-transport .transport-musical-actions{order:4;display:flex;flex-wrap:nowrap;gap:3px}
+.compact-transport .transport-icon,.compact-transport .transport-options>summary{display:flex;align-items:center;justify-content:center;width:29px;height:29px;min-height:29px;padding:4px;border:1px solid var(--c-n-800);border-radius:4px;background:var(--c-n-900);color:var(--c-n-300);cursor:pointer;list-style:none}
+.compact-transport .transport-options>summary::-webkit-details-marker{display:none}
+.compact-transport .transport-icon svg,.compact-transport .transport-options>summary svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.compact-transport .transport-locators .transport-icon{width:24px;height:24px;min-height:24px;flex:none}
+.compact-transport .transport-musical-actions button[aria-pressed=true]{background:var(--c-a-300);color:var(--c-n-900)}
+.compact-transport #time{display:none}.compact-transport #seek{order:5;flex:1;min-width:45px;width:auto}.compact-transport #duration{order:6}.compact-transport .volume{order:7}
+.compact-transport .editor-locator-error{position:absolute;bottom:100%;left:0;min-width:180px;max-width:260px;grid-column:1/-1;padding:5px 7px;background:var(--c-n-900);border:1px solid var(--c-t-500);border-radius:3px;z-index:120;color:var(--c-t-300);font:12px 'Microsoft YaHei UI',sans-serif}
+.compact-transport .transport-options-body{bottom:35px}
+.roll-ruler{position:relative;isolation:isolate}#ruler-playhead{position:absolute;left:52px;top:34px;width:20px;height:20px;z-index:8;cursor:grab;touch-action:none}#ruler-playhead::before{content:'';display:block;width:0;height:0;margin:1px auto;border-left:8px solid transparent;border-right:8px solid transparent;border-top:11px solid var(--c-t-200);filter:drop-shadow(0 1px 1px var(--c-n-900))}
+@media(max-width:1050px){.studio-ui #transport.compact-transport{gap:5px}.compact-transport .transport-source{width:85px;max-width:85px}.compact-transport #musical-transport>.transport-location{width:137px}.compact-transport .transport-locators{width:150px}.compact-transport .volume{display:none}}
+@media(max-width:760px){.studio-ui #transport.compact-transport{flex-wrap:wrap;min-height:96px}.compact-transport .transport-source{width:80px}.compact-transport #seek{order:8;flex-basis:65%;min-width:70px}.compact-transport #duration{order:9}.compact-transport .transport-musical-actions{margin-left:auto}.compact-transport .transport-options-body{right:0;max-width:calc(100vw - 36px)}}
+
+/* Read-only transport uses the same locator / meter / position lanes. */
+.editor-workspace .roll-ruler { height:56px; }
+
+/* The handle is not a ruler label: reset inherited label padding/border. */
+#ruler-playhead { padding:0; border:0; background:transparent; box-sizing:border-box; }
+#ruler-playhead::before { position:absolute; left:50%; top:1px; margin:0; transform:translateX(-50%); }
+
+/* Settings are a form, not miniature transport buttons. */
+.compact-transport .transport-options-body { position:fixed; right:16px; bottom:76px; width:340px; max-width:calc(100vw - 32px); max-height:calc(100vh - 110px); padding:16px; overflow:auto; overscroll-behavior:contain; text-align:left; white-space:normal; }
+.compact-transport .transport-options-body label { display:grid; grid-template-columns:88px minmax(0,1fr); align-items:center; width:100%; min-width:0; gap:10px; margin:0 0 10px; }
+.compact-transport .transport-options-body label>span { white-space:nowrap; }
+.compact-transport .transport-options-body :is(input,select).control { width:100%; min-width:0; max-width:none; height:30px; }
+.compact-transport .transport-options-body p { margin:10px 0; color:var(--c-n-300); line-height:1.6; }
+.compact-transport .transport-options-body details { margin-top:12px; border-top:1px solid var(--c-n-800); padding-top:8px; }
+.compact-transport .transport-options-body details>summary { display:list-item; width:auto; height:auto; min-height:30px; padding:4px 0; margin-bottom:8px; border:0; background:none; list-style:disclosure-closed inside; white-space:nowrap; }
+.compact-transport .transport-options-body details[open]>summary { list-style-type:disclosure-open; }
+.compact-transport .transport-options-body :is(input,select,button,summary):focus-visible { outline:2px solid var(--c-a-300); outline-offset:2px; }
+@media(max-width:760px){.compact-transport .transport-options-body { bottom:112px; max-height:calc(100vh - 144px); }}
+
+/* Make the active editing mode unmistakable without changing tool semantics. */
+.editor-tool-pair button[data-do=editorSelectTool]{width:auto;min-width:62px;font-size:12px;padding:4px 8px}
+.editor-tool-pair button[aria-pressed=true]{background:var(--c-a-300);color:var(--c-n-900);border-color:var(--c-n-200);box-shadow:inset 0 -2px 0 var(--c-n-100);font-weight:700}
+
+.editor-opening {height:28px;flex:none;border-bottom:1px solid var(--c-n-800)}.editor-tool-pair button[data-do=editorBeatEraseTool]{width:auto;min-width:64px;font-size:12px;padding:4px 8px}
+
+.rhythm-object-actions{display:flex;gap:5px;align-items:center}.rhythm-object-actions button{min-width:34px}.rhythm-compact-help{color:var(--muted);font-size:11px}.editor-beat-tools h3 span{font-weight:400;color:var(--muted);cursor:help}
+
+/* Explicit playback controls, not a miscellaneous settings drawer. */
+.transport-rate{display:flex;align-items:center;gap:5px;white-space:nowrap;font-size:11px}.transport-rate select{width:68px;min-width:0}.transport-together{white-space:nowrap;font-size:11px}
+
+/* Keep pointer coverage before the first canvas paint after a revision render. */
+.editor-beat-flags>canvas,.editor-opening>canvas{width:100%;min-width:0;height:100%;align-self:stretch}
+
+#editor-mode-status{position:fixed;right:18px;bottom:80px;z-index:80;display:flex;align-items:center;gap:12px;max-width:min(420px,calc(100vw - 36px));padding:10px 12px;border:1px solid var(--c-a-300);border-radius:5px;background:var(--c-n-900);color:var(--c-n-150);box-shadow:0 4px 16px color-mix(in srgb,var(--c-n-900) 40.0%,transparent);font-size:12px}#editor-mode-status button{flex:none;min-width:24px;padding:2px;border:0;background:transparent;color:inherit;font-size:18px}
+
+#editor-insert-duration{max-width:155px}.rhythm-insert-help{font-size:10px;color:var(--muted)}.rhythm-duration-summary{font-size:12px;margin:4px 0;color:var(--c-n-200)}
+
+/* Range and toggle tools keep text legible instead of legacy icon-only width. */
+.editor-tool-pair button[data-do=editorRangeTool],.editor-tool-pair button[data-do=editorPenToggle]{width:auto;min-width:70px;font-size:12px;padding:4px 8px;flex-shrink:0}
+
+/* Nonmodal plugin-style score window; never changes piano-roll geometry. */
+#dialog.editor-score-floating[open]{z-index:70;border-radius:7px;border:1px solid var(--c-a-600);box-shadow:0 10px 36px color-mix(in srgb,var(--c-n-900) 60.0%,transparent);min-width:0;min-height:0}
+#dialog.editor-score-floating .dialog-body{display:flex;flex-direction:column;padding:6px 10px;overflow:hidden;gap:5px}
+.editor-score-range-toolbar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;flex:none}
+.editor-score-range-toolbar .editor-score-range-pages,.editor-score-range-toolbar .editor-score-range-zoom{margin:0}
+.editor-score-range-toolbar [role=status]{margin-right:auto;font-size:12px}
+#dialog.editor-score-floating .dialog-head{min-height:32px;padding:3px 10px;cursor:move;touch-action:none;user-select:none}
+#dialog.editor-score-floating .dialog-foot{padding:4px 24px 4px 10px}
+#dialog.editor-score-floating .editor-score-range-paper{flex:1;min-height:40px;overflow:auto;text-align:center}
+#dialog.editor-score-floating .editor-score-range-paper img{width:100%;max-width:none;margin:auto}
+.editor-score-range-paper img.is-stale{opacity:.55;filter:grayscale(.5)}
+.editor-score-range-details{font-size:11px;color:var(--muted);flex:none}
+.editor-score-range-details p{margin:4px 0;max-height:55px;overflow:auto}
+.editor-score-resize{position:absolute;bottom:0;right:0;width:22px;height:22px;cursor:nwse-resize;touch-action:none;background:repeating-linear-gradient(135deg,transparent 0 3px,var(--c-a-400) 3px 4px,transparent 4px 6px);clip-path:polygon(100% 0,100% 100%,0 100%);opacity:.65}
+
+/* Compact, labelled-by-tooltip tools; pen mode remains visibly distinct. */
+.editor-tool-pair button.editor-icon-tool[data-do],.editor-tools button.editor-icon-tool[data-do=editorSnapToggle]{position:relative;width:34px;min-width:34px;height:30px;padding:5px;justify-content:center;flex-shrink:0}
+.editor-icon-tool svg{width:17px;height:17px;flex:none}
+.editor-icon-tool .editor-tool-switch{position:absolute;right:1px;bottom:0;font-size:9px;line-height:10px;opacity:.65;pointer-events:none}
+
+/* Reference waveform is audition-only, independently of the active pen. */
+.editor-wave-surface #waveform-canvas{cursor:grab;}
+.editor-wave-lane{border-top:1px solid var(--soft-line);}
+
+/* A read-only roll has no inspector column; editing keeps its saved collapse preference. */
+.studio-ui .workbench[data-view=notes] .editor-workspace:not(:has(>.editor-side)){grid-template-columns:minmax(0,1fr)}
+
+/* A single cursor menu, outside the scrolling editor and below modal dialogs. */
+#rhythm-context-menu{position:fixed;left:0;top:0;z-index:610;box-sizing:border-box;overflow:auto;overscroll-behavior:contain;padding:4px;border:1px solid var(--line);border-radius:var(--r-dense);background:var(--raised);color:var(--text);box-shadow:var(--shadow-2);font-size:12px}
+#rhythm-context-menu[hidden]{display:none}
+#rhythm-context-menu>button{display:block;width:100%;min-width:0;min-height:26px;padding:4px 8px;border:0;border-radius:var(--r-chip);background:transparent;color:inherit;font:inherit;text-align:left;white-space:normal;overflow-wrap:anywhere;cursor:pointer}
+#rhythm-context-menu>button:hover,#rhythm-context-menu>button:focus-visible{background:var(--ui-accent-soft);color:var(--ui-accent-ink)}
+#rhythm-context-menu>button:focus-visible{outline:1px solid var(--ui-focus);outline-offset:-1px}
+#dialog:has(.rhythm-opening-form){width:min(420px,calc(100vw - 24px))}
+.rhythm-opening-form{display:grid;gap:8px}.rhythm-opening-form :is(.field,.form-note){margin:0}.rhythm-opening-form details{font-size:12px;color:var(--muted)}.rhythm-opening-form summary{cursor:pointer}
+#dialog:has(.rhythm-opening-form) #editor-pulse-status:empty{display:none}
+
+/* Compact default for note-on velocity, not a gesture-time value. */
+.editor-insert-velocity{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.editor-insert-velocity #editor-insert-velocity{inline-size:4.5em;min-inline-size:0;font-variant-numeric:tabular-nums}
+.editor-insert-velocity #editor-insert-velocity-preset{inline-size:25px;min-inline-size:0;padding-inline:3px;appearance:none;text-align:center}
+#editor-note-creation[data-held-velocity]::after{content:attr(data-held-velocity);position:absolute;left:calc(100% + 5px);top:50%;transform:translateY(-50%);padding:1px 4px;border-radius:4px;background:#344568;color:#fff;font:600 10px/1.3 AstraSans,system-ui,sans-serif;font-variant-numeric:tabular-nums;white-space:nowrap;pointer-events:none}
+/* First-paint cursor on a newly reconciled lane, before the next pointer probe. */
+.editor-workspace #velocity-canvas{cursor:var(--astra-cursor-arrow,default)}
+.project-editor-tools:is([data-tool=select],[data-tool=draw])+.editor-workspace #velocity-canvas,
+.note-toolbar:has([data-tool=select],[data-tool=draw])+.editor-workspace #velocity-canvas{cursor:var(--astra-cursor-pen,crosshair)}
+
+/* Existing top-left command shell; only the rhythm body is grouped. */
+.editor-rhythm-command-body .rhythm-menu-group{display:grid;gap:4px;min-width:0;padding:5px}
+.editor-rhythm-command-body .rhythm-menu-group+.rhythm-menu-group{border-top:1px solid var(--border, #d6d8e5)}
+.editor-rhythm-command-body .rhythm-menu-caption{font-size:11px;color:var(--muted,#62677a)}
+.editor-rhythm-command-body .rhythm-menu-pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(118px,100%),1fr));gap:4px}
+.editor-rhythm-command-body .rhythm-menu-pair button{min-width:0;white-space:normal;text-align:left}
+.editor-rhythm-command-body .tool-field{display:grid;grid-template-columns:minmax(6.2em,auto) minmax(0,1fr);align-items:center;gap:5px;margin:0}
+.editor-rhythm-command-body .tool-field select{width:100%;min-width:0}
+.editor-rhythm-command-body .rhythm-summary small{margin-left:.55em;color:var(--muted,#62677a)}
+.editor-rhythm-command-body .rhythm-object-actions:empty{display:none}
+.editor-rhythm-command-body .rhythm-object-actions{margin-top:3px}
+.studio-ui .editor-command-bar .beat-check-find{white-space:nowrap}
+.beat-check-controls{display:flex;align-items:center;gap:8px;flex:none;min-height:30px;padding:2px 6px 2px 52px;border-bottom:1px solid var(--ui-line-soft);color:var(--ui-text-2);font-size:12px;flex-wrap:wrap}
+.beat-check-controls [role=group]{display:flex;align-items:center;gap:4px}
+.beat-check-controls button{min-height:24px;height:24px;padding:0 6px;white-space:nowrap;font-size:11px}
+.beat-check-controls[hidden],.beat-check-controls [hidden]{display:none}

@@ -1,0 +1,172 @@
+/* Astra: restrained, high-density music workbench. No timeline animation here. */
+:root{--ui-radius:5px;--ui-control:30px;--ui-border:var(--c-n-800);--ui-focus:var(--c-a-300);--ui-selection:var(--c-n-800);--ui-font:'Segoe UI','Microsoft YaHei UI',sans-serif}
+body,input,select,textarea,button{font-family:var(--ui-font)}
+button,input,select,textarea{font-size:13px;line-height:1.35}
+button{gap:6px;border-radius:var(--ui-radius)}
+button svg,summary svg{width:16px;height:16px;flex:none;vertical-align:middle}
+button svg{pointer-events:none}
+button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--ui-focus);outline-offset:2px}
+button:not(:disabled):hover{border-color:var(--c-n-500)}
+button:disabled{cursor:default}
+input[type=number],output,.transport-location,.transport-locators,.status-token{font-variant-numeric:tabular-nums}
+.control{border-radius:4px;border-color:var(--ui-border)}
+.studio-ui .workbench .session-head{padding:7px 12px;min-height:46px;gap:8px}
+.studio-ui .workbench .session-title h1{font-size:16px;font-weight:600;letter-spacing:0}
+.studio-ui .workbench .session-actions{align-items:center;gap:5px}
+.studio-ui .workbench .session-actions button{min-height:30px;font-size:12px}
+.project-menu{position:relative;z-index:30}
+.project-menu>summary{display:flex;align-items:center;gap:6px;list-style:none;cursor:pointer;min-height:30px;padding:4px 9px;border:1px solid transparent;border-radius:5px;font-size:12px}
+.project-menu>summary::-webkit-details-marker{display:none}
+.project-menu>summary:after{content:'⌄';color:var(--muted)}
+.project-menu[open]>summary,.project-menu>summary:hover{background:var(--surface);border-color:var(--line)}
+.project-menu-body{position:absolute;right:0;top:calc(100% + 5px);display:grid;gap:3px;min-width:180px;padding:6px;background:var(--surface);border:1px solid var(--ui-border);border-radius:7px;box-shadow:0 7px 24px color-mix(in srgb,var(--c-n-900) 40.0%,transparent)}
+.studio-ui .workbench .project-menu-body button{width:100%;justify-content:flex-start;white-space:nowrap}
+.studio-ui .view-navigation .tabs{gap:18px}
+.studio-ui .view-navigation .tabs button{font-weight:500;gap:7px}
+.studio-ui .midi-bar{gap:6px 10px}
+.editor-heading-actions{gap:5px;align-items:center}
+.editor-heading-actions button{display:inline-flex;align-items:center;justify-content:center;min-height:30px;font-size:12px}
+.editor-heading-actions [data-do=editorPreferences]{margin-left:3px}
+.editor-heading-actions [data-do=editorUndo],.editor-heading-actions [data-do=editorRedo]{border-color:transparent;background:transparent}
+.editor-heading-actions [data-do=editorReadOnly],.editor-heading-actions [data-do=editorEnter]{border-color:var(--c-a-600);background:var(--c-n-900)}
+.editor-tools{gap:6px;align-items:center}
+.editor-tools>label{gap:5px;font-size:12px;white-space:nowrap}
+.editor-tools button,.editor-tools .control{min-height:30px;font-size:12px}
+.editor-tool-pair{display:flex;gap:2px;padding-right:7px;margin-right:1px;border-right:1px solid var(--line)}
+.editor-tool-pair button[data-do]{min-width:0;padding:4px 7px;display:inline-flex;gap:5px;align-items:center}
+.editor-tool-pair button[aria-pressed=true]{background:var(--ui-selection);border-color:var(--c-a-400);color:var(--c-n-50)}
+.editor-tools [data-do=editorSnapToggle]{display:inline-flex;align-items:center;gap:5px;margin-left:5px}
+.editor-tools .editor-snap-status{font-size:11px;line-height:1.4}
+.rhythm-insert-help{display:none}
+.editor-side{background:var(--c-n-900);border-right:1px solid var(--line)}
+.editor-side-section{padding:10px;border-bottom:1px solid var(--soft-line)}
+.editor-side-section h3{font-size:13px;font-weight:600;line-height:1.5;margin-bottom:7px}
+.editor-side-section>button{display:inline-flex;align-items:center;justify-content:flex-start;min-height:30px;font-size:12px;gap:6px;margin:3px 2px 3px 0;max-width:100%}
+.editor-side-section summary{padding:3px 0;font-size:12px;line-height:1.5}
+.editor-side-section p,.editor-side-section small{line-height:1.55}
+.rhythm-object-actions{flex-wrap:wrap}
+.editor-meter-item{padding:7px;gap:8px;border-radius:4px}
+.editor-meter-item span{font-variant-numeric:tabular-nums}
+.studio-ui .compact-transport{gap:8px;border-top:1px solid var(--c-n-700);background:var(--c-n-900);padding:6px 10px}
+.compact-transport .transport-source{width:125px;max-width:125px}
+.compact-transport .transport-source select{font-size:12px}
+.compact-transport .transport-location input,.compact-transport .transport-locators input{font-variant-numeric:tabular-nums;font-size:12px;border-color:var(--c-n-800)}
+.compact-transport button{border-radius:4px}
+.compact-transport .play-controls{gap:4px}
+.transport-rate{padding-left:6px;border-left:1px solid var(--line)}
+.studio-ui .score-tools{gap:6px}
+.studio-ui .score-tools button{min-height:30px;font-size:12px}
+.studio-ui .score-hint{font-size:12px;line-height:1.5}
+.score-extra summary,.ornament-disclosure>summary{font-size:12px;padding:7px 0}
+.studio-ui .file-group h3{font-size:13px;font-weight:600;background:var(--c-n-900);padding:10px 12px}
+.studio-ui .file-row{min-height:44px;padding:9px 12px;font-size:13px}
+.file-row:hover{background:var(--c-n-900)}
+.studio-ui .track-controls{background:var(--c-n-900)}
+.studio-ui .track-name strong{font-size:14px}
+.studio-ui .track-actions button{min-height:30px;font-size:12px}
+.studio-ui .track-hint{font-size:12px}
+.studio-ui .home h1{font-size:28px;font-weight:600;letter-spacing:0}
+.studio-ui .home .drop{border-radius:8px;padding:24px;background:var(--c-n-900)}
+.studio-ui .home .tile{border-radius:6px}
+.studio-ui .home .recent-card{border-radius:5px}
+.dialog{border:1px solid var(--c-n-700);border-radius:9px;background:var(--c-n-900);box-shadow:0 16px 64px color-mix(in srgb,var(--c-n-900) 46.7%,transparent);max-width:calc(100vw - 32px);max-height:calc(100vh - 32px)}
+.dialog::backdrop{background:color-mix(in srgb,var(--c-n-900) 60.0%,transparent)}
+.dialog-head{padding:16px 20px;border-bottom:1px solid var(--line);gap:12px}
+.dialog-head h2{font-size:17px;font-weight:600;line-height:1.4}
+.dialog-body{padding:18px 20px}
+.dialog-foot{padding:12px 20px;gap:8px;border-top:1px solid var(--line);background:var(--c-n-900);flex-wrap:wrap}
+.dialog button{min-height:32px;font-size:13px}
+.dialog .control{min-height:32px;font-size:13px}
+.dialog label,.dialog .form-note{font-size:13px;line-height:1.6}
+.dialog .field{margin-bottom:12px}
+.dialog .form-error{padding:8px 10px;border-left:3px solid var(--c-r-400);background:var(--c-n-900)}
+.dialog .form-error:empty{display:none}
+.dialog details{line-height:1.6}
+.dialog summary{cursor:pointer;min-height:28px}
+@media(max-width:1100px){.studio-ui .workbench .session-title{flex-basis:160px}.editor-heading-actions{flex-wrap:wrap}.editor-tools{row-gap:5px}.compact-transport .transport-source{width:108px;max-width:108px}}
+@media(max-width:800px){.studio-ui .workbench .session-head{gap:5px}.studio-ui .workbench .session-actions{flex-wrap:wrap}.project-menu-body{left:0;right:auto}.editor-tool-pair{flex-wrap:wrap}.dialog{max-width:calc(100vw - 16px);max-height:calc(100vh - 16px)}.dialog-head,.dialog-body,.dialog-foot{padding:12px}.dialog-foot button{flex-grow:1}.studio-ui .view-navigation .tabs{gap:10px}.studio-ui .view-navigation .tabs button{font-size:12px}}
+
+/* Keep precision visible; defer static instructions rather than shrinking type. */
+.editor-tools #editor-grid-precision{display:inline;font-size:11px;margin-left:0}
+.editor-tools #editor-snap-status[data-bypass=false]{display:none}
+.editor-score-stale{padding:8px 10px;gap:12px;border-left:2px solid var(--c-w-400);border-radius:3px;font-size:12px;line-height:1.5}
+.editor-score-stale button{min-height:30px;flex:none}
+
+@media(max-width:1100px){
+ .studio-ui #transport.compact-transport{flex-wrap:wrap;min-height:96px;height:auto;align-content:center}
+ .compact-transport .transport-musical-actions{flex-wrap:wrap;max-width:100%;margin-left:auto}
+ .compact-transport #seek{order:8;flex:1 1 140px;min-width:70px}
+ .compact-transport #duration{order:9}
+ .studio-ui .compact-transport .volume{display:flex;order:10}
+ .compact-transport .transport-rate{font-size:12px}
+}
+@media(max-width:800px){
+ .studio-ui .workbench .session-title{flex:1 1 240px;flex-wrap:nowrap}
+ .studio-ui .workbench .session-title h1{flex:1 1 auto;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .studio-ui .workbench .project-facts{flex-wrap:wrap}
+ .studio-ui .workbench .session-title .project-facts .status-token{font-size:11px}
+ .studio-ui .workbench .session-actions{flex:1 0 100%;justify-content:flex-end}
+}
+
+/* Inspector actions expose their target and consequence, not a generic tool menu. */
+.editor-task-action{display:flex;flex-direction:column;gap:3px;margin:9px 0}
+.editor-task-action>button{display:flex;align-items:center;justify-content:flex-start;gap:6px;width:100%;min-height:32px;font-size:12px;text-align:left;white-space:normal}
+.editor-task-action>small{display:block;padding:0 2px;font-size:11px;line-height:1.45}
+.editor-scope-caption{font-variant-numeric:tabular-nums;margin:7px 0 4px;color:var(--text)}
+.editor-scope-hint{font-size:11px;margin:4px 0}
+
+/* Commands stay with the editor toolbar; inspector follows selected objects. */
+.editor-command-bar{display:flex;align-items:center;gap:5px;padding:5px 0 0;border-top:1px solid var(--line);margin-top:5px;flex-wrap:wrap;position:relative;z-index:20}
+.editor-command-menu{position:relative}
+.editor-command-menu>summary{list-style:none;cursor:pointer;padding:5px 10px;border:1px solid transparent;border-radius:4px;font-size:12px;user-select:none}
+.editor-command-menu>summary:hover,.editor-command-menu[open]>summary{background:var(--c-n-800);border-color:var(--line)}
+.editor-command-body{position:absolute;left:0;top:100%;width:290px;max-width:calc(100vw - 35px);max-height:55vh;overflow:auto;padding:10px 14px;background:var(--c-n-900);border:1px solid var(--c-n-700);border-radius:5px;box-shadow:0 8px 24px color-mix(in srgb,var(--c-n-900) 53.3%,transparent);z-index:100;font-size:12px;line-height:1.5}
+.editor-command-body hr{border:0;border-top:1px solid var(--line);margin:10px 0}
+.editor-command-scope{margin-left:auto;font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}
+.project-editor-tools{overflow:visible!important}
+
+/* Scrollbar-end zoom: one quiet navigation strip, no extra row or side column. */
+.studio-ui .editor-workspace .midi-roll{position:relative;grid-template-columns:52px minmax(0,1fr);}
+.studio-ui .roll-scroll{scrollbar-gutter:stable;}
+.studio-ui .roll-scroll::-webkit-scrollbar{width:14px;height:14px;}
+.studio-ui .roll-scroll::-webkit-scrollbar-track{background:var(--c-n-900);}
+.studio-ui .roll-scroll::-webkit-scrollbar-track:horizontal{margin-right:118px;}
+.studio-ui .roll-scroll::-webkit-scrollbar-track:vertical{margin-bottom:110px;}
+.studio-ui .roll-scroll::-webkit-scrollbar-thumb{background:var(--c-n-700);border:4px solid var(--c-n-900);border-radius:7px;}
+.studio-ui .roll-scroll::-webkit-scrollbar-corner{background:var(--c-n-900);}
+.studio-ui .roll-navigation{position:absolute;right:14px;bottom:0;width:118px;height:14px;min-height:0;padding:0;display:flex;align-items:center;z-index:5;background:var(--c-n-900);border:0;}
+.studio-ui .horizontal-zoom{display:flex;width:100%;height:14px;gap:0;align-items:center;}
+.studio-ui .horizontal-zoom button,.studio-ui .pitch-zoom-rail button{min-width:14px;min-height:14px;width:14px;height:14px;border:0;border-radius:0;padding:0;background:transparent;color:var(--c-n-500);font-size:10px;line-height:14px;}
+.studio-ui .horizontal-zoom button[data-do="zoomFit"],.studio-ui .horizontal-zoom button[data-do="pitchFit"]{display:none;}
+.studio-ui .horizontal-zoom input{width:90px;min-width:0;height:14px;margin:0;}
+.studio-ui .pitch-zoom-rail{position:absolute;right:0;bottom:14px;display:flex;flex-direction:column;justify-content:flex-end;width:14px;height:110px;padding:0;gap:0;border:0;background:var(--c-n-900);z-index:5;}
+.studio-ui .pitch-zoom-rail input{flex:none;width:14px;height:82px;max-height:82px;min-height:0;margin:0;}
+.studio-ui .horizontal-zoom input,.studio-ui .pitch-zoom-rail input{appearance:none;-webkit-appearance:none;background:transparent;cursor:pointer;}
+.studio-ui .horizontal-zoom input::-webkit-slider-runnable-track{height:2px;background:var(--c-n-700);border-radius:2px;}
+.studio-ui .horizontal-zoom input::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:7px;height:10px;margin-top:-4px;background:var(--c-n-500);border-radius:2px;}
+.studio-ui .pitch-zoom-rail input::-webkit-slider-runnable-track{width:2px;background:var(--c-n-700);border-radius:2px;}
+.studio-ui .pitch-zoom-rail input::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:10px;height:7px;background:var(--c-n-500);border-radius:2px;}
+.studio-ui .roll-navigation:hover input::-webkit-slider-thumb,.studio-ui .pitch-zoom-rail:hover input::-webkit-slider-thumb{background:var(--accent);}
+.studio-ui .roll-navigation button:hover,.studio-ui .pitch-zoom-rail button:hover{color:var(--text);background:var(--c-n-800);}
+.studio-ui .transport .volume-popover{display:block;position:relative;flex:none;width:30px;height:30px;overflow:visible;}
+.volume-popover summary{display:flex;align-items:center;justify-content:center;width:30px;height:30px;position:relative;cursor:pointer;list-style:none;border-radius:5px;}
+.volume-popover summary::-webkit-details-marker{display:none;}
+.volume-popover summary:hover,.volume-popover[open] summary{background:var(--hover,var(--c-n-900));}
+.volume-popover summary:focus-visible{outline:2px solid var(--accent);outline-offset:1px;}
+.volume-popup-panel{position:absolute;bottom:calc(100% + 10px);right:0;width:160px;padding:12px;border:1px solid var(--line);border-radius:8px;background:var(--surface,var(--c-n-900));box-shadow:0 6px 24px color-mix(in srgb,var(--c-n-900) 46.7%,transparent);z-index:100;}
+.volume-popup-panel label{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:8px;}
+.studio-ui .transport .volume-popover input{width:136px;display:block;}
+.volume-muted-mark{display:none;position:absolute;right:2px;bottom:0;color:var(--accent);font-weight:700;}
+.is-muted .volume-muted-mark{display:block;}
+.is-muted svg{opacity:.5;}
+
+/* Stem comparison: only source, play/stop, position, progress and popover volume. */
+.studio-ui .transport.stem-transport{display:flex;flex-wrap:nowrap;align-items:center;gap:12px;min-height:58px;height:58px;padding:8px 18px}
+.studio-ui .stem-transport #musical-transport{display:none!important}
+.studio-ui .stem-transport .transport-source{width:150px;max-width:150px;flex:none}
+.studio-ui .stem-transport #seek{flex:1;min-width:60px;width:auto}
+.studio-ui .stem-transport .volume{display:block;flex:none}
+.studio-ui .clip .playhead{width:2px;border:0;background:var(--accent);box-shadow:0 0 5px color-mix(in srgb,var(--c-t-300) 40.0%,transparent);transform:none}
+.studio-ui .clip .wave-progress{position:absolute;inset:0 auto 0 0;width:0;background:color-mix(in srgb,var(--c-a-300) 7.1%,transparent);border-right:0;pointer-events:none}
+.studio-ui .track-row.is-selected .wave-progress{background:color-mix(in srgb,var(--c-a-300) 14.1%,transparent)}
+@media(max-width:650px){.studio-ui .transport.stem-transport{gap:7px;padding:7px}.studio-ui .stem-transport .transport-source{width:100px;max-width:100px}}

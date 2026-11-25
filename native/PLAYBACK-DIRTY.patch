@@ -1,0 +1,17 @@
+--- a/vst-isolated-fx/host/component_handler.hpp
++++ b/vst-isolated-fx/host/component_handler.hpp
+@@ -17,7 +17,13 @@
+  tresult PLUGIN_API beginEdit(ParamID)override{return kResultOk;}
+  tresult PLUGIN_API endEdit(ParamID)override{return kResultOk;}
+  tresult PLUGIN_API performEdit(ParamID id,ParamValue value)override{changed();auto w=write.load();auto next=(w+1)%edits.size();if(next==read.load(std::memory_order_acquire))return kOutOfMemory;edits[w]={id,value};write.store((uint32_t)next,std::memory_order_release);return kResultOk;}
+- tresult PLUGIN_API restartComponent(int32 flags)override{if(flags)changed();restart.fetch_or(flags);return kResultOk;}
++ tresult PLUGIN_API restartComponent(int32 flags)override{
++  // Changing parameter titles/metadata is not a change to the saved preset.
++  // E.g. Pianoteq emits this alone for playback of sustain (MIDI CC64).
++  // Keep other notifications, including a combined value change, dirty.
++  if(flags&~kParamTitlesChanged)changed();
++  restart.fetch_or(flags);return kResultOk;
++ }
+  bool pop(Edit& e){auto r=read.load();if(r==write.load(std::memory_order_acquire))return false;e=edits[r];read.store((r+1)%edits.size(),std::memory_order_release);return true;}
+  tresult PLUGIN_API queryInterface(const TUID iid,void** p)override{if(FUnknownPrivate::iidEqual(iid,IComponentHandler::iid)||FUnknownPrivate::iidEqual(iid,FUnknown::iid)){*p=this;return kResultOk;}*p=nullptr;return kNoInterface;} uint32 PLUGIN_API addRef() override{return 1000;} uint32 PLUGIN_API release() override{return 1000;}
+ };

@@ -1,0 +1,108 @@
+{
+  "name": "opensheetmusicdisplay",
+  "version": "2.3.1",
+  "license": "BSD-3-Clause",
+  "source": "https://github.com/opensheetmusicdisplay/opensheetmusicdisplay/tree/2.3.1",
+  "npm_archive": "https://registry.npmjs.org/opensheetmusicdisplay/-/opensheetmusicdisplay-2.3.1.tgz",
+  "npm_integrity": "sha512-0mvP1KzFFi3/oYdOmsHqGbvFRxWiThkC9TAeGJPFWPHxD4HbfPXXqoDy+jCQr/dBNGnFKxeYeYwD3Cipgyz+Sg==",
+  "archive_sha256": "8418a699d07ae57a12574fd58351629d934cddafd0efffe8f1a286cfbd4d5ea4",
+  "script_sha256": "caa3052d01f4e1b91fd22e12d6561269d157edced929ef88c95ecb5f9d387812",
+  "notice_sources": [
+    {
+      "package": "vexflow",
+      "notice_version": "1.2.93",
+      "source": "https://registry.npmjs.org/vexflow/-/vexflow-1.2.93.tgz",
+      "sha256": "292904cb4c723d1b89f6d2e2c289a2362d7bb8e7310b3eb8d0004027bdb1f48f"
+    },
+    {
+      "package": "jszip",
+      "notice_version": "3.10.2",
+      "source": "https://registry.npmjs.org/jszip/-/jszip-3.10.2.tgz",
+      "sha256": "4ee15dcb3f5433b736a41d091bcad37facee4a4aa96f9e21194789da886ac226"
+    },
+    {
+      "package": "loglevel",
+      "notice_version": "1.9.2",
+      "source": "https://registry.npmjs.org/loglevel/-/loglevel-1.9.2.tgz",
+      "sha256": "9d9aadc0cb581318551ba42f04fe336e3876b42a294cae2d80500e49bdf728ee"
+    },
+    {
+      "package": "typescript-collections",
+      "notice_version": "1.3.3",
+      "source": "https://registry.npmjs.org/typescript-collections/-/typescript-collections-1.3.3.tgz",
+      "sha256": "fb50692eb34260166c263e258ac67713fd8204cee5cceea9f46706421431af6f"
+    },
+    {
+      "package": "pako",
+      "notice_version": "1.0.11",
+      "source": "https://registry.npmjs.org/pako/-/pako-1.0.11.tgz",
+      "sha256": "0d4028dc0352a740c30cbfd772917f2744986d42bfa0b06ec7642bffe7ad3941"
+    },
+    {
+      "package": "lie",
+      "notice_version": "3.3.0",
+      "source": "https://registry.npmjs.org/lie/-/lie-3.3.0.tgz",
+      "sha256": "2db8461cd4a10e2fc3588c8c55da34d33465ff81cc19c72416bbcaec7ee6a36e"
+    },
+    {
+      "package": "immediate",
+      "notice_version": "3.0.6",
+      "source": "https://registry.npmjs.org/immediate/-/immediate-3.0.6.tgz",
+      "sha256": "98c792f39650b00818c05dcc407902034dc4092f368596b37658d44f28739d11"
+    },
+    {
+      "package": "setimmediate",
+      "notice_version": "1.0.5",
+      "source": "https://registry.npmjs.org/setimmediate/-/setimmediate-1.0.5.tgz",
+      "sha256": "5cb9fc22698364ed42c02d6aa3dc50ffeafa68452ae84699672e3dfd74922c9e"
+    },
+    {
+      "package": "readable-stream",
+      "notice_version": "2.3.8",
+      "source": "https://registry.npmjs.org/readable-stream/-/readable-stream-2.3.8.tgz",
+      "sha256": "1648613948f68ac9cbbe8f72a3f93a67ecdb862ffb57946a2c0bbb5a1479a532"
+    },
+    {
+      "package": "core-util-is",
+      "notice_version": "1.0.3",
+      "source": "https://registry.npmjs.org/core-util-is/-/core-util-is-1.0.3.tgz",
+      "sha256": "4430fdc71f2cf3b5e297113b9a692da2d6cff96cf84da00f0ecef5e5a6e74d0c"
+    },
+    {
+      "package": "inherits",
+      "notice_version": "2.0.4",
+      "source": "https://registry.npmjs.org/inherits/-/inherits-2.0.4.tgz",
+      "sha256": "d94dbc6c1bb3c5ac0fb12a73ade187108fc60de273a1b754f55044eb5e24afaf"
+    },
+    {
+      "package": "isarray",
+      "notice_version": "1.0.0",
+      "source": "https://registry.npmjs.org/isarray/-/isarray-1.0.0.tgz",
+      "sha256": "e23c76f14f5222e07e39d89858b61e8e33f96956de9e0df3659cbdf8db950c87"
+    },
+    {
+      "package": "process-nextick-args",
+      "notice_version": "2.0.1",
+      "source": "https://registry.npmjs.org/process-nextick-args/-/process-nextick-args-2.0.1.tgz",
+      "sha256": "425bf8c725d23bc5ac76bcedd10d9cdbbd6354c7273dd7def44417cfbca8889b"
+    },
+    {
+      "package": "safe-buffer",
+      "notice_version": "5.1.2",
+      "source": "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.1.2.tgz",
+      "sha256": "e09206c60fccafb952c854af7629cbb031a98d6da2e143fb3aa3c8a48402aa22"
+    },
+    {
+      "package": "string_decoder",
+      "notice_version": "1.1.1",
+      "source": "https://registry.npmjs.org/string_decoder/-/string_decoder-1.1.1.tgz",
+      "sha256": "af8262434508fa8292407f7fef4690d19eabb73387ca230b41f2a1155216963a"
+    },
+    {
+      "package": "util-deprecate",
+      "notice_version": "1.0.2",
+      "source": "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz",
+      "sha256": "79a1de983c1b393180c47456d6b73caab278a00ea6e37d5c6675f2dcdec2a3e5"
+    }
+  ]
+}

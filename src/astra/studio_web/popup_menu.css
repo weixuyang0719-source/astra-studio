@@ -1,0 +1,150 @@
+/* Shared app-owned popup language (popup_menu.js). Values mirror the VST
+   chooser (ui_unification.css §6) so the MIDI source list, instrument chooser
+   and insert chooser read as one family. Unlayered: loads after astra.css. */
+
+/* MIDI source trigger: keeps the toolbar slot geometry of the former native
+   select (id rules in components/kawaii set width/height/radius/background),
+   and takes the VST trigger's hover / open treatment. */
+.studio-ui .workbench[data-view=notes] .midi-file-group #midi-select.midi-source-trigger{
+  display:inline-flex;align-items:center;justify-content:space-between;gap:var(--sp-3,6px);
+  box-sizing:border-box;padding:0 var(--sp-4,8px) 0 var(--sp-5,10px);border:0;
+  color:var(--ui-text);font-size:var(--fs-sm,12px);font-weight:var(--fw-medium,500);line-height:1.45;
+  text-align:left;box-shadow:none;cursor:pointer;min-width:0
+}
+.studio-ui .midi-source-name{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.studio-ui .midi-source-arrow{flex:none;color:var(--ui-text-3);font-size:11px}
+.studio-ui .workbench[data-view=notes] .midi-file-group #midi-select.midi-source-trigger:hover{box-shadow:inset 0 0 0 1px var(--ui-accent-line)}
+.studio-ui .workbench[data-view=notes] .midi-file-group #midi-select.midi-source-trigger[aria-expanded=true]{background:var(--ui-surface);box-shadow:inset 0 0 0 1.5px var(--ui-accent),0 0 0 3px var(--ui-accent-softer)}
+
+/* Menu surface: same as .vst-slot-picker. */
+.astra-menu{position:fixed;z-index:90;display:flex;flex-direction:column;gap:2px;overflow:auto;box-sizing:border-box;
+  padding:var(--sp-3,6px);border:0;border-radius:var(--r-panel,10px);background:var(--ui-surface,#fff);color:var(--ui-text);
+  box-shadow:var(--shadow-pop),0 0 0 1px var(--ui-line-soft);font-size:12.5px}
+.astra-menu[hidden]{display:none}
+.studio-ui .astra-menu-item{display:block;flex:none;width:100%;min-height:28px;height:auto;box-sizing:border-box;margin:0;padding:5px 9px;
+  border:0;border-radius:var(--r-dense,6px);background:transparent;color:var(--ui-text);font:inherit;font-size:12.5px;line-height:1.45;
+  text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:none;cursor:pointer}
+.studio-ui .astra-menu-item:hover{background:var(--ui-accent-softer);color:var(--ui-accent-ink)}
+.studio-ui .astra-menu-item[aria-selected=true]{background:var(--ui-accent-soft);color:var(--ui-accent-ink);cursor:default}
+
+/* Quiet but real keyboard focus inside the shared menus: hover tint for an
+   unselected row, a hairline for the selected one. Focus is never removed. */
+.studio-ui :is(.astra-menu-item:not([aria-selected=true]),.vst-slot-choice:not([aria-pressed=true]):not(:disabled)):focus-visible{background:var(--ui-accent-softer);color:var(--ui-accent-ink)}
+.studio-ui :is(.astra-menu-item[aria-selected=true],.vst-slot-choice[aria-pressed=true]):focus-visible{box-shadow:inset 0 0 0 1px var(--ui-accent-line)}
+
+/* Entrance motion: popup_menu.js animates these from the trigger edge, so the
+   older CSS keyframes (opening upward from below for every menu) are off. */
+.studio-ui :is(.editor-command-body,.project-menu-body){animation:none}
+/* Remaining CSS-animated popovers honour reduced motion (kawaii_theme.css ran
+   them unconditionally). */
+@media(prefers-reduced-motion:reduce){
+ .studio-ui :is(.transport-speed-panel,.volume-panel,.volume-popup-panel,.editor-command-body,.project-menu-body,.vst-slot-picker,.astra-menu){animation:none!important;transition:none!important}
+}
+
+/* Appendix: 新增拍点时值 picker skin (rhythm menu only).
+   Scope: .studio-ui .editor-rhythm-command-body #editor-insert-duration
+   Guarded: browsers without customizable <select> keep the current native popup.
+   No markup / JS changes. The real <select>, its <option>s, value, events,
+   keyboard and accessibility semantics are untouched; only the UA picker is restyled. */
+@supports (appearance: base-select) and selector(select::picker(select)) {
+
+  /* Opt in: both the select and its picker must use base-select. */
+  .studio-ui .editor-rhythm-command-body #editor-insert-duration,
+  .studio-ui .editor-rhythm-command-body #editor-insert-duration::picker(select) {
+    appearance: base-select;
+  }
+
+  /* Closed control: keep existing .control look; only neutralise base-select
+     extras that would otherwise change the button. */
+  .studio-ui .editor-rhythm-command-body #editor-insert-duration {
+    font: inherit;
+    color: var(--ui-text);
+    text-align: start;
+    white-space: nowrap;
+  }
+  .studio-ui .editor-rhythm-command-body #editor-insert-duration > button,
+  .studio-ui .editor-rhythm-command-body #editor-insert-duration selectedcontent {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* The real top-layer picker. Anchoring/flip fallbacks stay UA-managed
+     (position-anchor to the select), so it is not clipped by the menu panel. */
+  .studio-ui .editor-rhythm-command-body #editor-insert-duration::picker(select) {
+    box-sizing: border-box;
+    margin-block: 4px;
+    padding: 4px;
+    border: 0;
+    border-radius: var(--r-panel);
+    background: var(--ui-surface);
+    color: var(--ui-text);
+    box-shadow: var(--shadow-pop), 0 0 0 1px var(--ui-line-soft);
+    min-inline-size: anchor-size(self-inline);
+    max-inline-size: calc(100vw - 16px);
+    /* Cap to the viewport (also at 125% zoom); scroll inside if needed. */
+    max-block-size: min(24em, calc(100dvh - 16px));
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+
+  .studio-ui .editor-rhythm-command-body #editor-insert-duration option {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-2);
+    box-sizing: border-box;
+    min-block-size: var(--ctl-md);
+    padding: 4px 10px 4px 8px;
+    border-radius: var(--r-ctl);
+    background: transparent;
+    color: var(--ui-text);
+    font: inherit;
+    white-space: nowrap;
+    cursor: default;
+  }
+  .studio-ui .editor-rhythm-command-body #editor-insert-duration option + option {
+    margin-block-start: 1px;
+  }
+
+  /* Soft lavender hover / keyboard-active / selected. The UA focus outline
+     on option:focus-visible is intentionally NOT removed. */
+  .studio-ui .editor-rhythm-command-body #editor-insert-duration option:hover:not(:disabled),
+  .studio-ui .editor-rhythm-command-body #editor-insert-duration option:focus-visible,
+  .studio-ui .editor-rhythm-command-body #editor-insert-duration option:checked {
+    background: var(--ui-accent-softer);
+    color: var(--ui-text);
+  }
+  .studio-ui .editor-rhythm-command-body #editor-insert-duration option:checked {
+    font-weight: 600;
+  }
+  /* Keep the checkmark as a non-colour selection cue, just quieter. */
+  .studio-ui .editor-rhythm-command-body #editor-insert-duration option::checkmark {
+    color: var(--muted);
+  }
+
+  .studio-ui .editor-rhythm-command-body #editor-insert-duration option:disabled {
+    color: var(--muted);
+    background: transparent;
+  }
+}
+
+/* Appearance only: 量化/移调/长度 accordion headers as one family (matches 乐器与效果 rack heading),
+   and a shared frame for follow / grid / 试听速度 popovers. No anchor, size or control changes. */
+.studio-ui #editor-inspector[data-layout=cubase-compact] .editor-tool-section>summary{
+  box-sizing:border-box;height:28px;min-height:28px;padding:0 4px;border:0;border-radius:var(--r-ctl);
+  background:none;font-size:12px;font-weight:600;line-height:1;color:var(--ui-text-2);transition:none;
+}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .editor-tool-section>summary:hover{background:var(--ui-accent-softer);color:var(--ui-text)}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .editor-tool-section[open]>summary{background:none;color:var(--ui-text)}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .editor-tool-section[open]>summary:hover{background:var(--ui-accent-softer)}
+
+.studio-ui .midi-tools .follow-menu .follow-menu-body,
+.studio-ui .editor-grid-menu .editor-command-body,
+.studio-ui .compact-transport .transport-speed-panel{
+  border:1px solid var(--ui-line);border-radius:var(--r-lg);
+  background:var(--ui-surface);box-shadow:var(--shadow-pop);color:var(--ui-text);
+}
+.studio-ui .follow-menu-body button:hover:not(:disabled),
+.studio-ui .editor-grid-menu .editor-command-body :is(button,select.control):hover:not(:disabled){background:var(--ui-accent-softer)}

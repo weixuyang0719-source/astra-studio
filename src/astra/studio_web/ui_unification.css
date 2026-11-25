@@ -1,0 +1,643 @@
+/* UI consistency pass (2026-11-19) — overlay only.
+   Loaded after every other sheet and unlayered, so it wins over the legacy/system
+   layers without !important. Uses the existing system tokens only; no theme change.
+   Sections: 1 title row · 2 mode pair & more menu · 3 side panel collapse/reveal ·
+   4 operation hints · 5 info line · 6 VST slot & fader · 7 beat/meter context menu ·
+   8 narrow windows. */
+
+/* 1 ─ Title row: one quiet line of facts that need attention now ───────────── */
+.studio-ui .project-facts [hidden]{display:none}
+.studio-ui .workbench .session-head .project-facts{gap:var(--sp-3);align-items:center}
+.studio-ui .workbench .session-head .project-facts>*+*::before{content:none}
+.studio-ui .workbench .session-head .project-facts>span:first-child:not([hidden]){display:inline-flex}
+.studio-ui .workbench .session-head .project-facts .status-token{font-size:var(--fs-xs);width:auto}
+.studio-ui .project-facts #project-save-status[data-state=saved]{color:var(--ui-text-3)}
+.studio-ui .project-facts #project-save-status[data-state=saving]{color:var(--ui-text-2)}
+.studio-ui .project-facts #project-save-status[data-state=dirty]{color:var(--ui-warn)}
+.studio-ui .project-facts #project-save-status:is([data-state=dirty],[data-state=failed])::before{content:"";display:inline-block;width:6px;height:6px;margin-right:5px;border-radius:50%;background:currentColor}
+.studio-ui .project-facts .status-token.failed{color:var(--ui-danger)}
+.studio-ui .project-facts>button.quiet{height:22px;min-height:22px;padding:0 var(--sp-3);font-size:var(--fs-xs)}
+.studio-ui .project-details{position:relative;flex:none}
+.studio-ui .project-details>summary{height:22px;min-height:22px;padding:0 var(--sp-3);gap:var(--sp-2);font-size:var(--fs-xs);color:var(--ui-text-2);cursor:pointer}
+.studio-ui .project-details-badge{display:inline-flex;align-items:center;height:16px;padding:0 5px;border-radius:var(--r-chip);background:var(--ui-inset);color:var(--ui-text-2);font:var(--fw-medium) 10.5px/1 var(--ui-font)}
+.studio-ui .project-details-badge[data-tone=pending]{background:var(--ui-warn-soft);color:var(--ui-warn)}
+.studio-ui .project-details-badge[data-tone=review]{background:var(--ui-accent-softer);color:var(--ui-accent-ink)}
+/* positioned by the shared command-menu placement once open; absolute until then */
+.studio-ui .project-details-body{position:absolute;left:0;top:calc(100% + 5px);min-width:240px;max-width:min(360px,calc(100vw - 20px));display:grid;gap:var(--sp-3);white-space:normal}
+.studio-ui .project-detail-list{display:grid;gap:var(--sp-2);margin:0}
+.studio-ui .project-detail-row{display:grid;grid-template-columns:4.5em minmax(0,1fr);align-items:baseline;gap:var(--sp-3);font-size:var(--fs-xs)}
+.studio-ui .project-detail-row[hidden]{display:none}
+.studio-ui .project-detail-row dt{color:var(--ui-text-3)}
+.studio-ui .project-detail-row dd{margin:0;color:var(--ui-text);overflow-wrap:anywhere}
+.studio-ui .project-detail-row .status-token{display:inline-flex;align-items:center;gap:3px;padding:0;border:0;background:none;box-shadow:none;font:inherit;color:inherit}
+.studio-ui .project-detail-row .status-token svg{width:12px;height:12px}
+.studio-ui .project-details-body .project-details-action{justify-self:start;height:28px;min-height:28px;padding:0 var(--sp-4);font-size:var(--fs-xs)}
+
+/* 2 ─ Edit / read-only pair, same slot and size in both modes; scoped more menu ─ */
+.studio-ui .editor-heading-actions .editor-mode-switch{flex:none;box-sizing:border-box;height:var(--ctl-md);padding:2px;gap:2px}
+.studio-ui .editor-heading-actions .editor-mode-switch button{width:auto;height:calc(var(--ctl-md) - 4px);min-height:0;padding:0 var(--sp-4);border:0;border-radius:var(--r-dense);background:transparent;color:var(--ui-text-2);font-size:var(--fs-sm);font-weight:var(--fw-medium);box-shadow:none;gap:0}
+.studio-ui .editor-heading-actions .editor-mode-switch button:hover:not(:disabled):not([aria-pressed=true]){background:var(--ui-accent-softer);color:var(--ui-accent-ink);border-color:transparent}
+.studio-ui .editor-heading-actions .editor-mode-switch button[aria-pressed=true]{background:var(--ui-surface);color:var(--ui-accent-ink);box-shadow:var(--shadow-1),0 0 0 1px color-mix(in srgb,var(--c-a-300) 55%,transparent);cursor:default}
+.studio-ui .editor-heading-actions .editor-mode-switch button:disabled{color:var(--ui-text-disabled);background:transparent;box-shadow:none}
+.studio-ui .editor-heading-actions .editor-mode-switch button:focus-visible{outline:2px solid var(--ui-focus);outline-offset:-2px}
+/* An unavailable editor keeps its usual mode control. The warning is an
+   ordinary toolbar row, not a floating overlay or a replacement for the pair. */
+.studio-ui .note-toolbar .editor-unavailable-status{grid-column:1/-1;box-sizing:border-box;justify-self:start;min-width:0;max-width:100%;margin:0;padding:2px var(--sp-3);border-radius:var(--r-dense);background:var(--ui-warn-soft);color:var(--ui-warn);font-size:var(--fs-xs);line-height:1.5}
+.studio-ui .editor-unavailable-status>summary{cursor:pointer}
+.studio-ui .editor-unavailable-status>p{margin:var(--sp-2) 0;overflow-wrap:anywhere}
+.studio-ui .editor-unavailable-details{margin-inline-start:var(--sp-2);text-decoration:underline;text-underline-offset:2px}
+/* the shortcut entry shares a selector with the icon-only toolbar buttons; give the menu row its text back */
+.studio-ui .editor-heading-actions .editor-more-menu .editor-task-action{width:100%;height:auto;min-height:34px;padding:0 var(--sp-4);gap:var(--sp-3);justify-content:flex-start;font-size:var(--fs-sm);border:0;background:transparent;color:var(--ui-text)}
+.studio-ui .editor-heading-actions .editor-more-menu .editor-task-action:hover:not(:disabled){background:var(--ui-accent-softer);color:var(--ui-accent-ink)}
+.studio-ui .editor-heading-actions .editor-more-menu .editor-task-action svg{width:var(--icon-md,16px);height:var(--icon-md,16px)}
+
+/* 3 ─ Side panel: collapses fully left; a slim labelled strip brings it back ─ */
+.studio-ui .workbench[data-view=notes] .editor-workspace.inspector-collapsed{grid-template-columns:0 minmax(0,1fr)}
+.studio-ui .workbench[data-view=notes] .editor-workspace.inspector-collapsed>.editor-side{grid-column:1;grid-row:1}
+.studio-ui .workbench[data-view=notes] .editor-workspace.inspector-collapsed>.editor-main{grid-column:2;grid-row:1}
+.studio-ui .view-zone-tools{display:inline-flex;align-items:center;gap:2px;flex:none}
+.studio-ui .view-zone-tools :is(.view-zone-toggle,.view-zoom-menu>summary){display:inline-grid;place-items:center;box-sizing:border-box;width:30px;height:30px;min-width:30px;min-height:30px;padding:0;border:0;background:transparent;box-shadow:none;color:var(--ui-text-2);cursor:pointer;border-radius:var(--r-ctl);list-style:none}
+.studio-ui .view-zone-tools :is(.view-zone-toggle,.view-zoom-menu>summary):hover{background:var(--ui-accent-softer);color:var(--ui-accent-ink)}
+.studio-ui .view-zone-tools :is(.view-zone-toggle[aria-pressed=true],.view-zoom-menu[open]>summary){background:var(--ui-accent-soft);color:var(--ui-accent-ink);box-shadow:inset 0 0 0 1px var(--ui-accent-line)}
+.studio-ui .view-zone-tools .view-zone-toggle:disabled{opacity:.45;cursor:default}
+.studio-ui:has(.workbench[data-view=notes] .view-zone-transport) #transport :is(#transport-fold,#transport-folded-status){display:none}
+
+/* 4 ─ One home for operation hints (footer, opens upward like the other menus) ─ */
+.studio-ui .editor-main .midi-footer{position:relative}
+.studio-ui .editor-main .midi-footer .shortcut-guide.editor-help-menu{display:block;flex:none;margin-left:auto;min-width:0}
+.studio-ui .editor-help-menu>summary{height:22px;min-height:22px;padding:0 var(--sp-3);font-size:var(--fs-xs);color:var(--ui-text-3);cursor:pointer}
+.studio-ui .editor-help-body{position:absolute;right:0;bottom:calc(100% + 6px);width:min(440px,calc(100vw - 20px));display:grid;gap:var(--sp-3);white-space:normal}
+.studio-ui .editor-help-group{display:grid;gap:2px}
+.studio-ui .editor-help-group strong{font:var(--fw-medium) 11px/1.4 var(--ui-font-round);color:var(--ui-text-3);letter-spacing:.04em}
+.studio-ui .editor-help-group p{margin:0;font-size:var(--fs-xs);line-height:1.75;color:var(--ui-text-2)}
+.studio-ui .editor-help-body kbd{padding:1px 4px;border-radius:var(--r-chip);background:var(--ui-inset);color:var(--ui-text);font:11px/1.4 var(--ui-font-num);white-space:nowrap}
+.studio-ui .editor-help-body .editor-help-action{justify-self:start;height:28px;min-height:28px;padding:0 var(--sp-4);font-size:var(--fs-xs)}
+
+/* 5 ─ Info line: read-only values are text, locked controls read as values ── */
+.studio-ui .editor-info-line .info-read{background:var(--ui-surface);border-color:var(--ui-line-soft)}
+.studio-ui .editor-info-line .info-read .info-value{user-select:text;cursor:text}
+.studio-ui .editor-info-line .info-clear{flex:none;align-self:flex-start;box-sizing:border-box;width:var(--info-cell-height);height:var(--info-cell-height);min-height:0;padding:0;border:0;border-radius:var(--r-dense);background:transparent;color:var(--ui-text-3);font-size:16px;line-height:1}
+.studio-ui .editor-info-line .info-clear:hover{background:var(--ui-accent-softer);color:var(--ui-accent-ink)}
+.studio-ui .editor-info-line .segments button:disabled{cursor:default;opacity:1}
+.studio-ui .editor-info-line .segments button:disabled:not([aria-pressed=true]){color:var(--ui-text-3)}
+.studio-ui .editor-info-line .info-meter:disabled{cursor:default}
+
+/* 6 ─ VST slot and instrument fader read like the other side-panel sections ─ */
+.studio-ui .editor-side .vst-slot{padding:var(--sp-4) var(--sp-4) var(--sp-3);border-bottom:1px solid var(--ui-line-soft)}
+.studio-ui .vst-slot-title,.studio-ui .instrument-fader-heading label{margin:0 0 var(--sp-2);font:var(--fw-medium) 11px/1.4 var(--ui-font-round);color:var(--ui-text-3);letter-spacing:.04em}
+.studio-ui .vst-slot-trigger{box-sizing:border-box;height:28px;min-height:28px;padding:0 var(--sp-4);border:0;border-radius:var(--r-chip);background:var(--ui-inset);color:var(--ui-text);font-size:12.5px;box-shadow:none}
+.studio-ui .vst-slot-trigger:hover{box-shadow:inset 0 0 0 1px var(--ui-accent-line)}
+.studio-ui .vst-slot-trigger[aria-expanded=true]{background:var(--ui-surface);box-shadow:inset 0 0 0 1.5px var(--ui-accent),0 0 0 3px var(--ui-accent-softer)}
+.studio-ui .vst-slot-trigger:focus-visible{outline:2px solid var(--ui-focus);outline-offset:1px}
+.studio-ui .vst-slot-arrow{color:var(--ui-text-3)}
+.studio-ui .vst-slot-picker{padding:var(--sp-3);border:0;border-radius:var(--r-panel);background:var(--ui-surface);color:var(--ui-text);box-shadow:var(--shadow-pop),0 0 0 1px var(--ui-line-soft)}
+.studio-ui .vst-slot-group,.studio-ui .vst-slot-actions{border-top-color:var(--ui-line-soft)}
+.studio-ui .vst-slot-group>summary{font-size:var(--fs-xs);color:var(--ui-text-2)}
+.studio-ui .vst-slot-choice{min-height:28px;border:0;border-radius:var(--r-dense);background:transparent;color:var(--ui-text);font-size:12.5px}
+.studio-ui .vst-slot-choice:hover{background:var(--ui-accent-softer);color:var(--ui-accent-ink)}
+.studio-ui .vst-slot-choice[aria-pressed=true]{background:var(--ui-accent-soft);color:var(--ui-accent-ink)}
+.studio-ui :is(.vst-slot-status,.vst-slot-empty){font-size:var(--fs-xs);color:var(--ui-text-2)}
+.studio-ui .editor-instrument-fader{padding:var(--sp-3) var(--sp-4) var(--sp-4);border-bottom-color:var(--ui-line-soft)}
+.studio-ui #instrument-gain-db::-webkit-slider-runnable-track{background:var(--ui-sunken)}
+
+/* 7 ─ Beat / meter context menu matches the other popovers ──────────────── */
+.studio-ui #rhythm-context-menu{padding:var(--sp-2);border:0;border-radius:var(--r-panel);background:var(--ui-surface);color:var(--ui-text);box-shadow:var(--shadow-pop),0 0 0 1px var(--ui-line-soft);font-size:12.5px}
+.studio-ui #rhythm-context-menu>button{min-height:28px;padding:4px var(--sp-4);border-radius:var(--r-dense)}
+.studio-ui #rhythm-context-menu>button:hover,.studio-ui #rhythm-context-menu>button:focus-visible{background:var(--ui-accent-softer);color:var(--ui-accent-ink)}
+
+/* 8 ─ Narrow windows ─────────────────────────────────────────────────────── */
+@media(max-width:1100px){
+ .studio-ui .editor-heading-actions .editor-mode-switch button{padding:0 var(--sp-3)}
+}
+@media(max-width:820px){
+ /* the title row may wrap; popovers stay inside the window (placement clamps to 10px) */
+ .studio-ui .workbench .session-head .project-facts{row-gap:var(--sp-1)}
+ .studio-ui .project-details-badge[data-tone=review]{display:none}
+}
+
+/* ── Round 2 (2026-11-19) ─────────────────────────────────────────────────── */
+/* 9 ─ Info strip: stable numeric geometry. The `font` shorthand above resets
+   font-variant-numeric, so tabular figures are restated after it. Shared cells
+   reserve width for their usual digit counts; numbers grow leftward inside it,
+   so labels and following cells keep their x position. ─────────────────── */
+.studio-ui .editor-info-line :is(.info-value,.info-meter>strong,.info-head small){font-variant-numeric:tabular-nums;font-feature-settings:"tnum" 1}
+.studio-ui .editor-info-line .info-value{display:inline-block;box-sizing:content-box;border-radius:3px;text-align:right}
+.studio-ui .editor-info-line :is([data-info-fact=count],[data-info-field=count]) .info-value{min-width:5ch}
+.studio-ui .editor-info-line :is([data-info-fact=cc],[data-info-field=cc]) .info-value{min-width:4ch}
+.studio-ui .editor-info-line :is([data-info-fact=left],[data-info-fact=right],[data-info-fact=duration],[data-info-fact=time]) .info-value{min-width:9ch}
+.studio-ui .editor-info-line .info-read:is([data-info-field=start],[data-info-field=end],[data-info-field=length],[data-info-field=duration]) .info-value{min-width:7ch}
+.studio-ui .editor-info-line .info-read[data-info-field=pitch] .info-value{min-width:4ch}
+.studio-ui .editor-info-line .info-read:is([data-info-field=velocity],[data-info-field=channel]) .info-value{min-width:3ch}
+.studio-ui .editor-info-line [data-info-fact=meter] .info-value{min-width:4ch;text-align:left}
+.studio-ui .editor-info-line:not([data-readonly]) .info-head small{display:inline-block;min-width:9ch}
+
+/* 10 ─ Settings: one destination, category list left, context panel right ─ */
+#dialog:has(.settings-layout){width:min(860px,calc(100vw - 24px))}
+.studio-ui .settings-layout{display:grid;grid-template-columns:172px minmax(0,1fr);gap:var(--sp-5);align-items:start;min-height:min(440px,58vh)}
+.studio-ui .settings-nav{position:sticky;top:0;display:flex;flex-direction:column;gap:2px;padding-right:var(--sp-4);border-right:1px solid var(--ui-line-soft)}
+.studio-ui .settings-nav [role=tab]{display:flex;align-items:center;justify-content:space-between;gap:var(--sp-3);width:100%;min-height:34px;padding:0 var(--sp-4);border:0;border-radius:var(--r-dense);background:transparent;color:var(--ui-text-2);font-size:var(--fs-sm);font-weight:var(--fw-medium);text-align:left;box-shadow:none;cursor:pointer}
+.studio-ui .settings-nav [role=tab]:hover:not([aria-selected=true]){background:var(--ui-accent-softer);color:var(--ui-accent-ink)}
+.studio-ui .settings-nav [role=tab][aria-selected=true]{background:var(--ui-accent-soft);color:var(--ui-accent-ink);cursor:default}
+.studio-ui .settings-nav [role=tab]:focus-visible{outline:2px solid var(--ui-focus);outline-offset:-2px}
+.studio-ui .settings-nav small{font-size:10.5px;font-weight:400;color:var(--ui-text-3)}
+.studio-ui .settings-nav small[data-scope=project]{color:var(--ui-warn)}
+.studio-ui .settings-nav-note{margin:var(--sp-4) 0 0;padding:0 var(--sp-4);font-size:var(--fs-xs);line-height:1.6;color:var(--ui-text-3)}
+.studio-ui .settings-pages{min-width:0}
+.studio-ui .settings-page:focus{outline:none}
+.studio-ui .settings-page-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--sp-2) var(--sp-4);margin:0 0 var(--sp-4)}
+.studio-ui .settings-page-head h3{margin:0;font:var(--fw-medium) 15px/1.4 var(--ui-font-round);color:var(--ui-text)}
+.studio-ui .settings-scope{display:inline-flex;align-items:center;height:18px;padding:0 6px;border-radius:var(--r-chip);background:var(--ui-inset);color:var(--ui-text-2);font-size:10.5px}
+.studio-ui .settings-scope[data-scope=project]{background:var(--ui-warn-soft);color:var(--ui-warn)}
+.studio-ui .settings-page-note{flex-basis:100%;margin:0;font-size:var(--fs-xs);line-height:1.6;color:var(--ui-text-2)}
+.studio-ui .settings-page .audio-output-status>h3{display:none}
+.studio-ui .settings-page-actions{display:flex;justify-content:flex-end;padding-top:var(--sp-3);border-top:1px solid var(--ui-line-soft)}
+.studio-ui .settings-keys-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--sp-4) var(--sp-5);margin-top:var(--sp-3)}
+.studio-ui .settings-keys-column{display:flex;flex-direction:column;align-self:start;gap:var(--sp-4);min-width:0}
+.studio-ui .settings-keys-group h4{margin:0 0 var(--sp-2);font:var(--fw-medium) 11px/1.4 var(--ui-font-round);color:var(--ui-text-3);letter-spacing:.04em}
+.studio-ui .settings-keys-group dl{display:grid;gap:0;margin:0}
+.studio-ui .settings-keys-group dl>div{display:flex;align-items:baseline;justify-content:space-between;gap:var(--sp-3);padding:3px 0;border-bottom:1px dashed var(--ui-line-soft);font-size:var(--fs-xs)}
+.studio-ui .settings-keys-group dt{min-width:0;color:var(--ui-text-2)}
+.studio-ui .settings-keys-group dd{flex:none;margin:0}
+.studio-ui .settings-key-none{color:var(--ui-text-3)}
+@media(max-width:640px){
+ .studio-ui .settings-layout{grid-template-columns:1fr;min-height:0}
+ .studio-ui .settings-nav{position:static;flex-direction:row;flex-wrap:wrap;padding:0 0 var(--sp-3);border-right:0;border-bottom:1px solid var(--ui-line-soft)}
+ .studio-ui .settings-nav [role=tab]{width:auto}
+}
+
+/* 11 ─ Project menu: context actions with compact headings and their key ─ */
+.studio-ui .project-menu-heading{padding:var(--sp-2) var(--sp-4) 2px;font:var(--fw-medium) 10.5px/1.4 var(--ui-font-round);color:var(--ui-text-3);letter-spacing:.04em}
+.studio-ui .project-menu-heading~.project-menu-heading{margin-top:var(--sp-1);padding-top:var(--sp-3);border-top:1px solid var(--ui-line-soft)}
+.studio-ui .project-menu-body button kbd{margin-left:auto;padding-inline:4px}
+
+/* 12 ─ Interaction transitions: visual only, short, never on hit areas or
+   values. Buttons/summaries already ease colour (components.css §1); the
+   popovers below lacked the shared entrance. Side panel, transport fold,
+   playhead, notes, CC and keyboard stay immediate by design (they resize the
+   roll or track playback). Reduced motion: none of these run. ────────── */
+@media(prefers-reduced-motion:no-preference){
+ .studio-ui .volume-popover[open]>.volume-popup-panel{animation:astraPopover 120ms ease-out}
+ .studio-ui #rhythm-context-menu:not([hidden]){animation:astraFadeIn 100ms ease-out}
+ .studio-ui #logs[open]{animation:astraFadeIn 120ms ease-out}
+ .studio-ui .settings-page:not([hidden]){animation:astraFadeIn 110ms ease-out}
+}
+@keyframes astraFadeIn{from{opacity:.35}to{opacity:1}}
+
+/* Keep navigation controls visually quiet. Text entry and opened choices
+   continue to have their own focus styling and ordinary keyboard behavior. */
+.studio-ui :is(
+  button,select,summary,a[href],canvas,
+  input:is([type=button],[type=submit],[type=reset],[type=checkbox],[type=radio],[type=range]),
+  [tabindex]:not(input,textarea),[role=button],[role=slider],[role=tab],[role=switch],[role=checkbox],[role=radio]
+):not(:is([contenteditable]:not([contenteditable=false]),[contenteditable=true] *,
+  [role=textbox],[role=searchbox]
+)):focus-visible{outline:none!important}
+
+/* A working MIDI has one canvas and one toolbar geometry in either mode. Only
+   edit-specific controls become non-interactive; the grid menu, viewport,
+   readout, and view controls keep their places. The left rail gives up its
+   layout space in one update and animates on its own layer, not every canvas. */
+.studio-ui .note-toolbar[data-stable-mode]:has(#project-editor-tools[data-tool=readonly]) :is(
+  .editor-tool-pair,.editor-note-group,.editor-command-bar,.inspector-switch,[data-do=editorInspector],
+  [data-do=editorUndo],[data-do=editorRedo],[data-do=editorScore],[data-do=editorExport],
+  [data-do=editorSnapToggle],[data-do=editorPreferEighth],#editor-snap-status,.rhythm-insert-help,label:has(#editor-insert-duration)
+){visibility:hidden;pointer-events:none}
+.studio-ui .note-toolbar[data-stable-mode]:has(#project-editor-tools[data-tool=readonly]) :is(
+  #editor-snap,#editor-quantize,label[for=editor-snap],label[for=editor-quantize],#editor-grid-precision
+){display:none}
+.studio-ui .workbench[data-view=notes] .editor-workspace[data-side-mode]{position:relative}
+.studio-ui .workbench[data-view=notes] .editor-workspace[data-side-mode=read]{grid-template-columns:0 minmax(0,1fr)}
+.studio-ui .workbench[data-view=notes] .editor-workspace[data-side-mode]>.editor-main{grid-column:2;grid-row:1}
+.studio-ui .workbench[data-view=notes] .editor-workspace[data-side-mode=read]>.editor-side{
+  position:absolute;inset:0 auto 0 0;width:var(--mode-side-width,0px);visibility:hidden;z-index:3;pointer-events:none
+}
+.studio-ui .workbench[data-view=notes] .editor-workspace[data-side-mode=read][data-side-leaving]>.editor-side{visibility:visible}
+
+/* Inspector-only supplement for the revised MIDI edit sections. */
+/* Labelled rows that hold a segmented group or interval row (same 34px label column as .tool-field). */
+.studio-ui #editor-inspector .tool-field-seg{grid-template-columns:34px minmax(0,1fr)}
+.studio-ui #editor-inspector .tool-field-seg>.tool-segments,
+.studio-ui #editor-inspector .tool-field-seg>.transpose-octaves{min-width:0}
+/* Status lines keep one line of height even when empty, so selecting notes never shifts the layout. */
+.studio-ui #editor-inspector :is(.tool-preview,.transpose-preview){min-height:16px;margin:0;line-height:16px;font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* Center the primary project tabs on the window, not the leftover header gap. */
+.studio-ui .workbench .session-head{
+  --project-header-bias:calc(var(--rail-w) / 2);
+  grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+  padding-inline:var(--sp-7);
+  align-items:center;
+}
+.studio-ui .workbench .session-head .session-title{
+  margin-inline-end:var(--project-header-bias);
+}
+.studio-ui .workbench .session-head .session-title h1{max-width:min(100%,30vw,420px)}
+.studio-ui .workbench .session-head .view-navigation{
+  justify-self:center;
+  transform:translateX(calc(-1 * var(--project-header-bias)));
+  flex-direction:column;
+  gap:var(--sp-2);
+}
+.studio-ui .workbench .session-head .session-actions{
+  justify-self:end;
+}
+@media(max-width:1250px){
+  .studio-ui .workbench .session-head{grid-template-columns:minmax(0,1fr) auto}
+  .studio-ui .workbench .session-head .session-title{margin-inline-end:0}
+}
+
+/* 仅作用于 #editor-inspector：量化三按钮、Q 键小菜单（原生 details，默认收起）、比例并排组、连奏勾选开关 */
+#editor-inspector .tool-actions{display:grid;gap:4px}
+#editor-inspector .tool-actions .tool-apply{height:26px;min-height:26px}
+#editor-inspector details.tool-qkey{border-radius:var(--r-ctl);background:var(--ui-inset)}
+#editor-inspector details.tool-qkey>summary{display:flex;align-items:center;gap:6px;min-height:24px;padding:0 6px;border-radius:var(--r-ctl);list-style:none;font-size:11px;color:var(--ui-text-3);cursor:pointer;user-select:none}
+#editor-inspector details.tool-qkey>summary::-webkit-details-marker{display:none}
+#editor-inspector details.tool-qkey>summary::marker{content:""}
+#editor-inspector details.tool-qkey>summary:hover{background:var(--ui-surface);color:var(--ui-text-2)}
+#editor-inspector details.tool-qkey>summary:focus-visible{outline:2px solid var(--ui-focus,var(--ui-accent));outline-offset:-2px}
+#editor-inspector .tool-qkey-label{flex:none}
+#editor-inspector .tool-qkey-current{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right;color:var(--ui-text-2)}
+#editor-inspector .tool-qkey-chevron{flex:none;width:5px;height:5px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-1px) rotate(45deg);transition:transform .12s ease}
+#editor-inspector details.tool-qkey[open]>summary .tool-qkey-chevron{transform:translateY(1px) rotate(-135deg)}
+#editor-inspector .tool-qkey-body{padding:0 6px 6px}
+#editor-inspector .tool-qkey .tool-segments{padding:1px}
+#editor-inspector .tool-qkey .tool-segments button{min-height:22px;font-size:11px;overflow:hidden;text-overflow:ellipsis}
+#editor-inspector #editor-q-preview.tool-preview{margin:0;min-height:1.4em;font-size:11px;line-height:1.4;color:var(--ui-text-3);overflow-wrap:anywhere}
+#editor-inspector .tool-pair{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+#editor-inspector .tool-pair>.tool-slider{flex:999 1 9rem;min-width:0}
+#editor-inspector .tool-pair>.tool-apply{flex:1 1 auto;width:auto;padding:0 10px;white-space:nowrap}
+#editor-inspector .tool-switch{display:flex;align-items:center;gap:8px;width:100%;min-height:26px;padding:0 4px;border:0;border-radius:var(--r-chip);background:transparent;color:var(--ui-text-2);font-size:12px;text-align:left;cursor:pointer}
+#editor-inspector .tool-switch:hover:not(:disabled){background:var(--ui-surface)}
+#editor-inspector .tool-switch:focus-visible{outline:2px solid var(--ui-focus,var(--ui-accent));outline-offset:-2px}
+#editor-inspector .tool-switch:disabled{opacity:.62;cursor:default}
+#editor-inspector .tool-switch-text{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#editor-inspector .tool-check{flex:none;display:grid;place-items:center;width:14px;height:14px;border:1.5px solid var(--ui-text-3);border-radius:4px;background:var(--ui-surface)}
+#editor-inspector .tool-switch[aria-checked=true] .tool-check{border-color:var(--ui-accent);background:var(--ui-accent)}
+#editor-inspector .tool-switch[aria-checked=true] .tool-check::after{content:"";width:6px;height:3px;border-left:1.5px solid var(--ui-on-accent,#fff);border-bottom:1.5px solid var(--ui-on-accent,#fff);transform:translateY(-1px) rotate(-45deg)}
+
+/* Compact MIDI inspector: original action bindings, Cubase field geometry, Astra colors. */
+.studio-ui #editor-inspector[data-layout=cubase-compact] .editor-tool-section{
+  margin:0 5px 5px;background:none;box-shadow:none;border-radius:0;
+}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .editor-tool-section>summary{
+  display:grid;grid-template-columns:8px minmax(0,1fr) 14px;gap:6px;height:23px;min-height:0;
+  padding:0 5px;border:1px solid var(--ui-line);border-radius:3px;
+  background:var(--ui-inset);font-size:12px;color:var(--ui-text);font-weight:600;
+}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .editor-tool-section>summary::before{
+  content:"";width:5px;height:5px;border-right:1.3px solid currentColor;border-bottom:1.3px solid currentColor;transform:rotate(-45deg);
+}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .editor-tool-section[open]>summary::before{transform:translateY(-1px) rotate(45deg)}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .editor-tool-section>summary::after{display:none}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .editor-tool-section>summary svg{grid-column:3;grid-row:1;color:var(--ui-text-3)}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .editor-tool-section>summary span{grid-column:2;grid-row:1}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .editor-tool-section>summary:hover{background:var(--ui-accent-softer)}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .editor-tool-body{padding:6px 4px 5px;gap:3px}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-field{
+  display:grid;grid-template-columns:minmax(4.7em,1fr) minmax(0,1.2fr);gap:4px;min-height:24px;
+  align-items:center;font-size:11.5px;color:var(--ui-text-2);
+}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-field select.control,
+.studio-ui #editor-inspector[data-layout=cubase-compact] .inspector-spin{
+  width:100%;height:23px;min-width:0;min-height:0;border:1px solid var(--ui-line);
+  border-radius:3px;background:var(--ui-surface);box-shadow:none;font-size:11.5px;
+}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .inspector-spin{display:flex;align-items:center;gap:2px;padding-right:4px}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .inspector-spin input.control{
+  width:100%;min-width:0;height:20px;min-height:0;text-align:right;font:12px/1 var(--ui-font-num);
+  padding:0 3px;border:0;border-radius:0;background:transparent;box-shadow:none;
+}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .inspector-spin:focus-within{outline:1px solid var(--ui-accent)}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .inspector-spin small{font:11px/1 var(--ui-font-num);color:var(--ui-text-3)}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .inspector-grid-preview{
+  display:grid;grid-template-columns:repeat(4,minmax(0,1fr));height:43px;margin:5px 0;
+  padding:3px 4px;border:1px solid var(--ui-line);border-radius:4px;background:var(--ui-sunken);
+}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .inspector-grid-preview span{position:relative;border-left:1px solid var(--ui-text-3)}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .inspector-grid-preview span::after{
+  content:"";position:absolute;inset:14px 0 1px;opacity:.65;
+  background:repeating-linear-gradient(to right,var(--ui-accent) 0 1px,transparent 1px calc(100% / var(--subdivisions)));
+}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .inspector-grid-preview b{
+  position:absolute;left:2px;top:1px;font:600 10px/1 var(--ui-font-num);color:var(--ui-text-2);
+}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-actions{gap:3px}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-apply{
+  display:flex;align-items:center;justify-content:center;width:calc(100% - 26px);
+  min-height:23px;height:23px;margin:0 0 0 auto;padding:0 4px;
+  border:1px solid var(--ui-line);border-radius:3px;background:var(--ui-inset);box-shadow:none;font-size:11.5px;
+}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-apply:hover:not(:disabled){
+  border-color:var(--ui-accent-line);color:var(--ui-accent-ink);background:var(--ui-accent-softer);
+}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-actions .tool-apply:last-child{margin-top:5px}
+.studio-ui #editor-inspector[data-layout=cubase-compact] details.tool-qkey{background:none}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-qkey>summary{min-height:20px}
+.studio-ui #editor-inspector[data-layout=cubase-compact] [data-tool-section=length] .tool-pair{display:grid;gap:3px}
+.studio-ui #editor-inspector[data-layout=cubase-compact] [data-tool-section=length] .tool-slider{grid-template-columns:minmax(2.8em,auto) minmax(18px,1fr) 56px}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-slider .tool-number input.control{
+  width:38px;min-height:22px;height:22px;border:1px solid var(--ui-line);border-radius:3px;font-size:11.5px;padding:0 2px;
+}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-switch{min-height:21px;font-size:11px;border-radius:3px}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-check{width:12px;height:12px;border-radius:2px}
+
+/* Cubase-style Length stack: label above slider/number; real actions stay in their groups. */
+.studio-ui #editor-inspector[data-layout=cubase-compact] .length-parameter{padding:2px 0}
+.studio-ui #editor-inspector[data-layout=cubase-compact] [data-tool-section=length] .length-parameter>.tool-slider{
+  grid-template-columns:minmax(32px,1fr) auto;row-gap:4px;
+}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .length-parameter>.tool-slider>label{grid-column:1/-1}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .length-parameter>.tool-slider>.tool-number{
+  min-width:55px;justify-content:flex-end;
+}
+.studio-ui #editor-inspector[data-layout=cubase-compact] [data-tool-section=length] .tool-switch{margin:2px 0}
+
+/* Astra · MIDI inspector skin appendix — scoped to #editor-inspector only; append after existing rules. */
+.studio-ui #editor-inspector[data-layout=cubase-compact]{
+  --ins-label:56px;--ins-gap:6px;--ins-h:24px;
+  --ins-line:color-mix(in srgb,var(--ui-text-3) 20%,transparent);
+  --ins-ring:0 0 0 2px var(--ui-accent-softer);
+}
+
+/* Sections: flat, separated by a hairline instead of a card frame. */
+.studio-ui #editor-inspector[data-layout=cubase-compact] .editor-tool-section{border:0;border-bottom:1px solid var(--ins-line);border-radius:0;background:none;box-shadow:none;margin:0}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .editor-tool-section>summary{min-height:26px;padding:0 4px;border:0;border-radius:var(--r-ctl);background:none;font-size:12px;font-weight:600;color:var(--ui-text-2)}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .editor-tool-section[open]>summary{color:var(--ui-text)}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .editor-tool-section>summary:hover{background:var(--ui-accent-softer);color:var(--ui-text)}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .editor-tool-section>summary:focus-visible{outline:2px solid var(--ui-focus,var(--ui-accent));outline-offset:-2px}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .editor-tool-section[open]>summary svg{color:var(--ui-accent)}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .editor-tool-body{padding:4px 2px 10px;gap:4px}
+
+/* Label | control rows share one column grid. */
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-field{display:grid;grid-template-columns:var(--ins-label) minmax(0,1fr);align-items:center;gap:var(--ins-gap);min-height:var(--ins-h)}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-field>span:first-child{font-size:11px;color:var(--ui-text-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-field select.control,
+.studio-ui #editor-inspector[data-layout=cubase-compact] .inspector-spin{height:var(--ins-h);min-height:var(--ins-h);border:1px solid transparent;border-radius:var(--r-ctl);background:var(--ui-inset);box-shadow:none;transition:border-color .12s,box-shadow .12s}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-field select.control:hover:not(:disabled),
+.studio-ui #editor-inspector[data-layout=cubase-compact] .inspector-spin:hover:not(:has(:disabled)){border-color:var(--ins-line)}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-field select.control:focus-visible,
+.studio-ui #editor-inspector[data-layout=cubase-compact] .inspector-spin:focus-within{outline:none;border-color:var(--ui-accent);box-shadow:var(--ins-ring)}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .inspector-spin input.control{background:none;border:0;box-shadow:none;outline:none;text-align:right}
+
+/* Grid ruler: quieter inset strip aligned with the control column. */
+.studio-ui #editor-inspector[data-layout=cubase-compact] .inspector-grid-preview{margin:2px 0 2px calc(var(--ins-label) + var(--ins-gap));border:0;border-radius:var(--r-ctl);background:var(--ui-inset);opacity:.85}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .inspector-grid-preview span{border-left-color:color-mix(in srgb,var(--ui-text-3) 55%,transparent)}
+
+/* Apply buttons: aligned to the control column, outline-quiet, clear states. */
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-actions{gap:4px;margin-top:2px}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-apply{box-sizing:border-box;width:calc(100% - 16px);height:var(--ins-h);min-height:var(--ins-h);margin-inline:auto;padding:0 6px;border:1px solid var(--ins-line);border-radius:var(--r-ctl);background:transparent;box-shadow:none;font-size:11px;font-weight:500;color:var(--ui-text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-apply:hover:not(:disabled){border-color:color-mix(in srgb,var(--ui-accent) 45%,transparent);background:var(--ui-accent-softer);color:var(--ui-accent)}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-apply:active:not(:disabled){background:color-mix(in srgb,var(--ui-accent) 18%,transparent)}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-apply:focus-visible{outline:2px solid var(--ui-focus,var(--ui-accent));outline-offset:1px}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-apply:disabled{border-style:dashed;background:transparent;color:var(--ui-text-3);opacity:.55;cursor:not-allowed}
+/* Primary of each group: tinted, not filled. */
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-actions .tool-apply:last-child:not(:disabled),
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-apply[data-do=editorLegatoFreeze]:not(:disabled){border-color:color-mix(in srgb,var(--ui-accent) 35%,transparent);background:var(--ui-accent-softer);color:var(--ui-accent);font-weight:600}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-actions .tool-apply:last-child{margin-top:4px}
+
+/* Q-key menu: reads as a row of the same grid. */
+.studio-ui #editor-inspector[data-layout=cubase-compact] details.tool-qkey>summary{min-height:22px;padding:0 4px 0 0;gap:var(--ins-gap);font-size:11px;color:var(--ui-text-3)}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-qkey-label{flex:0 0 var(--ins-label)}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-qkey-current{flex:1;min-width:0;text-align:right;color:var(--ui-text-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.studio-ui #editor-inspector[data-layout=cubase-compact] details.tool-qkey[open]>summary .tool-qkey-current{color:var(--ui-accent)}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-qkey-body{padding:2px 0 2px calc(var(--ins-label) + var(--ins-gap))}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-segments button[aria-pressed=true]{background:var(--ui-accent-softer);color:var(--ui-accent);font-weight:600}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-segments button:focus-visible{outline:2px solid var(--ui-focus,var(--ui-accent));outline-offset:-2px}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-segments button:disabled{opacity:.5;cursor:not-allowed}
+
+/* Length: sliders, switch, divider. */
+.studio-ui #editor-inspector[data-layout=cubase-compact] .length-parameter{padding:2px 8px 4px}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .length-parameter>.tool-slider>label{font-size:11px;color:var(--ui-text-3)}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-slider input[type=range]{accent-color:var(--ui-accent)}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-slider input[type=range]:disabled{opacity:.45;cursor:not-allowed}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-slider input[type=range]:focus-visible{outline:2px solid var(--ui-focus,var(--ui-accent));outline-offset:2px;border-radius:2px}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-slider .tool-number input.control:focus-visible{outline:none;border-color:var(--ui-accent);box-shadow:var(--ins-ring)}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-slider .tool-number small{font-size:10px;color:var(--ui-text-3)}
+.studio-ui #editor-inspector[data-layout=cubase-compact] [data-tool-section=length] .tool-switch{min-height:22px;box-sizing:border-box;width:calc(100% - 16px);margin:2px 8px 4px;padding:0;color:var(--ui-text-2)}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-switch[aria-checked=true]{color:var(--ui-text)}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-switch[aria-checked=true] .tool-check{box-shadow:inset 0 0 0 2px var(--ui-surface)}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-switch:disabled{opacity:.5;cursor:not-allowed}
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-divider{height:1px;margin:6px 0 4px calc(var(--ins-label) + var(--ins-gap));background:var(--ins-line);border:0}
+
+/* ==========================================================================
+   Current Project settings — align with global preferences pages.
+   Append at the end of ui_unification.css. Scoped to #settings-page-project.
+   One outer card (.preferences-section);
+   inner .settings-group become flat sub-sections divided by hairlines.
+   ========================================================================== */
+
+/* ---- Outer card: same card as other categories --------------------------- */
+.studio-ui #settings-page-project > fieldset.preferences-section{
+  min-width:0;
+  margin:0 0 14px;
+  padding:4px 17px 6px;
+}
+
+/* ---- Inner groups: flat sections, no nested outlines -------------------- */
+.studio-ui #settings-page-project > fieldset.preferences-section > .settings-group{
+  min-width:0;
+  margin:0;
+  padding:14px 0 14px;
+  border:0;
+  border-radius:0;
+  background:none;
+}
+.studio-ui #settings-page-project > fieldset.preferences-section > .settings-group:not(:last-child){
+  border-bottom:1px solid var(--c-n-100);
+}
+
+/* ---- Section titles: match .preferences-section h3 ---------------------- */
+.studio-ui #settings-page-project .settings-group > legend{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  float:none;
+  width:auto;
+  margin:0 0 10px;
+  padding:0;
+  color:var(--c-a-600);
+  font:600 12px/1.5 var(--ui-font-round);
+  letter-spacing:.04em;
+}
+/* The single remaining 仅本次 chip: quiet, aligned with title */
+.studio-ui #settings-page-project .settings-group > legend .scope-tag{
+  margin:0;
+  padding:1px 7px;
+  border-radius:var(--r-chip);
+  background:var(--ui-inset);
+  color:var(--ui-text-2);
+  font:400 11px/1.6 var(--ui-font);
+  letter-spacing:0;
+}
+
+/* ---- Grid rhythm & label/field alignment -------------------------------- */
+.studio-ui #settings-page-project .settings-group .dialog-grid{
+  column-gap:var(--sp-4);
+  row-gap:12px;
+  align-items:start;
+  min-width:0;
+}
+.studio-ui #settings-page-project .settings-group label.field{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  min-width:0;
+  margin:0;
+}
+.studio-ui #settings-page-project .settings-group label.field > span:not(.field-line){
+  color:var(--ui-text-2);
+  font-size:var(--fs-sm);
+  line-height:1.4;
+}
+.studio-ui #settings-page-project .settings-group label.field :is(select,input.control){
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  box-sizing:border-box;
+}
+
+/* Path picker: input flexes, browse button keeps its natural size */
+.studio-ui #settings-page-project .settings-group .field-line{
+  display:flex;
+  align-items:center;
+  gap:var(--sp-2);
+  min-width:0;
+}
+.studio-ui #settings-page-project .settings-group .field-line > input.control{
+  flex:1 1 auto;
+  width:auto;
+  min-width:0;
+}
+.studio-ui #settings-page-project .settings-group .field-line > button{
+  flex:0 0 auto;
+  white-space:nowrap;
+}
+
+/* Checkboxes: readable native control, consistent baseline */
+.studio-ui #settings-page-project .settings-group label.check-line{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  min-width:0;
+  min-height:var(--ctl-md);
+  margin:0;
+  color:var(--ui-text);
+  font-size:var(--fs-sm);
+}
+.studio-ui #settings-page-project .settings-group label.check-line > input[type=checkbox]{
+  width:16px;
+  height:16px;
+  margin:0;
+  flex-shrink:0;
+  accent-color:var(--c-a-500);
+}
+
+/* Remaining short notes */
+.studio-ui #settings-page-project .settings-group .form-note{
+  margin:10px 0 0;
+  color:var(--c-n-500);
+  font-size:12px;
+  line-height:1.6;
+}
+
+/* ---- Status/error lines between card and footer ------------------------- */
+.studio-ui #settings-page-project > #project-settings-error:not(:empty),
+.studio-ui #settings-page-project > #project-settings-status:not(:empty){
+  margin:0 0 var(--sp-3);
+  font-size:12px;
+  line-height:1.6;
+}
+
+/* ---- Narrow widths ------------------------------------------------------- */
+@media (max-width:550px){
+  .studio-ui #settings-page-project > fieldset.preferences-section{padding:2px 14px 4px}
+  .studio-ui #settings-page-project .settings-group .field-line{flex-wrap:wrap}
+  .studio-ui #settings-page-project .settings-group .field-line > input.control{flex-basis:100%}
+}
+
+/* Scoped toolbar, signed length controls, and companion numbers. */
+/* toolbar: one soft pressed family; 更新谱面 not targeted */
+.studio-ui .note-toolbar .editor-tools button[aria-pressed=true]:not(:disabled),
+.studio-ui .editor-heading-actions .editor-mode-switch button[aria-pressed=true]:not(:disabled),
+.studio-ui .note-toolbar .midi-tools .segments button[aria-pressed=true]:not(:disabled){background:var(--ui-accent-soft);color:var(--ui-accent-ink);box-shadow:inset 0 0 0 1px var(--ui-accent-line)}
+.studio-ui .note-toolbar .editor-tools button[aria-pressed=true]:disabled{background:var(--ui-accent-softer);color:var(--ui-text-disabled);box-shadow:inset 0 0 0 1px var(--ui-line-soft)}
+/* 打开 MIDI matches 导出 MIDI outline; size and command unchanged */
+.studio-ui .note-toolbar .midi-file-group :is([data-do=openFile],[data-do=editorExternalMidiOpen]){border-color:var(--ui-line);background:var(--ui-surface);color:var(--ui-text)}
+.studio-ui .note-toolbar .midi-file-group :is([data-do=openFile],[data-do=editorExternalMidiOpen]):hover:not(:disabled){background:var(--ui-accent-softer);border-color:var(--ui-accent-line);color:var(--ui-accent-ink)}
+/* pen ⇄ glyph: centre on the icon, no offset */
+.studio-ui .note-toolbar .editor-tool-pair [data-do=editorPenToggle] .editor-tool-switch{display:inline-flex;align-items:center;line-height:1;bottom:2px}
+/* Length inspector sliders: transport-seek family; input box untouched */
+.studio-ui :is(#editor-legato-adjust,#editor-legato-overlap)[type=range]{-webkit-appearance:none;appearance:none;background:transparent}
+.studio-ui :is(#editor-legato-adjust,#editor-legato-overlap)[type=range]::-webkit-slider-runnable-track{height:6px;border:0;border-radius:3px;background:var(--ui-sunken)}
+.studio-ui :is(#editor-legato-adjust,#editor-legato-overlap)[type=range]::-webkit-slider-runnable-track{background:linear-gradient(var(--ui-text-3),var(--ui-text-3)) center/1px 100% no-repeat,var(--ui-sunken)}
+.studio-ui :is(#editor-legato-adjust,#editor-legato-overlap)[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;box-sizing:border-box;width:18px;height:18px;margin-top:-6px;border:3px solid var(--ui-surface);border-radius:50%;background:var(--ui-time);box-shadow:0 0 0 1px var(--ui-time-line)}
+.studio-ui :is(#editor-legato-adjust,#editor-legato-overlap)[type=range]:hover:not(:disabled)::-webkit-slider-thumb{box-shadow:0 0 0 1px var(--ui-time-line),0 0 0 4px var(--ui-time-soft)}
+.studio-ui :is(#editor-legato-adjust,#editor-legato-overlap)[type=range]::-moz-range-track{height:6px;border:0;border-radius:3px;background:var(--ui-sunken)}
+.studio-ui :is(#editor-legato-adjust,#editor-legato-overlap)[type=range]::-moz-range-track{background:linear-gradient(var(--ui-text-3),var(--ui-text-3)) center/1px 100% no-repeat,var(--ui-sunken)}
+.studio-ui :is(#editor-legato-adjust,#editor-legato-overlap)[type=range]::-moz-range-progress{background:transparent}
+.studio-ui :is(#editor-legato-adjust,#editor-legato-overlap)[type=range]::-moz-range-thumb{box-sizing:border-box;width:18px;height:18px;border:3px solid var(--ui-surface);border-radius:50%;background:var(--ui-time);box-shadow:0 0 0 1px var(--ui-time-line)}
+/* one group: inspector slider-companion numbers; size, padding, focus kept */
+.studio-ui #editor-inspector[data-layout=cubase-compact] .tool-slider .tool-number input.control[type=number]{border-radius:var(--r-sm);text-align:right}
+
+/* The score switch shares the Notes segment styling. Mode changes touch only
+   score chrome; there is no overlay, modal or replacement of the paper. */
+.studio-ui .score-mode-actions{flex:none;margin-inline-start:auto}
+.studio-ui .score-bar .score-page-title{font-size:var(--fs-sm);font-weight:var(--fw-medium);color:var(--ui-text)}
+.studio-ui .score-build-panel{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--sp-3);padding:var(--sp-3) var(--sp-5);border-radius:var(--r-ctl);background:var(--ui-inset)}
+.studio-ui .score-build-panel>p{margin:0;font-size:var(--fs-xs);color:var(--ui-text-2)}
+.studio-ui :is(#score-build-panel,#score-specialist-tools)[hidden]{display:none}
+
+/* Numeric scrubbing owns these number fields; native spinner hit boxes must not commit on press. */
+#editor-inspector :is(#editor-q-strength-n,#editor-transpose-amount,#editor-legato-adjust-n,#editor-legato-overlap-n,#editor-length-scale-n,#editor-vel-scale-n){appearance:textfield}
+#editor-inspector :is(#editor-q-strength-n,#editor-transpose-amount,#editor-legato-adjust-n,#editor-legato-overlap-n,#editor-length-scale-n,#editor-vel-scale-n)::-webkit-inner-spin-button{appearance:none}
+
+/* Navigation & rail transitions: presentation only (app.js arms view/workspace motion on real navigation). */
+.studio-ui .view-navigation .tabs{position:relative}
+/* The glide owns the selection background. Never fade a second button fill in
+   or out at either handoff; hover text and keyboard focus stay native. */
+.studio-ui .view-navigation .tabs > button{transition-property:color}
+.studio-ui .view-navigation .tabs.tabs-gliding > button{z-index:1;background:transparent;box-shadow:none}
+.studio-ui .view-navigation .tabs .tab-pill-glide{position:absolute;z-index:0;pointer-events:none;border-radius:var(--r-pill);background:var(--ui-surface);box-shadow:var(--shadow-1),0 0 0 1px color-mix(in srgb,var(--c-a-300) 55%,transparent)}
+.studio-ui .editor-pane.view-swapping{overflow-x:clip}
+@media(prefers-reduced-motion:no-preference){
+  .studio-ui .rail-button{transition:background-color 140ms ease,color 140ms ease,box-shadow 160ms ease,transform 120ms cubic-bezier(.22,1,.36,1)}
+  .studio-ui .rail-button:active:not(:disabled){transform:scale(.93)}
+  .studio-ui .rail-button:is([data-do=new],[data-do=chooseProject])::before{content:"";position:absolute;left:-6px;top:11px;bottom:11px;width:3px;border-radius:3px;background:var(--ui-accent);opacity:0;transform:scaleY(.35);transition:opacity 150ms ease,transform 200ms cubic-bezier(.22,1,.36,1)}
+  .studio-ui .rail-button:is([data-do=new],[data-do=chooseProject]).active::before{opacity:1;transform:scaleY(1)}
+  @supports (transition-behavior:allow-discrete){
+    .studio-ui #dialog:not(.editor-docked):not(.editor-score-floating),
+    .studio-ui #ncm-dialog{
+      opacity:0;transform:translate3d(0,8px,0) scale(.985);
+      transition:opacity 130ms cubic-bezier(.4,0,1,1),transform 130ms cubic-bezier(.4,0,1,1),overlay 130ms allow-discrete,display 130ms allow-discrete;
+    }
+    .studio-ui #dialog:not(.editor-docked):not(.editor-score-floating):not([open]),
+    .studio-ui #ncm-dialog:not([open]){pointer-events:none}
+    .studio-ui #dialog[open]:not(.editor-docked):not(.editor-score-floating),
+    .studio-ui #ncm-dialog[open]{
+      opacity:1;transform:none;
+      transition:opacity 185ms cubic-bezier(.22,1,.36,1),transform 185ms cubic-bezier(.22,1,.36,1),overlay 185ms allow-discrete,display 185ms allow-discrete;
+    }
+    @starting-style{
+      .studio-ui #dialog[open]:not(.editor-docked):not(.editor-score-floating),
+      .studio-ui #ncm-dialog[open]{opacity:0;transform:translate3d(0,8px,0) scale(.985)}
+    }
+    .studio-ui #dialog:not(.editor-docked):not(.editor-score-floating)::backdrop,
+    .studio-ui #ncm-dialog::backdrop{
+      opacity:0;
+      transition:opacity 130ms ease-out,overlay 130ms allow-discrete,display 130ms allow-discrete;
+    }
+    .studio-ui #dialog[open]:not(.editor-docked):not(.editor-score-floating)::backdrop,
+    .studio-ui #ncm-dialog[open]::backdrop{
+      opacity:1;
+      transition:opacity 185ms ease-out,overlay 185ms allow-discrete,display 185ms allow-discrete;
+    }
+    @starting-style{
+      .studio-ui #dialog[open]:not(.editor-docked):not(.editor-score-floating)::backdrop,
+      .studio-ui #ncm-dialog[open]::backdrop{opacity:0}
+    }
+  }
+  @supports not (transition-behavior:allow-discrete){
+    .studio-ui #dialog[open]:not(.editor-docked):not(.editor-score-floating),
+    .studio-ui #ncm-dialog[open]{animation:astraFadeIn 120ms ease-out}
+  }
+}

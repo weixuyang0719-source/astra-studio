@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.16)
+project(AstraRecoveryRecycle LANGUAGES CXX)
+add_library(astra_recovery_recycle SHARED recovery_recycle.cpp)
+target_compile_features(astra_recovery_recycle PRIVATE cxx_std_17)
+target_link_libraries(astra_recovery_recycle PRIVATE ole32 shell32 uuid)
+target_compile_definitions(astra_recovery_recycle PRIVATE _WIN32_WINNT=0x0602)

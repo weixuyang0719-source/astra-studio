@@ -1,0 +1,5 @@
+function(harfbuzz_Populate unused_upstream_url local_path)
+    if(NOT EXISTS "${local_path}/harfbuzz/CMakeLists.txt")
+        message(FATAL_ERROR "Verified offline HarfBuzz 7.1.0 sources are required")
+    endif()
+endfunction()

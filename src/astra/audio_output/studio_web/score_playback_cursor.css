@@ -1,0 +1,15 @@
+/* Playback cursor presentation only; no new hit region or score layout box.
+ * Geometry is MuseScore 4.6.5's PlaybackCursor rect; the colour is Astra's
+ * playhead role (--ui-time), the same one the Notes page playhead uses.
+ * The bar is its own compositor layer and moves by transform each frame.
+ */
+.astra-native-score .astra-native-paper{position:relative}
+.ast-sp-cursor-layer{display:block;position:absolute;z-index:1;overflow:hidden;pointer-events:none!important;user-select:none;contain:strict}
+.ast-sp-cursor-layer[hidden]{display:none!important}
+.ast-sp-cursor-layer *{pointer-events:none!important}
+.ast-sp-cursor-glyph{position:absolute;left:0;top:0;width:3px;height:0;box-sizing:border-box;border-radius:3px;
+  will-change:transform;transform:translate3d(0,0,0);
+  background:linear-gradient(180deg,color-mix(in srgb,var(--ui-time,#7254e8) 70%,transparent),var(--ui-time,#7254e8) 18%,var(--ui-time,#7254e8) 82%,color-mix(in srgb,var(--ui-time,#7254e8) 70%,transparent));
+  box-shadow:0 0 0 2px color-mix(in srgb,var(--ui-time,#7254e8) 16%,transparent),0 0 10px color-mix(in srgb,var(--ui-time,#7254e8) 28%,transparent);
+  opacity:.92}
+@media (prefers-reduced-motion:reduce){.ast-sp-cursor-glyph{box-shadow:none}}

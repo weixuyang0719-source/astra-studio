@@ -1,0 +1,29 @@
+/* Applies only to the score's input toolbar; playback and palette are independent. */
+.astra-native-score .astra-ms-grip{cursor:move;touch-action:none;user-select:none}
+.astra-native-score .astra-ms-grip:focus-visible{outline:2px solid var(--ns-accent);outline-offset:-3px}
+.astra-native-score .astra-input-dock-spacer{pointer-events:none;max-width:100%;box-sizing:border-box}
+.astra-native-score .astra-native-notation-tools:is([data-input-dock=float],[data-input-dragging]){
+  position:fixed;z-index:42;margin:0;width:max-content;
+  max-width:var(--input-dock-max-w,calc(100vw - 10px));max-height:var(--input-dock-max-h,calc(100vh - 10px));
+  border:1px solid var(--ns-line);border-radius:5px;box-shadow:0 8px 24px #1e214b38;
+  overflow:auto
+}
+.astra-native-score .astra-native-notation-tools[data-input-dragging]{cursor:move;user-select:none}
+.astra-native-score .astra-input-dock-preview{
+  position:fixed;z-index:41;box-sizing:border-box;pointer-events:none;border:2px solid #357df1;
+  border-radius:4px;background:rgba(54,128,246,.27)
+}
+.astra-native-score .astra-native-workspace.astra-input-docked-left{
+  grid-template-columns:78px clamp(185px,25vw,300px) minmax(0,1fr)
+}
+.astra-native-score .astra-native-notation-tools[data-input-dock=left]:not([data-input-dragging]){
+  width:78px;min-width:0;flex-flow:column nowrap;align-items:stretch;align-self:stretch;
+  padding:0;border-block:none;border-inline-end:1px solid var(--ns-sep);overflow:auto
+}
+.astra-native-score .astra-native-notation-tools[data-input-dock=left]:not([data-input-dragging]) .astra-ms-grip{
+  width:100%;height:27px
+}
+.astra-native-score .astra-native-notation-tools[data-input-dock=left]:not([data-input-dragging]) .astra-ms-grip>*{transform:rotate(90deg)}
+.astra-native-score .astra-native-notation-tools[data-input-dock=left]:not([data-input-dragging]) .astra-native-tool-group{
+  width:100%;box-sizing:border-box;flex-wrap:wrap;gap:2px;border-inline-start:none;border-block-end:1px solid var(--ns-sep)
+}

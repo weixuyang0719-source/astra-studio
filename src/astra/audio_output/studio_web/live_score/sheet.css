@@ -1,0 +1,65 @@
+html { min-width: 0; background: #f5f6fc; }
+body { margin: 0; color: #24252e; }
+#paper {
+  padding: 12px;
+  container-type: inline-size;
+}
+#staging {
+  position: absolute;
+  inset: 0 auto auto -30000px;
+  /* This is also the printed SVG width. Window size cannot change engraving. */
+  width: 186mm;
+  visibility: hidden;
+}
+#paper .score {
+  width: max-content;
+  min-width: 100%;
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+}
+.engraving-page {
+  box-sizing: border-box;
+  position: relative;
+  background: white;
+  break-inside: avoid;
+  container-type: inline-size;
+}
+#paper .engraving-page {
+  width: calc(min(210mm, 100cqw) * var(--preview-zoom, 1));
+  aspect-ratio: 210 / 297;
+  box-shadow: 0 0 0 1px #e2e5f0, 0 2px 8px rgb(35 47 77 / 8%);
+}
+.engraving-page > svg {
+  position: absolute;
+  display: block;
+  top: 2.694%;
+  left: 5.714%;
+  width: 88.572%;
+  height: auto;
+}
+.engraving-page footer {
+  position: absolute;
+  bottom: 3.030%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font: 1.68cqw sans-serif;
+  color: #333;
+}
+@page { size: A4 portrait; margin: 0; }
+@media print {
+  html, body, #paper { background: white; margin: 0; padding: 0; }
+  #staging { display: none; }
+  #paper .score { display: block; width: 210mm; min-width: 0; }
+  #paper .engraving-page {
+    width: 210mm;
+    /* Absorb Chromium's rounding at the page-break boundary. */
+    height: 296mm;
+    box-shadow: none;
+  }
+  .engraving-page + .engraving-page { break-before: page; }
+  .engraving-page > svg { top: 8mm; left: 12mm; width: 186mm; }
+  .engraving-page footer { bottom: 9mm; font-size: 10pt; }
+}
+

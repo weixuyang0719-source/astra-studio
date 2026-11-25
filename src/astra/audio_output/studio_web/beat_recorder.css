@@ -1,0 +1,269 @@
+/* Astra Beat Recorder — aligned with Astra light lavender-white OKLCH design system.
+   Color grammar: Time Violet (--ui-time) = Loop; Crimson (--c-r-*) = Beat Record & L/R Overwrite;
+   Azure-Indigo (--ui-accent) = Snapped MIDI Note-On & Confirm. */
+
+/* 1. Single-pill Transport Beat-Record button (sits in .transport-cycle-actions beside Loop & Metronome) */
+.studio-ui #transport.compact-transport:not(.stem-transport){
+  grid-template-columns:166px auto 70px minmax(125px,155px) minmax(130px,200px) auto;
+}
+.studio-ui #transport .transport-beat-rec{
+  display:inline-flex;align-items:center;position:relative;margin-left:3px;
+  border-radius:var(--r-ctl);background:var(--ui-inset);border:1px solid var(--ui-line-soft);
+  height:32px;box-sizing:border-box;user-select:none;-webkit-user-select:none;
+  transition:background var(--dur-fast) var(--ease),border-color var(--dur-fast) var(--ease),box-shadow var(--dur-fast) var(--ease);
+}
+.studio-ui #transport .transport-beat-rec[hidden]{display:none}
+.studio-ui #transport .transport-beat-rec>.transport-beat-rec-btn{
+  display:inline-flex;align-items:center;gap:5px;width:auto;min-width:0;height:30px;min-height:30px;
+  padding:0 9px 0 8px;border:0;border-radius:7px;background:transparent;
+  color:var(--ui-text-2);font-size:var(--fs-sm);font-weight:var(--fw-medium);line-height:1;
+  white-space:nowrap;box-shadow:none;cursor:pointer;
+}
+.studio-ui #transport .transport-beat-rec>.transport-beat-rec-btn:hover:not(:disabled){
+  background:var(--ui-danger-soft);color:var(--ui-danger);
+}
+.studio-ui #transport .transport-beat-rec>.transport-beat-rec-btn:disabled{
+  opacity:.42;cursor:not-allowed;background:transparent;color:var(--ui-text-disabled);
+}
+.studio-ui .beat-rec-dot{
+  width:7px;height:7px;border-radius:50%;background:var(--c-r-500);flex:none;
+  box-shadow:0 0 0 1.5px color-mix(in srgb,var(--c-r-500) 24%,transparent);
+}
+.studio-ui #transport .transport-beat-rec>.transport-beat-rec-btn svg{
+  width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex:none;
+}
+.studio-ui #transport .transport-beat-rec .beat-rec-count{
+  display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:17px;padding:0 4px;
+  border-radius:var(--r-pill);background:color-mix(in srgb,#ffffff 24%,transparent);
+  font-family:var(--ui-font-num);font-size:11px;font-weight:var(--fw-strong);font-variant-numeric:tabular-nums;
+}
+.studio-ui #transport .transport-beat-rec .beat-rec-count[hidden]{display:none}
+
+/* Active states on transport & button (visual-first cues!) */
+.studio-ui #transport[data-beat-rec=armed] .transport-beat-rec{
+  background:var(--ui-danger-soft);border-color:var(--ui-danger-line);
+}
+.studio-ui #transport[data-beat-rec=armed] .transport-beat-rec>.transport-beat-rec-btn{
+  color:var(--ui-danger);font-weight:var(--fw-strong);
+}
+.studio-ui #transport[data-beat-rec=armed] .transport-beat-rec .beat-rec-dot{
+  animation:astra-beat-rec-breathe 1.3s ease-in-out infinite;
+}
+.studio-ui #transport[data-beat-rec=armed] #play{
+  box-shadow:0 0 0 3px var(--ui-danger-soft),0 0 0 4.5px var(--ui-danger-line);
+}
+.studio-ui #transport[data-beat-rec=recording]{
+  box-shadow:0 0 0 1.5px var(--c-r-400),var(--shadow-2);
+}
+.studio-ui #transport[data-beat-rec=recording] .transport-beat-rec{
+  background:var(--c-r-500);border-color:var(--c-r-600);
+}
+.studio-ui #transport[data-beat-rec=recording] .transport-beat-rec>.transport-beat-rec-btn{
+  color:#ffffff;font-weight:var(--fw-strong);
+}
+.studio-ui #transport[data-beat-rec=recording] .transport-beat-rec>.transport-beat-rec-btn:hover{
+  background:var(--c-r-600);color:#ffffff;
+}
+.studio-ui #transport[data-beat-rec=recording] .transport-beat-rec .beat-rec-dot{
+  background:#ffffff;box-shadow:0 0 0 2px color-mix(in srgb,#ffffff 35%,transparent);
+  animation:astra-beat-rec-pulse .75s ease-in-out infinite;
+}
+.studio-ui #transport[data-beat-rec=review] .transport-beat-rec{
+  background:var(--ui-accent-soft);border-color:var(--ui-accent-line);
+}
+.studio-ui #transport[data-beat-rec=review] .transport-beat-rec>.transport-beat-rec-btn{
+  color:var(--ui-accent-ink);font-weight:var(--fw-strong);
+}
+.studio-ui #transport[data-beat-rec=review] .transport-beat-rec .beat-rec-dot{
+  background:var(--ui-accent);box-shadow:none;
+}
+.studio-ui #transport .transport-beat-rec[data-lr-punch=true]:not([data-phase=recording]){
+  box-shadow:inset 0 -2px 0 var(--c-r-500);
+}
+@keyframes astra-beat-rec-breathe{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.85)}}
+@keyframes astra-beat-rec-pulse{0%,100%{opacity:1;transform:scale(1.1)}50%{opacity:.55;transform:scale(.82)}}
+@media(prefers-reduced-motion:reduce){
+  .studio-ui #transport .transport-beat-rec .beat-rec-dot{animation:none!important}
+}
+
+/* Folded transport status badge */
+.studio-ui #transport-folded-status .fold-beat-rec{
+  background:var(--ui-danger-soft);color:var(--ui-danger);border:1px solid var(--ui-danger-line);
+}
+
+/* 2. Top Command Bar parallel menu: "录制" (matches "小节与拍号" / "检查轨道") */
+.studio-ui .editor-command-bar .beat-rec-menu>summary .beat-rec-menu-dot{
+  width:7px;height:7px;border-radius:50%;background:var(--c-r-500);flex:none;margin-right:1px;
+}
+.studio-ui .beat-rec-menu .beat-rec-menu-body{
+  box-sizing:border-box;width:min(268px,calc(100vw - 24px));min-width:0;padding:9px 11px;
+  display:flex;flex-direction:column;gap:6px;user-select:none;-webkit-user-select:none;
+}
+.studio-ui .note-toolbar .beat-rec-menu .beat-rec-menu-start{
+  display:flex;align-items:center;gap:7px;width:100%;height:30px;min-height:30px;padding:0 10px;
+  border-radius:var(--r-ctl);border:1px solid var(--ui-danger-line);background:var(--ui-danger-soft);
+  color:var(--ui-danger);font-size:var(--fs-sm);font-weight:var(--fw-strong);cursor:pointer;box-shadow:none;
+}
+.studio-ui .note-toolbar .beat-rec-menu .beat-rec-menu-start:hover:not(:disabled){
+  background:var(--c-r-500);border-color:var(--c-r-600);color:#ffffff;
+}
+.studio-ui .note-toolbar .beat-rec-menu .beat-rec-menu-start:hover:not(:disabled) .beat-rec-dot{background:#ffffff;box-shadow:none}
+.studio-ui .note-toolbar .beat-rec-menu .beat-rec-menu-start:hover:not(:disabled) kbd{
+  background:color-mix(in srgb,#ffffff 22%,transparent);border-color:color-mix(in srgb,#ffffff 34%,transparent);color:#ffffff;
+}
+.studio-ui .note-toolbar .beat-rec-menu .beat-rec-menu-start kbd{
+  margin-left:auto;font-family:var(--ui-font-num);font-size:10px;padding:1px 5px;border-radius:4px;
+  background:var(--ui-surface);border:1px solid var(--ui-danger-line);color:var(--ui-danger);
+}
+.studio-ui .beat-rec-menu-section{
+  display:flex;flex-direction:column;gap:4px;padding-top:6px;border-top:1px solid var(--ui-line-soft);
+}
+.studio-ui .beat-rec-menu-section>strong{
+  font-size:11px;font-weight:var(--fw-strong);color:var(--ui-text-3);padding:0 4px 2px;
+}
+.studio-ui .beat-rec-opt{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;
+  padding:5px 6px;border-radius:var(--r-ctl);font-size:var(--fs-sm);color:var(--ui-text);
+  transition:background var(--dur-fast) var(--ease);
+}
+.studio-ui .beat-rec-opt:hover{background:var(--ui-inset)}
+.studio-ui .beat-rec-opt input[type=checkbox]{
+  width:15px;height:15px;margin:0;accent-color:var(--ui-accent);cursor:pointer;flex:none;
+}
+.studio-ui .beat-rec-opt.is-punch{border:1px solid transparent}
+.studio-ui .beat-rec-opt.is-punch[data-on=true]{
+  background:var(--ui-danger-soft);border-color:var(--ui-danger-line);color:var(--ui-danger);
+}
+.studio-ui .beat-rec-opt.is-punch input[type=checkbox]{accent-color:var(--c-r-500)}
+.studio-ui .beat-rec-opt-meta{display:flex;flex-direction:column;gap:1px;min-width:0}
+.studio-ui .beat-rec-opt-meta small{font-size:10px;color:var(--ui-text-3);font-variant-numeric:tabular-nums}
+.studio-ui .beat-rec-opt.is-punch[data-on=true] .beat-rec-opt-meta small{color:var(--c-r-600)}
+.studio-ui .beat-rec-subrow{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  padding:2px 6px 4px;font-size:var(--fs-xs);color:var(--ui-text-2);
+}
+.studio-ui .beat-rec-subrow[hidden]{display:none}
+.studio-ui .beat-rec-seg{
+  display:inline-flex;gap:3px;background:var(--ui-inset);padding:2px;border-radius:var(--r-ctl);border:1px solid var(--ui-line-soft);
+}
+.studio-ui .note-toolbar .beat-rec-menu .beat-rec-seg button{
+  width:auto;min-width:44px;height:22px;min-height:22px;padding:0 6px;border:0;border-radius:6px;
+  background:transparent;color:var(--ui-text-2);font-size:11px;font-weight:var(--fw-medium);
+  cursor:pointer;box-shadow:none;white-space:nowrap;
+}
+.studio-ui .note-toolbar .beat-rec-menu .beat-rec-seg button[aria-pressed=true]{
+  background:var(--ui-danger-soft);color:var(--ui-danger);box-shadow:inset 0 0 0 1px var(--ui-danger-line);
+}
+.studio-ui .beat-rec-menu-keys{
+  padding:6px 4px 2px;border-top:1px solid var(--ui-line-soft);font-size:11px;color:var(--ui-text-3);
+  display:flex;align-items:center;gap:4px;flex-wrap:wrap;
+}
+.studio-ui .beat-rec-menu-keys kbd{
+  font-family:var(--ui-font-num);font-size:10px;padding:0 4px;line-height:16px;border-radius:4px;
+  background:var(--ui-inset);border:1px solid var(--ui-line);color:var(--ui-text-2);
+}
+.studio-ui .beat-rec-advanced{
+  padding-top:4px;border-top:1px solid var(--ui-line-soft);font-size:11px;color:var(--ui-text-3);
+}
+.studio-ui .beat-rec-advanced>summary{
+  cursor:pointer;padding:3px 4px;border-radius:6px;color:var(--ui-text-3);font-size:11px;
+}
+.studio-ui .beat-rec-advanced>summary:hover{background:var(--ui-inset);color:var(--ui-text-2)}
+.studio-ui .beat-rec-offset-row{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 4px 2px;
+}
+.studio-ui .beat-rec-offset-row small{font-size:10px;color:var(--ui-text-3);line-height:1.35}
+.studio-ui .beat-rec-offset-box{display:inline-flex;align-items:center;gap:4px;flex:none}
+.studio-ui .beat-rec-offset-box input{
+  width:54px;height:24px;min-height:24px;padding:0 6px;border:1px solid var(--ui-line);border-radius:6px;
+  background:var(--ui-inset);color:var(--ui-text);font-family:var(--ui-font-num);font-size:12px;
+  font-variant-numeric:tabular-nums;text-align:center;user-select:text;-webkit-user-select:text;
+}
+.studio-ui .beat-rec-offset-box input::-webkit-inner-spin-button,
+.studio-ui .beat-rec-offset-box input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+
+/* 3. Compact visual-first HUD pill strip under #beat-flags-canvas (hidden when idle) */
+.studio-ui .beat-rec-hud{
+  display:flex;align-items:center;gap:6px;min-height:30px;padding:3px 10px;
+  background:var(--ui-surface);border-bottom:1px solid var(--ui-line-soft);
+  font-size:var(--fs-xs);color:var(--ui-text);user-select:none;-webkit-user-select:none;
+}
+.studio-ui .beat-rec-hud[hidden]{display:none}
+.studio-ui .beat-rec-hud[data-phase=recording]{
+  background:color-mix(in srgb,var(--ui-danger-soft) 68%,var(--ui-surface));
+  border-bottom-color:var(--ui-danger-line);
+}
+.studio-ui .beat-rec-hud[data-phase=review]{
+  background:color-mix(in srgb,var(--ui-accent-softer) 80%,var(--ui-surface));
+  border-bottom-color:var(--ui-accent-line);
+}
+.studio-ui .beat-rec-pill{
+  display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 8px;border-radius:var(--r-pill);
+  font-weight:var(--fw-strong);font-variant-numeric:tabular-nums;white-space:nowrap;
+}
+.studio-ui .beat-rec-pill.is-armed{background:var(--ui-danger-soft);color:var(--ui-danger);border:1px solid var(--ui-danger-line)}
+.studio-ui .beat-rec-pill.is-recording{background:var(--c-r-500);color:#ffffff}
+.studio-ui .beat-rec-pill.is-review{background:var(--ui-accent-soft);color:var(--ui-accent-ink);border:1px solid var(--ui-accent-line)}
+.studio-ui .beat-rec-pill.is-punch{background:var(--ui-danger-soft);color:var(--ui-danger);border:1px solid var(--ui-danger-line);font-weight:var(--fw-medium)}
+.studio-ui .beat-rec-pill.is-warn{background:var(--ui-warn-soft);color:var(--ui-warn);border:1px solid var(--ui-warn-line);font-weight:var(--fw-medium)}
+.studio-ui .beat-rec-pill.is-pass{background:var(--ui-time-soft);color:var(--ui-time);border:1px solid var(--ui-time-line);font-weight:var(--fw-medium)}
+.studio-ui .beat-rec-hud-dot{
+  width:6px;height:6px;border-radius:50%;background:currentColor;flex:none;
+}
+.studio-ui .beat-rec-hud[data-phase=recording] .beat-rec-hud-dot{
+  animation:astra-beat-rec-pulse .75s ease-in-out infinite;
+}
+.studio-ui .beat-rec-hud-keys{
+  display:inline-flex;align-items:center;gap:4px;color:var(--ui-text-3);font-size:11px;white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis;min-width:0;
+}
+.studio-ui .beat-rec-hud-keys.is-review-hint{color:var(--ui-text-2);opacity:.86}
+.studio-ui .beat-rec-hud-keys kbd{
+  font-family:var(--ui-font-num);font-size:10px;padding:0 4px;line-height:16px;border-radius:4px;
+  background:var(--ui-inset);border:1px solid var(--ui-line);color:var(--ui-text-2);
+}
+.studio-ui .beat-rec-hud-actions{display:inline-flex;align-items:center;gap:5px;margin-left:auto}
+.studio-ui .beat-rec-hud button{
+  display:inline-flex;align-items:center;gap:4px;height:24px;min-height:24px;padding:0 8px;
+  border-radius:var(--r-dense);border:1px solid var(--ui-line);background:var(--ui-surface);
+  color:var(--ui-text-2);font-size:11px;font-weight:var(--fw-medium);cursor:pointer;white-space:nowrap;
+}
+.studio-ui .beat-rec-hud button:hover:not(:disabled){background:var(--ui-accent-softer);border-color:var(--ui-accent-line);color:var(--ui-accent-ink)}
+.studio-ui .beat-rec-hud button[aria-pressed=true]{background:var(--ui-accent-soft);border-color:var(--ui-accent-line);color:var(--ui-accent-ink);font-weight:var(--fw-strong)}
+.studio-ui .beat-rec-hud button.is-tap{border-color:var(--ui-danger-line);color:var(--ui-danger);background:var(--ui-surface)}
+.studio-ui .beat-rec-hud button.is-tap:active{background:var(--c-r-500);color:#ffffff;transform:scale(.96)}
+.studio-ui .beat-rec-hud button.is-primary{background:var(--ui-accent);border-color:var(--ui-accent);color:#ffffff;font-weight:var(--fw-strong)}
+.studio-ui .beat-rec-hud button.is-primary kbd{background:color-mix(in srgb,#ffffff 20%,transparent);border:1px solid color-mix(in srgb,#ffffff 32%,transparent);color:#ffffff;padding:0 4px;border-radius:4px;font-size:10px;line-height:15px}
+.studio-ui .beat-rec-hud button.is-primary:hover:not(:disabled){background:var(--ui-accent-hover);border-color:var(--ui-accent-hover);color:#ffffff}
+.studio-ui .beat-rec-hud button:disabled{opacity:.45;cursor:not-allowed}
+.studio-ui .beat-rec-meter-group{
+  display:inline-flex;align-items:center;gap:2px;padding:1px;border-radius:var(--r-dense);
+  background:var(--ui-inset);border:1px solid var(--ui-line-soft);
+}
+.studio-ui .beat-rec-meter-group button{height:20px;min-height:20px;padding:0 6px;border:0;background:transparent}
+.studio-ui .beat-rec-meter-group button[aria-pressed=true]{background:var(--ui-surface);box-shadow:inset 0 0 0 1px var(--ui-line)}
+.studio-ui .beat-rec-hud svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+
+/* Record state is separate from playback; the text is independent of color. */
+.studio-ui #transport .transport-beat-rec:is([data-phase=armed],[data-phase=preroll]) .beat-rec-dot {
+  background: #c28a3b;
+}
+.studio-ui #transport .transport-beat-rec[data-phase=review] .beat-rec-dot {
+  background: #6a83be;
+}
+
+/* A quiet, nonnumeric preparation indicator around the Record dot. */
+.studio-ui #transport .transport-beat-rec[data-phase=preparing] .beat-rec-dot {
+  position:relative;
+  background:#c66c70;
+}
+.studio-ui #transport .transport-beat-rec[data-phase=preparing] .beat-rec-dot::after {
+  content:"";
+  position:absolute;
+  inset:-4px;
+  border-radius:50%;
+  background:conic-gradient(#b94f5b 0 var(--beat-prep-ring,0%),rgba(185,79,91,.22) 0 100%);
+  -webkit-mask:radial-gradient(farthest-side,transparent calc(100% - 1.4px),#000 calc(100% - 1px));
+  mask:radial-gradient(farthest-side,transparent calc(100% - 1.4px),#000 calc(100% - 1px));
+  pointer-events:none;
+}

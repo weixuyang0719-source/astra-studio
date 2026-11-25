@@ -1,0 +1,91 @@
+/* Claude motion and presentation, recovered for the Notes left sidebar only.
+   Deliberately does not replace global menu, dialog, transport, or page motion. */
+
+.studio-ui #editor-left-zone{
+  --mo-fast:120ms;--mo-med:200ms;--mo-slow:260ms;
+  --mo-out:cubic-bezier(.2,.8,.2,1);          /* same curve as popup_menu.js */
+  --mo-spring:cubic-bezier(.34,1.36,.5,1);    /* small overshoot for chevrons/thumbs */
+}
+
+.studio-ui #editor-left-zone :is(button,summary,[role=tab],select,.control,a.button){
+  transition:background-color var(--mo-fast) ease,color var(--mo-fast) ease,border-color var(--mo-fast) ease,
+             box-shadow var(--mo-fast) ease,opacity var(--mo-fast) ease,scale 90ms var(--mo-out);
+}
+.studio-ui #editor-left-zone :is(button,[role=tab]):active:not(:disabled):not([aria-disabled=true]){scale:.96}
+.studio-ui #editor-left-zone summary:active{scale:.985}
+.studio-ui #editor-left-zone :is(input,select,textarea,.control):focus-visible{transition:box-shadow var(--mo-fast) ease,outline-color var(--mo-fast) ease}
+
+@supports (interpolate-size:allow-keywords) and selector(details::details-content){
+.studio-ui #editor-left-zone :is(.editor-tool-section,.vst-rack,.editor-side-section){
+  interpolate-size:allow-keywords;
+}
+.studio-ui #editor-left-zone :is(.editor-tool-section,.vst-rack,.editor-side-section)::details-content{
+  block-size:0;opacity:0;overflow:clip;
+  transition:block-size var(--mo-med) var(--mo-out),opacity var(--mo-med) cubic-bezier(.6,0,.4,1),
+             content-visibility var(--mo-med) allow-discrete;
+}
+.studio-ui #editor-left-zone :is(.editor-tool-section,.vst-rack,.editor-side-section)[open]::details-content{
+  block-size:auto;opacity:1;
+  overflow:visible;   /* menus inside an open section (e.g. Q key) must never be clipped */
+}
+}
+
+.studio-ui #editor-left-zone #editor-inspector[data-layout=cubase-compact] .editor-tool-section{
+  margin:0;border-bottom:1px solid var(--ins-line,var(--ui-line-soft));background:transparent;
+  transition:background-color var(--mo-med) var(--mo-out);
+}
+.studio-ui #editor-left-zone #editor-inspector[data-layout=cubase-compact] .editor-tool-section[open]{
+  background:linear-gradient(180deg,color-mix(in srgb,var(--ui-accent-softer) 70%,transparent) 0,transparent 44px);
+}
+.studio-ui #editor-left-zone #editor-inspector[data-layout=cubase-compact] .editor-tool-section>summary{
+  grid-template-columns:10px minmax(0,1fr) 22px;height:30px;min-height:30px;padding:0 6px;border-radius:8px;
+  color:var(--ui-text-2);
+  transition:background-color var(--mo-fast) ease,color var(--mo-fast) ease,scale 90ms var(--mo-out);
+}
+.studio-ui #editor-left-zone #editor-inspector[data-layout=cubase-compact] .editor-tool-section>summary::before{
+  justify-self:center;color:var(--ui-text-3);
+  transition:transform var(--mo-slow) var(--mo-spring),color var(--mo-fast) ease;
+}
+.studio-ui #editor-left-zone #editor-inspector[data-layout=cubase-compact] .editor-tool-section[open]>summary::before{color:var(--ui-accent)}
+.studio-ui #editor-left-zone #editor-inspector[data-layout=cubase-compact] .editor-tool-section>summary svg{
+  box-sizing:border-box;width:22px;height:22px;padding:4px;border-radius:7px;justify-self:end;
+  background:transparent;color:var(--ui-text-3);
+  transition:background-color var(--mo-med) var(--mo-out),color var(--mo-med) var(--mo-out);
+}
+.studio-ui #editor-left-zone #editor-inspector[data-layout=cubase-compact] .editor-tool-section>summary:hover svg{background:var(--ui-surface);color:var(--ui-accent-ink)}
+.studio-ui #editor-left-zone #editor-inspector[data-layout=cubase-compact] .editor-tool-section[open]>summary{color:var(--ui-text)}
+.studio-ui #editor-left-zone #editor-inspector[data-layout=cubase-compact] .editor-tool-section[open]>summary svg{background:var(--ui-accent-soft);color:var(--ui-accent-ink)}
+.studio-ui #editor-left-zone #editor-inspector[data-layout=cubase-compact] .editor-tool-section[open]>summary:hover{background:color-mix(in srgb,var(--ui-accent-softer) 80%,transparent)}
+
+.studio-ui #editor-left-zone #editor-vst-slot .vst-rack{
+  position:relative;padding:0 10px 10px;border-radius:14px;
+  border:1px solid var(--ui-accent-line);
+  background:linear-gradient(180deg,color-mix(in srgb,var(--ui-accent-softer) 92%,var(--ui-surface)) 0,var(--ui-surface) 46px);
+  box-shadow:0 1px 2px color-mix(in srgb,var(--ui-accent-ink) 8%,transparent),0 10px 24px -14px color-mix(in srgb,var(--ui-accent) 45%,transparent);
+  transition:box-shadow var(--mo-med) var(--mo-out),border-color var(--mo-med) var(--mo-out),background-color var(--mo-med) var(--mo-out);
+}
+.studio-ui #editor-left-zone #editor-vst-slot .vst-rack:not([open]){padding-bottom:0;background:var(--ui-accent-softer);
+  box-shadow:0 1px 2px color-mix(in srgb,var(--ui-accent-ink) 6%,transparent)}
+.studio-ui #editor-left-zone #editor-vst-slot .vst-rack-title{height:34px;gap:8px;font:700 12.5px/1 var(--ui-font-round,var(--ui-font));color:var(--ui-accent-ink);letter-spacing:.02em}
+.studio-ui #editor-left-zone #editor-vst-slot .vst-rack-title::before{
+  content:"";flex:none;width:6px;height:6px;margin:0 3px 0 2px;
+  border-right:1.6px solid currentColor;border-bottom:1.6px solid currentColor;
+  transform:rotate(-45deg);transition:transform var(--mo-slow) var(--mo-spring);
+}
+.studio-ui #editor-left-zone #editor-vst-slot .vst-rack[open]>.vst-rack-title::before{content:"";transform:rotate(45deg) translate(-1px,-1px)}
+.studio-ui #editor-left-zone #editor-vst-slot .vst-rack-title::after{
+  content:"";margin-left:auto;width:7px;height:7px;border-radius:50%;
+  background:var(--ui-sakura);box-shadow:0 0 0 3px color-mix(in srgb,var(--ui-sakura) 22%,transparent);
+}
+.studio-ui #editor-left-zone #editor-vst-slot .vst-rack-title:hover{color:var(--ui-accent-ink)}
+.studio-ui #editor-left-zone #editor-vst-slot .vst-rack .vst-insert-trigger{transition:background-color var(--mo-fast) ease,box-shadow var(--mo-fast) ease}
+.studio-ui #editor-left-zone #editor-vst-slot .vst-rack .vst-insert:hover .vst-insert-trigger:not([aria-expanded=true]){background:var(--ui-surface);box-shadow:inset 0 0 0 1px var(--ui-line)}
+
+@media (prefers-reduced-motion: reduce){
+  .studio-ui #editor-left-zone *,.studio-ui #editor-left-zone *::before,.studio-ui #editor-left-zone *::after{
+    animation:none!important;transition:none!important;scale:none!important;
+  }
+  .studio-ui #editor-left-zone :is(.editor-tool-section,.vst-rack,.editor-side-section)::details-content{
+    animation:none!important;transition:none!important;
+  }
+}

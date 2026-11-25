@@ -1,0 +1,28 @@
+/* Audio output settings (RAW app). Current (live) card above, pending change below. */
+.audio-output-status .aos-live{margin:4px 0 14px;padding:12px 14px;border-radius:12px;background:var(--c-a-50);display:grid;gap:4px}
+.audio-output-status .aos-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.audio-output-status .aos-kicker{font-size:12px;color:var(--c-n-500)}
+.audio-output-status .aos-phase{font-size:12px;line-height:20px;padding:0 9px;border-radius:999px;background:var(--c-n-0);color:var(--c-n-600)}
+.audio-output-status .aos-phase[data-phase=playing]{color:var(--c-a-700);background:var(--c-a-100)}
+.audio-output-status .aos-phase:is([data-phase=error],[data-phase=blocked],[data-phase=unavailable]){color:var(--c-r-700);background:var(--c-r-50)}
+.audio-output-status .aos-device{font-size:15px;font-weight:600;color:var(--c-n-800);overflow-wrap:anywhere}
+.audio-output-status .aos-params{display:block;font-size:12px;line-height:1.6;color:var(--c-n-500)}
+.audio-output-status .aos-result{margin:2px 0 0;min-height:0;font-size:12px;line-height:1.6;color:var(--c-n-600)}
+.audio-output-status .aos-result:empty{display:none}
+.audio-output-status .aos-result[data-tone=ok]{color:var(--c-a-700)}
+.audio-output-status .aos-result[data-tone=error]{color:var(--c-r-700)}
+.audio-output-status .aos-subhead{margin:0;font-size:13px;font-weight:600;color:var(--c-n-700)}
+.audio-output-status #preferences-audio-device,.audio-output-status #preferences-audio-backend{flex:0 0 260px;max-width:260px}
+.audio-output-status .aos-fullname{overflow-wrap:anywhere}
+.audio-output-status .aos-config-head,.audio-output-status .aos-buffer-controls{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.audio-output-status .aos-config-head>[data-audio-device-apply]{width:auto;min-width:72px;padding:0 14px;white-space:nowrap}
+.audio-output-status .aos-buffer-controls{justify-content:flex-end}
+.audio-output-status .aos-hint{min-width:0;font-size:12px;line-height:1.6;color:var(--c-n-500)}
+@media(max-width:550px){.audio-output-status #preferences-audio-device,.audio-output-status #preferences-audio-backend{flex:auto;max-width:100%}.audio-output-status .aos-buffer-controls{justify-content:flex-start}}
+
+/* A status belongs to the source group, not an extra auto-placed footer row. */
+#transport .transport-source .output-status-chip{flex:0 0 auto;max-width:108px;min-height:24px;padding:2px 8px;margin:0 3px;border:1px solid var(--c-a-200,#d9dff1);border-radius:7px;background:var(--c-n-0,#fff);color:var(--c-n-600,#59647a);font:inherit;font-size:11px;line-height:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:none}
+#transport .transport-source .output-status-chip:hover{background:var(--c-a-50,#f2f5ff);color:var(--c-a-700,#4865ad)}
+#transport .transport-source .output-status-chip:focus-visible{outline:2px solid var(--c-a-500,#627ed8);outline-offset:2px}
+.audio-output-status #preferences-audio-buffer{flex:0 0 165px;max-width:165px}
+.audio-output-status [data-asio-control-panel]{min-height:32px;width:auto;padding:4px 12px;justify-self:start}

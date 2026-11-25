@@ -1,0 +1,335 @@
+/* SPDX-License-Identifier: GPL-3.0-only
+ * Layout port of MuseScore Studio 4.6.5 NoteInputBar.qml, PaletteTree.qml,
+ * and PaletteGridView.qml into Astra's one existing score surface.
+ */
+@font-face {
+  font-family:"MuseScore465Icons";
+  src:url("musescore465/MusescoreIcon.ttf") format("truetype");
+  font-style:normal;font-weight:400;font-display:block;
+}
+.astra-native-score .astra-ms-glyph {
+  display:inline-flex;align-items:center;justify-content:center;
+  flex:none;font:400 1em/1 "MuseScore465Icons" !important;
+  color:inherit;font-kerning:none;speak:none;
+}
+.astra-native-score-tools {
+  display:flex;align-items:center;flex-wrap:wrap;gap:2px;min-height:34px;padding:3px 10px 3px 6px;
+  color:var(--ui-text,var(--ns-fg));background:var(--ui-surface,#fff);
+}
+.astra-native-score-tools .astra-ns-doc-menu>summary,.astra-native-score-tools button[data-native-score] {
+  display:flex;align-items:center;justify-content:center;flex:none;box-sizing:border-box;
+  height:26px;min-height:0;padding:0 9px;font-size:12.5px;color:var(--ui-text,var(--ns-fg));white-space:nowrap;
+  border:1px solid transparent;background:transparent;border-radius:var(--r-dense,6px);
+}
+.astra-native-score-tools .astra-ns-doc-menu:not([open])>summary:hover,
+.astra-native-score-tools button[data-native-score]:not(:disabled):not([aria-pressed=true]):hover{
+  background:color-mix(in srgb,var(--ui-line-soft,var(--ns-line)) 46%,var(--ui-surface,#fff));color:var(--ui-text,var(--ns-fg));
+}
+.astra-native-score-mode{display:flex;align-items:center;gap:3px;margin-inline-start:auto}
+.astra-native-score .astra-native-score-mode button[data-native-score][aria-pressed=true],
+.astra-native-score .astra-native-score-tools .astra-ns-doc-menu[open]>summary{
+  background:color-mix(in srgb,var(--ui-accent-soft,var(--ns-on)) 84%,var(--ui-surface,#fff));
+  border-color:color-mix(in srgb,var(--ui-accent-line,var(--ns-on-line)) 58%,var(--ui-line,var(--ns-sep)));
+  color:var(--ui-accent-ink,var(--ns-on-fg));
+}
+.astra-native-history{
+  position:relative;display:flex;align-items:center;gap:2px;
+  margin-inline-start:8px;padding-inline-start:9px;
+}
+.astra-native-history::before{
+  content:"";position:absolute;inset-inline-start:0;top:50%;width:1px;height:14px;
+  transform:translateY(-50%);background:var(--ui-line-soft,var(--ns-line));pointer-events:none;
+}
+.astra-native-history button[data-native-score]{width:32px;padding:0;font-size:16px}
+.astra-native-score .astra-native-score-tools button[data-native-score=open]:not([hidden]){
+  border-color:color-mix(in srgb,var(--ui-accent-line,var(--ns-on-line)) 58%,var(--ui-line,var(--ns-sep)));
+  background:color-mix(in srgb,var(--ui-accent-soft,var(--ns-on)) 84%,var(--ui-surface,#fff));
+  color:var(--ui-accent-ink,var(--ns-on-fg));
+}
+.astra-native-score .astra-ns-menu{margin:0;min-width:0}
+.astra-native-score :is(.astra-native-rhythm-menu,.astra-ns-menu,.astra-ms-submenu)>summary{
+  display:flex;align-items:center;list-style:none;cursor:pointer;white-space:nowrap;user-select:none;
+}
+.astra-native-score :is(.astra-native-rhythm-menu,.astra-ns-menu,.astra-ms-submenu)>summary::-webkit-details-marker{display:none}
+.astra-native-score :is(.astra-ns-menu,.astra-native-rhythm-menu,.astra-ms-submenu)[open]>summary{background:var(--ns-on);color:var(--ns-on-fg)}
+.astra-native-score :is(.astra-ns-menu-pop,.astra-native-rhythm-popover){
+  position:fixed;z-index:40;min-width:196px;max-height:min(55vh,460px);overflow:auto;padding:4px;
+  box-sizing:border-box;background:#fff;color:var(--ns-fg);border:1px solid var(--ns-sep);
+  border-radius:4px;box-shadow:0 5px 16px #1d1a3a26;
+}
+.astra-native-score .astra-ns-menu-pop hr,.astra-native-score .astra-native-rhythm-popover hr{
+  margin:3px 1px;border:0;border-top:1px solid var(--ns-line)
+}
+.astra-native-score :is(.astra-ns-menu-pop,.astra-native-rhythm-popover,.astra-ms-layout-dock) button.astra-ns-mi,
+.astra-native-score .astra-ms-menu-plain,.astra-native-score .astra-ms-submenu>summary,
+.astra-native-score .astra-native-rhythm-menu.is-meter-custom>summary{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  width:100%;min-width:0;min-height:28px;height:auto;padding:4px 8px;border:0;border-radius:3px;
+  background:transparent;color:var(--ns-fg);font:12px/1.4 "Segoe UI","Microsoft YaHei UI",sans-serif;text-align:start;
+}
+/* On/off menu items (MuseScore View menu): a check slot before the label. */
+.astra-native-score .astra-ms-menu-plain[aria-pressed]{justify-content:flex-start;gap:6px}
+.astra-native-score .astra-ms-menu-plain[aria-pressed]::before{
+  content:"";flex:none;width:14px;height:14px;border-radius:4px;box-sizing:border-box;
+  border:1.5px solid var(--ui-line-strong,#c4c7d3);background:var(--ui-surface,#fff)}
+.astra-native-score .astra-ms-menu-plain[aria-pressed=true]::before{
+  border-color:var(--ui-accent,#436bc4);
+  background:var(--ui-accent,#436bc4) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M3.2 7.3l2.4 2.4 5.2-5.4' fill='none' stroke='%23fff' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat}
+.astra-native-score :is(.astra-ns-mi,.astra-ms-menu-plain):not(:disabled):hover,
+.astra-native-score .astra-ms-submenu>summary:hover{background:var(--ns-hover)}
+.astra-native-score :is(.astra-ns-menu-pop,.astra-native-rhythm-popover) kbd{
+  font:11px "Segoe UI",sans-serif;color:var(--ns-fg2);white-space:nowrap
+}
+.astra-native-score .astra-ms-submenu>div{padding:2px 0 4px 8px}
+.astra-native-score .astra-ms-menu-label{display:block}
+.astra-native-score .astra-ms-layout-dock{padding:7px}
+.astra-native-score .astra-ms-layout-dock button.astra-ns-mi{white-space:normal}
+.astra-native-score .astra-native-rhythm-popover form{padding:5px 2px}
+
+.astra-native-score .astra-native-notation-tools {
+  display:flex;align-items:stretch;min-height:40px;padding:0 8px 0 4px;box-sizing:border-box;
+  border-block-start:1px solid var(--ui-line-soft,var(--ns-line));
+  border-block-end:1px solid var(--ui-line,var(--ns-sep));
+  background:var(--ui-bg,var(--ns-soft));
+}
+.astra-native-score .astra-ms-grip{
+  flex:none;display:grid;place-items:center;width:18px;height:40px;
+  font-size:14px;color:var(--ui-text-3,var(--ns-fg2));opacity:.48;
+}
+.astra-native-score .astra-ns-section{display:flex;align-items:stretch;flex:1 1 auto;min-width:0;flex-wrap:wrap;color:var(--ui-text,var(--ns-fg))}
+.astra-native-score .astra-native-tool-group{
+  position:relative;display:flex;align-items:center;gap:2px;
+  padding:4px 7px;min-height:32px;box-sizing:content-box;
+}
+.astra-native-score .astra-native-tool-group:first-child{padding-inline-start:3px}
+.astra-native-score .astra-native-tool-group+.astra-native-tool-group::before{
+  content:"";position:absolute;inset-inline-start:0;top:50%;width:1px;height:16px;
+  transform:translateY(-50%);background:var(--ui-line-soft,var(--ns-line));pointer-events:none;
+}
+.astra-native-score .astra-native-notation-tools button.astra-ms-tool,
+.astra-native-score .astra-native-notation-tools :is(.astra-ns-menu,.astra-native-rhythm-menu)>summary {
+  display:grid;place-items:center;flex:none;box-sizing:border-box;
+  width:32px;height:32px;min-height:32px;padding:0;border:1px solid transparent;border-radius:var(--r-dense,6px);
+  background:transparent;color:var(--ui-text,var(--ns-fg));font-size:18px;
+}
+/* Optical height/weight balance for MuseScore465Icons inside 32px targets */
+.astra-native-score .astra-native-notation-tools :is(
+  button.astra-ms-tool:is([data-stock-icon=NOTE_64TH],[data-stock-icon=NOTE_32ND],[data-stock-icon=NOTE_16TH],[data-stock-icon=NOTE_8TH],[data-stock-icon=NOTE_QUARTER],[data-stock-icon=NOTE_HALF],[data-stock-icon=LONGO],[data-stock-icon=NOTE_DOTTED],[data-stock-icon=NOTE_DOTTED_2],[data-stock-icon=NOTE_DOTTED_3],[data-stock-icon=NOTE_DOTTED_4],[data-stock-icon=NOTE_SLUR],[data-stock-icon=NOTE_1024TH]),
+  .astra-native-rhythm-menu.is-tuplet>summary
+){font-size:16px}
+.astra-native-score .astra-native-notation-tools :is(
+  button.astra-ms-tool:is([data-stock-icon=EDIT],[data-stock-icon=DURATION_CURSOR],[data-stock-icon=FLAT_DOUBLE],[data-stock-icon=FLAT],[data-stock-icon=NATURAL],[data-stock-icon=SHARP],[data-stock-icon=NOTE_TIE],[data-stock-icon=NOTE_LV],[data-stock-icon=CROSS_STAFF_BEAMING]),
+  .astra-ms-customize>summary
+){font-size:17px}
+.astra-native-score .astra-native-notation-tools button.astra-ms-tool:is([data-stock-icon=SHARP_DOUBLE],[data-stock-icon=MARCATO],[data-stock-icon=ACCENT],[data-stock-icon=TENUTO]){font-size:19px}
+.astra-native-score .astra-native-notation-tools button.astra-ms-tool:is([data-stock-icon=NOTE_WHOLE],[data-stock-icon=NOTE_WHOLE_DOUBLE]){font-size:20px}
+.astra-native-score .astra-native-notation-tools button.astra-ms-tool[data-stock-icon=STACCATO]{font-size:22px}
+.astra-native-score .astra-native-notation-tools button.astra-ms-tool>.astra-ms-glyph:is([data-musescore-icon=NOTE_WHOLE],[data-musescore-icon=NOTE_WHOLE_DOUBLE]){transform:translateY(-0.22em)}
+.astra-native-score .astra-native-notation-tools .astra-native-rhythm-menu.is-tuplet>summary>.astra-ms-glyph{transform:translateY(0.05em)}
+.astra-native-score .astra-native-notation-tools button.astra-ms-tool:not(:disabled):not([aria-pressed=true]):hover,
+.astra-native-score .astra-native-notation-tools :is(.astra-ns-menu,.astra-native-rhythm-menu):not([open])>summary:not([aria-disabled=true]):hover{
+  background:color-mix(in srgb,var(--ui-line-soft,var(--ns-line)) 46%,var(--ui-surface,#fff));color:var(--ui-text,var(--ns-fg));
+}
+.astra-native-score .astra-native-notation-tools button.astra-ms-tool[aria-pressed=true],
+.astra-native-score .astra-native-notation-tools :is(.astra-ns-menu,.astra-native-rhythm-menu)[open]>summary{
+  background:color-mix(in srgb,var(--ui-accent-soft,var(--ns-on)) 84%,var(--ui-surface,#fff));
+  border-color:color-mix(in srgb,var(--ui-accent-line,var(--ns-on-line)) 58%,var(--ui-line,var(--ns-sep)));
+  color:var(--ui-accent-ink,var(--ns-on-fg));
+}
+.astra-native-score :is(.astra-native-score-tools,.astra-native-notation-tools) :is(button,summary):focus-visible{
+  outline-color:var(--ui-focus,var(--ns-accent));
+}
+.astra-native-score .astra-native-notation-tools summary[aria-disabled=true]{opacity:.44;cursor:default}
+.astra-native-score .astra-ms-check{
+  display:grid;align-items:center;grid-template-columns:22px minmax(100px,1fr) auto;gap:7px;
+  min-height:28px;white-space:nowrap;font:12px "Segoe UI",sans-serif;padding:0 6px;
+}
+.astra-native-score .astra-ms-check .astra-ms-glyph{font-size:18px !important}
+
+.astra-native-score .astra-native-workspace{
+  display:grid;grid-template-columns:clamp(185px,25vw,300px) minmax(0,1fr);
+  height:clamp(380px,68vh,820px);min-width:0;border-bottom:1px solid var(--ns-line)
+}
+/* A desktop-equivalent empty dock frees only the palette column. Keep the
+   separate floating/docked input toolbar and the remaining score unchanged. */
+.astra-native-score .astra-native-workspace:has(> .astra-native-palette[hidden]){
+  grid-template-columns:minmax(0,1fr)
+}
+.astra-native-score .astra-native-workspace.astra-input-docked-left:has(> .astra-native-palette[hidden]){
+  grid-template-columns:78px minmax(0,1fr)
+}
+.astra-native-score .astra-native-palette{
+  --pl-line:#d9dbe5;--pl-cell:#fff;
+  display:flex;flex-direction:column;min-width:0;min-height:0;border-inline-end:1px solid var(--ns-sep);background:var(--ns-soft)
+}
+.astra-native-score .astra-native-palette-header{
+  flex:none;display:flex;align-items:stretch;height:35px;box-sizing:border-box;
+  border-bottom:1px solid var(--ns-sep);background:#eaebf2
+}
+.astra-native-score .astra-ms-palette-tab-wrap{display:flex}
+.astra-native-score .astra-native-palette-header .astra-native-palette-tab{
+  position:static;z-index:auto;display:flex;align-items:center;min-height:0;padding:0 10px;color:var(--ns-fg);
+  background:transparent;border:0;border-inline-end:1px solid var(--ns-sep);border-radius:0;
+  font:12px/1.2 "Segoe UI","Microsoft YaHei UI",sans-serif;white-space:nowrap;
+}
+.astra-native-score .astra-native-palette-header .astra-ms-palette-tab-wrap .astra-native-palette-tab{border-inline-end:0;padding-inline-end:4px}
+.astra-native-score .astra-native-palette-header .astra-native-palette-tab[aria-selected=true]{
+  background:var(--ns-soft);border-bottom:1px solid var(--ns-soft);margin-bottom:-1px
+}
+.astra-native-score .astra-native-palette-header .astra-ms-palette-settings{
+  width:27px;padding:0;border-radius:0;background:var(--ns-soft);border:0;border-inline-end:1px solid var(--ns-sep);color:var(--ns-fg);font-size:15px
+}
+.astra-native-score .astra-ms-palette-content,.astra-native-score .astra-ms-inspector-dock{
+  display:flex;flex-direction:column;flex:1;min-height:0
+}
+.astra-native-score .astra-ms-palette-controls{display:flex;gap:8px;padding:12px 11px 10px}
+.astra-native-score .astra-ms-palette-controls button{
+  box-sizing:border-box;height:30px;padding:0;border:0;border-radius:3px;background:#e3e4ed;color:var(--ns-fg);cursor:pointer
+}
+.astra-native-score .astra-ms-palette-controls button:hover{background:var(--ns-hover)}
+.astra-native-score .astra-ms-palette-controls button:disabled{opacity:.55;cursor:default}
+.astra-native-score .astra-ms-palette-controls .astra-ms-add-palettes{flex:1;font:12px "Segoe UI","Microsoft YaHei UI",sans-serif}
+.astra-native-score .astra-native-palette-search-toggle{flex:none;width:30px;font-size:18px}
+.astra-native-score .astra-native-palette-search-toggle[aria-expanded=true]{background:var(--ns-on);color:var(--ns-on-fg)}
+.astra-native-score .astra-native-palette-search{flex:none;padding:0 11px 6px}
+.astra-native-score .astra-native-palette-scroll{
+  flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scrollbar-width:thin;scrollbar-gutter:stable;
+  scrollbar-color:transparent transparent;
+}
+.astra-native-score .astra-native-palette-scroll:hover,.astra-native-score .astra-native-palette-scroll:focus-within{scrollbar-color:#c9c7d8 transparent}
+
+.astra-native-score .astra-ms-palette-heading{display:flex;position:relative;margin:0;font:inherit}
+.astra-native-score .astra-native-palette-head{
+  box-sizing:border-box;display:flex;align-items:center;gap:12px;flex:1;min-width:0;height:30px;
+  padding:0 11px;border:0;border-radius:0;background:transparent;color:var(--ns-fg);cursor:pointer;text-align:start;
+  font:12px "Segoe UI","Microsoft YaHei UI",sans-serif
+}
+.astra-native-score .astra-native-palette-head .astra-ms-glyph{font-size:13px !important;width:16px}
+.astra-native-score .astra-ms-palette-heading:hover{background:var(--ns-hover)}
+.astra-native-score .astra-native-palette-head:focus-visible{outline-offset:-2px;background:var(--ns-on)}
+.astra-native-score .astra-ms-palette-group-options{
+  flex:none;width:27px;height:30px;padding:0;border:0;background:transparent;color:var(--ns-fg);font-size:14px;cursor:pointer
+}
+.astra-native-score .astra-ms-palette-group-options{visibility:hidden}
+.astra-native-score .astra-native-palette-group.is-open .astra-ms-palette-group-options,
+.astra-native-score .astra-ms-palette-heading:hover .astra-ms-palette-group-options,
+.astra-native-score .astra-ms-palette-heading:has(:focus-visible) .astra-ms-palette-group-options,
+.astra-native-score .astra-ms-palette-group-options[aria-expanded=true]{visibility:visible}
+.astra-native-score .astra-ms-palette-group-options:hover{background:var(--ns-on)}
+.astra-native-score .astra-native-catalogue-grid{
+  display:grid;margin:0 5px 3px;border:1px solid var(--pl-line);background:var(--pl-cell)
+}
+.astra-native-score .astra-native-catalogue-cell,.astra-native-score .pl-empty,.astra-native-score .astra-ms-palette-more{
+  min-width:0;min-height:0;
+  box-sizing:border-box;margin:0;padding:0;border:0;border-inline-end:1px solid var(--pl-line);border-bottom:1px solid var(--pl-line);
+  border-radius:0;background:var(--pl-cell);color:var(--ns-fg);overflow:hidden
+}
+.astra-native-score .astra-native-catalogue-grid.is-no-grid>*{border:0}
+.astra-native-score .astra-native-catalogue-cell{display:grid;place-items:center;cursor:default}
+.astra-native-score .astra-native-catalogue-cell[aria-disabled=false]{cursor:grab}
+.astra-native-score .astra-native-catalogue-cell[aria-disabled=false]:hover{background:var(--ns-hover)}
+.astra-native-score .astra-native-catalogue-cell[aria-pressed=true],
+.astra-native-score .astra-native-catalogue-cell[aria-disabled=false]:active{background:var(--ns-on)}
+.astra-native-score .astra-native-catalogue-cell:focus-visible{outline-offset:-2px;z-index:1}
+.astra-native-score .astra-native-catalogue-cell:disabled img{opacity:.58}
+.astra-native-score .astra-native-catalogue-icon{
+  display:block;width:auto;height:auto;max-width:none;max-height:none;margin:0;padding:0;object-fit:none;pointer-events:none
+}
+.astra-native-score .astra-ms-palette-more{color:var(--ns-fg2);cursor:pointer;font:12px "Segoe UI","Microsoft YaHei UI",sans-serif}
+.astra-native-score .astra-ms-palette-more:hover{background:var(--ns-hover)}
+.astra-native-score .astra-ms-palette-popup {
+  position:fixed;inset:auto;margin:0;padding:0;width:min(294px,90vw);max-height:min(52vh,440px);overflow:auto;
+  color:var(--ns-fg);background:var(--ns-soft);border:1px solid var(--ns-sep);border-radius:4px;box-shadow:0 5px 16px #17163135
+}
+.astra-native-score .astra-ms-palette-popup::backdrop{background:transparent}
+.astra-native-score .astra-ms-palette-popup>header{
+  display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--ns-line);
+  font:12px "Segoe UI","Microsoft YaHei UI",sans-serif;padding:4px 0 4px 8px
+}
+.astra-native-score .astra-ms-popup-body{min-height:24px;padding:6px 0;color:var(--ns-fg);font-size:12px}
+.astra-native-score .astra-ms-popup-body p{margin:2px 8px}
+.astra-native-score .astra-ms-palette-close,.astra-native-score .astra-ms-palette-menu-item{
+  background:transparent;border:0;padding:4px 9px;color:inherit;cursor:pointer
+}
+.astra-native-score .astra-ms-palette-menu-item{display:flex;align-items:center;justify-content:space-between;width:100%;text-align:left}
+.astra-native-score :is(.astra-ms-palette-close,.astra-ms-palette-menu-item):hover{background:var(--ns-hover)}
+.astra-native-score .astra-ms-palette-popup-add{float:right;margin:5px;padding:4px 8px;background:#e3e4ed;border:0;border-radius:3px;color:inherit}
+.astra-native-score .astra-ms-palette-popup-add:disabled{opacity:.5}
+.astra-native-score .astra-ms-inspector-dock .astra-inline-inspector{
+  position:static;inset:auto;z-index:auto;width:auto;max-height:none;border:0;border-radius:0;box-shadow:none;
+  flex:1;min-height:0;background:transparent
+}
+.astra-native-score .astra-native-zoom .astra-ms-glyph{font-size:16px !important}
+
+/* The left sidebar clips its own transition. The canvas size, position and
+   worker are untouched; once mounted the group has no close-time rebuild. */
+.astra-native-score .astra-ms-palette-expander{
+  display:grid;grid-template-rows:0fr;
+  transition:grid-template-rows 145ms cubic-bezier(.18,.76,.24,1)
+}
+.astra-native-score .astra-ms-palette-expander.is-expanded{grid-template-rows:1fr}
+.astra-native-score .astra-ms-palette-clip{min-height:0;overflow:hidden}
+.astra-native-score .astra-ms-palette-expander[aria-hidden=true]{pointer-events:none}
+
+.astra-native-score .astra-ms-palette-popup{
+  opacity:0;transform:translateY(-4px);
+  transition:opacity 145ms ease-out,transform 145ms ease-out,display 145ms allow-discrete,overlay 145ms allow-discrete;
+  transition-behavior:allow-discrete
+}
+.astra-native-score .astra-ms-palette-popup[open]{opacity:1;transform:translateY(0)}
+.astra-native-score .astra-ms-palette-popup:not([open]){pointer-events:none}
+@starting-style{
+  .astra-native-score .astra-ms-palette-popup[open]{opacity:0;transform:translateY(-4px)}
+}
+
+.astra-native-score .astra-ms-panel-manager{max-height:none;overflow:hidden}
+.astra-native-score .astra-ms-panel-manager .astra-ms-popup-body{
+  max-height:min(48vh,420px);overflow:auto;padding:3px;scrollbar-width:thin;overscroll-behavior:contain
+}
+.astra-native-score .astra-ms-panel-toggle{
+  position:relative;display:grid;align-items:center;grid-template-columns:14px minmax(0,1fr);
+  gap:9px;min-height:27px;margin:0;padding:0 8px;
+  border-radius:2px;font:12px/1.3 "Segoe UI","Microsoft YaHei UI",sans-serif;cursor:pointer
+}
+.astra-native-score .astra-ms-panel-toggle:hover{background:var(--ns-hover)}
+.astra-native-score .astra-ms-panel-toggle:has(input:focus-visible){
+  outline:2px solid var(--ns-accent);outline-offset:-2px;background:var(--ns-hover)
+}
+.astra-native-score .astra-ms-panel-toggle input{
+  position:absolute;inline-size:1px;block-size:1px;overflow:hidden;clip-path:inset(50%);margin:0
+}
+.astra-native-score .astra-ms-panel-tick{
+  display:grid;place-items:center;box-sizing:border-box;
+  inline-size:14px;block-size:14px;border:1px solid var(--ns-sep);border-radius:2px;
+  color:var(--ns-on-fg);background:white
+}
+.astra-native-score .astra-ms-panel-tick .astra-ms-glyph{visibility:hidden;font-size:11px!important}
+.astra-native-score .astra-ms-panel-toggle input:checked+.astra-ms-panel-tick{
+  background:var(--ns-on);border-color:var(--ns-on-line)
+}
+.astra-native-score .astra-ms-panel-toggle input:checked+.astra-ms-panel-tick .astra-ms-glyph{visibility:visible}
+.astra-native-score .astra-ms-panel-label{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.astra-native-score .astra-ms-palette-controls [data-palette-manage][aria-expanded=true]{
+  background:var(--ns-on);color:var(--ns-on-fg)
+}
+
+.astra-native-score .astra-ms-attribution{
+  flex:none;margin-inline:7px 9px;color:var(--ns-fg2);opacity:.58;
+  font:10px/1 "Segoe UI",sans-serif;white-space:nowrap;pointer-events:none;user-select:none
+}
+@media (max-width:900px){.astra-native-score .astra-ms-attribution{display:none}}
+@media (prefers-reduced-motion:reduce){
+  .astra-native-score .astra-ms-palette-expander,.astra-native-score .astra-ms-palette-popup{transition:none}
+}
+/* Edit / read-only: the shared Astra pair (.segments.editor-mode-switch, see
+ * ui_unification.css) at the trailing end of the score bar, as in Notes. */
+.astra-native-score .astra-native-mode-actions{display:flex;align-items:center;flex:none;margin-inline-start:var(--sp-3,8px)}
+.astra-native-score .astra-native-history+.astra-native-mode-actions{padding-inline-start:var(--sp-3,8px);border-inline-start:1px solid var(--ui-line-soft,var(--ns-sep))}
+/* Score page fills its pane like Notes: the bar, input toolbar and status bar
+ * keep their size and the workspace takes all remaining height (the old
+ * 68vh cap left an empty band at the bottom). Notes' side score keeps its own. */
+.studio-ui .session-body>.astra-native-score{display:flex;flex-direction:column;flex:1 1 auto;min-height:0}
+.studio-ui .session-body>.astra-native-score>*{flex:none}
+.studio-ui .session-body>.astra-native-score>.astra-native-workspace{flex:1 1 auto;height:auto;min-height:380px}
+/* The palette menu (···) belongs to the palette tab: only lit when that tab is selected. */
+.astra-native-score .astra-native-palette-header .astra-ms-palette-tab-wrap:not(:has(>[aria-selected=true])) .astra-ms-palette-settings{background:transparent}

@@ -1,0 +1,9 @@
+.astra-native-score #astra-score-mixer{flex:none;border-top:1px solid var(--ns-line);background:var(--ns-soft);color:var(--ns-fg);max-height:32vh;overflow:auto}
+#astra-score-mixer[hidden]{display:none}
+#astra-score-mixer>header{display:flex;align-items:center;justify-content:space-between;padding:3px 10px;border-bottom:1px solid var(--ns-line)}
+#astra-score-mixer>header button{background:transparent;border:0;color:inherit;cursor:pointer;font-size:18px}
+#astra-score-mixer .ast-mix-channels{display:flex;gap:0;align-items:stretch;padding-inline:10px}
+#astra-score-mixer .ast-mix-channels>div{display:flex;flex-direction:column;gap:5px;padding:6px 12px;border-inline-end:1px solid var(--ns-line);min-width:142px;max-width:45vw}
+#astra-score-mixer label{display:grid;grid-template-columns:auto auto;align-items:center;gap:3px 6px;font-size:12px}
+#astra-score-mixer input{appearance:auto;writing-mode:vertical-lr;direction:rtl;grid-row:span 2;height:min(9vh,60px);width:19px}
+#astra-score-mixer output{font-variant-numeric:tabular-nums}

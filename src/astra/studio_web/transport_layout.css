@@ -1,0 +1,94 @@
+/* One ordered transport surface, shared by read-only and editing. Stem audition has its own compact layout. */
+.studio-ui #transport.compact-transport:not(.stem-transport){display:grid;grid-template-columns:166px 62px 70px minmax(125px,155px) minmax(130px,200px) auto;grid-template-rows:6px 48px;gap:5px 8px;padding:4px 14px 7px;min-height:70px;height:auto;align-items:center;justify-content:center;background:var(--c-n-900);}
+#transport.compact-transport:not(.stem-transport) #musical-transport{display:contents;}
+.compact-transport:not(.stem-transport) #seek{grid-column:1/-1;grid-row:1;order:initial;width:100%;height:6px;min-width:0;margin:0;opacity:.65;}
+.compact-transport:not(.stem-transport) #seek:hover{opacity:1;}
+.compact-transport:not(.stem-transport) #time,.compact-transport:not(.stem-transport) #duration{display:none;}
+.compact-transport:not(.stem-transport) .transport-locators{grid-column:1;grid-row:2;width:auto;display:grid;grid-template-columns:minmax(0,1fr) 20px;grid-template-rows:22px 22px;gap:2px 5px;padding-right:8px;border-right:1px solid var(--c-n-800);}
+.compact-transport:not(.stem-transport) .transport-locators>div{grid-column:1;width:100%;gap:3px;}
+.compact-transport:not(.stem-transport) .transport-locators .transport-icon{height:21px;min-height:21px;width:20px;border:0;background:transparent;padding:2px;}
+.compact-transport:not(.stem-transport) .transport-locators input.control{height:21px;min-height:21px;border-color:transparent;background:var(--c-n-900);}
+.compact-transport:not(.stem-transport) .transport-options{grid-column:2;grid-row:1/3;align-self:center;}
+.compact-transport:not(.stem-transport) .transport-options>summary{width:18px;height:28px;min-height:28px;padding:0;border:0;background:transparent;}
+.compact-transport:not(.stem-transport) .transport-cycle-actions{grid-column:2;grid-row:2;display:flex;gap:3px;}
+.compact-transport:not(.stem-transport) .play-controls{grid-column:3;grid-row:2;display:flex;gap:3px;order:initial;}
+.compact-transport:not(.stem-transport) .play-controls button{width:33px;height:33px;min-height:33px;padding:6px;border-radius:4px;}
+.compact-transport:not(.stem-transport) #musical-transport>.transport-location{grid-column:4;grid-row:2;width:auto;display:grid;grid-template-columns:1fr;gap:0;padding:1px 8px;border-left:1px solid var(--c-n-800);border-right:1px solid var(--c-n-800);}
+.compact-transport:not(.stem-transport) #musical-transport>.transport-location>span:first-child{display:none;}
+.compact-transport:not(.stem-transport) #editor-play-position{height:27px;min-height:27px;font-size:16px;letter-spacing:.3px;text-align:center;border:0;background:var(--c-n-900);}
+.compact-transport:not(.stem-transport) #editor-play-position-seconds{text-align:center;font-size:10px;color:var(--c-n-400);line-height:16px;}
+.compact-transport:not(.stem-transport) .transport-source{grid-column:5;grid-row:2;width:auto;max-width:none;min-width:0;order:initial;gap:7px;}
+.compact-transport:not(.stem-transport) .transport-source select{width:100%;min-width:0;height:30px;background:transparent;border-color:transparent;font-size:12px;}
+.compact-transport:not(.stem-transport) .transport-source>svg{width:16px;height:16px;flex:none;color:var(--c-n-400);}
+.compact-transport:not(.stem-transport) .transport-musical-actions{grid-column:6;grid-row:2;display:flex;align-items:center;flex-wrap:nowrap;gap:4px;margin:0;order:initial;border-left:1px solid var(--c-n-800);padding-left:8px;}
+.compact-transport:not(.stem-transport) .transport-rate{display:grid;grid-template-columns:1fr;padding:0;border:0;gap:0;}
+.compact-transport:not(.stem-transport) .transport-rate>span{font-size:9px;color:var(--c-n-400);line-height:12px;}
+.compact-transport:not(.stem-transport) .transport-rate select{height:25px;min-height:25px;width:65px;padding:1px 4px;font-size:12px;}
+/* One flex cluster, including the popup when relevant; hidden means no slot. */
+.studio-ui #transport #volume-popup[hidden],.studio-ui #transport #volume-percent[hidden]{display:none}
+.studio-ui #transport.compact-transport:not(.stem-transport) .transport-musical-actions>#volume-popup{width:32px;height:32px;flex:0 0 32px;margin:0}
+.studio-ui #transport .volume-popup-panel>.editor-instrument-fader:not([hidden]){display:grid;grid-template-columns:1fr auto;gap:6px;align-items:center}
+.studio-ui #transport .volume-popup-panel>.editor-instrument-fader label{margin:0}
+.studio-ui #transport .volume-popup-panel>.editor-instrument-fader input{grid-column:1/-1;grid-row:2;width:100%}
+.studio-ui #transport .volume-popup-panel>.editor-instrument-fader output{grid-column:2;grid-row:1;white-space:nowrap}
+.compact-transport:not(.stem-transport) .transport-cycle-actions button[aria-pressed=true],.compact-transport:not(.stem-transport) .transport-together[aria-pressed=true]{background:var(--c-t-300);color:var(--c-n-900);border-color:var(--c-t-300);}
+@media(max-width:940px){.studio-ui #transport.compact-transport:not(.stem-transport){grid-template-columns:145px 60px 68px minmax(110px,1fr) auto;grid-template-rows:6px 46px 29px;gap:4px 6px;padding:4px 9px 6px;}.compact-transport:not(.stem-transport) .transport-source{grid-column:1/5;grid-row:3;max-width:300px;}.compact-transport:not(.stem-transport) .transport-musical-actions{grid-column:5;grid-row:2/4;}}
+@media(max-width:700px){.studio-ui #transport.compact-transport:not(.stem-transport){grid-template-columns:140px 60px 68px minmax(100px,1fr);grid-template-rows:6px 46px 33px;}.compact-transport:not(.stem-transport) .transport-source{grid-column:1/3;grid-row:3;}.compact-transport:not(.stem-transport) .transport-musical-actions{grid-column:3/5;grid-row:3;justify-self:end;}}
+
+.compact-transport .transport-speed-popup{position:relative;align-self:center;}
+.compact-transport .transport-speed-popup>summary{display:flex;align-items:center;justify-content:center;list-style:none;cursor:pointer;width:29px;height:29px;border:1px solid var(--c-n-800);border-radius:4px;background:var(--c-n-900);color:var(--c-n-300);}
+.compact-transport .transport-speed-popup>summary::-webkit-details-marker{display:none;}
+.compact-transport .transport-speed-popup>summary svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;transform:translateY(1px);}
+.compact-transport .transport-speed-popup>summary.is-adjusted{color:var(--c-a-200);border-color:var(--c-a-500);}
+.compact-transport .transport-speed-panel{position:absolute;bottom:38px;right:0;width:158px;padding:12px;background:var(--c-n-900);border:1px solid var(--c-n-700);border-radius:6px;box-shadow:0 8px 24px color-mix(in srgb,var(--c-n-900) 46.7%,transparent);z-index:130;}
+.compact-transport:not(.stem-transport) .transport-speed-panel .transport-rate{display:flex;justify-content:space-between;align-items:center;gap:10px;}
+.compact-transport:not(.stem-transport) .transport-speed-panel .transport-rate>span{font-size:11px;white-space:nowrap;color:var(--c-n-300);}
+
+/* A single control language: aligned 32px targets, quiet chrome, consistent icon weight. */
+.compact-transport:not(.stem-transport) .transport-cycle-actions button,
+.compact-transport:not(.stem-transport) .transport-musical-actions button,
+.compact-transport:not(.stem-transport) .transport-speed-popup>summary,
+.compact-transport:not(.stem-transport) .volume-popover>summary,
+.compact-transport:not(.stem-transport) .play-controls button{box-sizing:border-box;width:32px;height:32px;min-height:32px;border-radius:4px;border:1px solid var(--c-n-800);background:var(--c-n-900);color:var(--c-n-300);padding:6px;}
+.compact-transport:not(.stem-transport) .transport-cycle-actions{gap:4px;}
+.compact-transport:not(.stem-transport) .transport-musical-actions{gap:4px;}
+.compact-transport:not(.stem-transport) .transport-cycle-actions svg,
+.compact-transport:not(.stem-transport) .transport-musical-actions svg,
+.compact-transport:not(.stem-transport) .volume-popover>summary svg{width:18px;height:18px;stroke-width:1.6;}
+.compact-transport:not(.stem-transport) #play,
+.compact-transport:not(.stem-transport) button[aria-pressed=true]{background:var(--c-a-300);color:var(--c-n-900);border-color:var(--c-a-300);}
+.compact-transport:not(.stem-transport) .transport-source{border:1px solid var(--c-n-800);border-radius:4px;height:32px;padding:0 6px;background:var(--c-n-900);}
+.compact-transport:not(.stem-transport) .transport-source select{height:30px;padding-left:0;}
+.compact-transport:not(.stem-transport) .transport-locators,
+.compact-transport:not(.stem-transport) #musical-transport>.transport-location,
+.compact-transport:not(.stem-transport) .transport-musical-actions{border-color:transparent;}
+
+/* Compact desktop transport dock: its surface ends with its controls. */
+.studio-ui #transport.compact-transport:not(.stem-transport){width:fit-content;max-width:calc(100% - 28px);align-self:center;margin:7px auto 9px;border:1px solid var(--c-n-800);border-radius:10px;background:linear-gradient(180deg,var(--c-n-900),var(--c-n-900));box-shadow:0 4px 16px color-mix(in srgb,var(--c-n-900) 20.0%,transparent),inset 0 1px color-mix(in srgb,var(--c-n-0) 2.4%,transparent);padding:7px 12px 8px;grid-template-rows:48px 16px;gap:2px 8px;min-height:78px;}
+.compact-transport:not(.stem-transport) .transport-locators,
+.compact-transport:not(.stem-transport) .transport-cycle-actions,
+.compact-transport:not(.stem-transport) .play-controls,
+.compact-transport:not(.stem-transport) #musical-transport>.transport-location,
+.compact-transport:not(.stem-transport) .transport-source,
+.compact-transport:not(.stem-transport) .transport-musical-actions{grid-row:1;}
+.compact-transport:not(.stem-transport) #seek{grid-row:2;appearance:none;-webkit-appearance:none;height:16px;background:transparent;opacity:1;cursor:pointer;border:0;padding:0 3px;}
+.compact-transport:not(.stem-transport) #seek::-webkit-slider-runnable-track{height:2px;background:var(--c-n-700);border-radius:2px;}
+.compact-transport:not(.stem-transport) #seek::-webkit-slider-thumb{appearance:none;-webkit-appearance:none;width:9px;height:9px;margin-top:-3.5px;background:var(--c-t-300);border:0;border-radius:50%;box-shadow:0 0 0 3px color-mix(in srgb,var(--c-t-300) 6.3%,transparent);}
+.compact-transport:not(.stem-transport) #seek:hover::-webkit-slider-thumb,
+.compact-transport:not(.stem-transport) #seek:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 4px color-mix(in srgb,var(--c-t-300) 14.9%,transparent);background:var(--c-a-200);}
+@media(max-width:940px){.studio-ui #transport.compact-transport:not(.stem-transport){grid-template-rows:46px 32px 16px;max-width:calc(100% - 16px);margin:5px auto 7px;}.compact-transport:not(.stem-transport) #seek{grid-row:3;}.compact-transport:not(.stem-transport) .transport-source{grid-row:2;}.compact-transport:not(.stem-transport) .transport-musical-actions{grid-row:1/3;}}
+@media(max-width:700px){.compact-transport:not(.stem-transport) .transport-musical-actions{grid-row:2;}}
+.compact-transport:not(.stem-transport) #editor-play-position-seconds{border:0;background:transparent;padding:0;min-height:16px;height:16px;width:100%;font-size:10px;color:var(--c-n-400);cursor:pointer;border-radius:3px;}
+.compact-transport:not(.stem-transport) #editor-play-position-seconds:hover{color:var(--c-n-150);background:color-mix(in srgb,var(--c-n-0) 3.1%,transparent);}
+
+/* Keep the source focus indication within its own control, not outside the capsule. */
+#transport .transport-source{min-width:0;box-sizing:border-box;}
+#transport .transport-source select{min-width:0;max-width:100%;box-sizing:border-box;}
+#transport .transport-source select:focus-visible{outline:2px solid var(--ui-focus,var(--c-a-500));outline-offset:-3px;border-radius:7px;box-shadow:none;}
+
+/* Press feedback is tactile only; play/pause icon remains backend-confirmed. */
+#transport #play:not(:disabled):active {
+  transform: translateY(1px) scale(.95);
+  filter: brightness(.96);
+  transition: none;
+}

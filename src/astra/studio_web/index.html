@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Astra Studio</title>
+  <link rel="stylesheet" href="astra.css">
+  <script defer src="qrc:///qtwebchannel/qwebchannel.js"></script>
+  <script defer src="cursors.js"></script>
+  <script defer src="page_input_guard.js"></script>
+  <script defer src="popup_menu.js"></script>
+  <script defer src="transport_keys.js"></script>
+  <script defer src="note_inspector.js"></script>
+  <script defer src="roll_meter.js"></script>
+  <script defer src="editor_shortcuts.js"></script>
+  <script defer src="rhythm_motion.js"></script>
+  <script defer src="rhythm_context_menu.js"></script>
+  <script defer src="rhythm_timeline.js"></script>
+  <script defer src="beat_checks.js"></script>
+  <script defer src="project_editor.js"></script>
+  <script defer src="transport_panel.js"></script>
+  <script defer src="ornament_review.js"></script>
+  <script defer src="velocity_colors.js"></script>
+  <script defer src="analysis_hints.js"></script>
+  <script defer src="md_beat_trial.js"></script>
+  <script defer src="preferences.js"></script>
+  <script defer src="project_opening.js"></script>
+  <link rel="stylesheet" href="vst_selector.css">
+  <script defer src="vst_selector.js"></script>
+  <script defer src="app.js"></script>
+  <script defer src="wave_seek.js"></script>
+  <style>.track-row .clip{touch-action:none;user-select:none}</style>
+<link rel="stylesheet" href="output_status.css"><script defer src="output_status.js"></script>
+<link rel="stylesheet" href="ui_unification.css">
+<link rel="stylesheet" href="popup_menu.css">
+  <link rel="stylesheet" href="motion_polish.css">
+</head>
+<body class="studio-ui">
+<svg class="symbols" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-astra" viewBox="0 0 24 24">
+    <path fill="currentColor" stroke="none" d="
+      M13.9 2.7 Q14.2 2.2 14.5 2.6
+      C16 4.9 19 5.1 20.6 7.7
+      C24 13.2 18.7 20.4 10.4 21.7
+      Q9.8 21.8 10.4 21.4
+      C15.7 18.7 19.4 15 18.4 11.5
+      C17.8 9.5 16.2 8.5 15.2 8
+      Q14.8 7.8 14.6 8.3
+      C13.9 10.3 13 13.2 11.9 16
+      C11 18.3 8.4 20 5.7 19.9
+      C3.2 19.8 2 18.4 2.6 16.6
+      C3.3 14.5 6 13.1 8.5 13.4
+      Q8.8 13.4 9 13.1
+      C10.5 10 11.8 6.2 13.9 2.7Z"/>
+  </symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></symbol>
+  <symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9 9a3 3 0 0 1 6 0c0 2-3 2.5-3 4m0 3v.1"/></symbol>
+  <symbol id="i-convert" viewBox="0 0 24 24"><path d="M4 8h15m-4-4 4 4-4 4M20 16H5m4-4-4 4 4 4"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-upload" viewBox="0 0 24 24"><path d="M12 15V4m-4 4 4-4 4 4M5 14v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5"/></symbol>
+  <symbol id="i-piano" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 4v7h2V4m4 0v7h2V4M9 12v8m6-8v8"/></symbol>
+  <symbol id="i-guitar" viewBox="0 0 24 24"><path d="m14 10 6-6m-1-1 2 2M13 9a3 3 0 0 0-4 1c-.4.7-.5 1.5-1.4 1.6-2.4.2-4 1.8-4 4.1a4.7 4.7 0 0 0 4.8 4.7c2.3 0 4-1.5 4.2-3.8.1-1 .9-1.1 1.6-1.5a3 3 0 0 0 1-4.2Z"/><path d="m8 16 2 2m1-5 1 1"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 6h4m4 0h8M4 12h10m4 0h2M4 18h4m4 0h8"/><circle cx="10" cy="6" r="2"/><circle cx="16" cy="12" r="2"/><circle cx="10" cy="18" r="2"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+  <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+  <symbol id="i-track" viewBox="0 0 24 24"><path d="M4 10v4m4-7v10m4-13v16m4-12v8m4-6v4"/></symbol>
+  <symbol id="i-score" viewBox="0 0 24 24"><path d="M4 5h16M4 9h16M4 13h16M4 17h16M4 21h16"/><path d="M13 14V7l4-2v6"/><ellipse cx="11.3" cy="14.5" rx="1.7" ry="1.2"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H6V3Zm7 0v5h4M9 12h6m-6 4h6"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 12 7-12 7Z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><path d="M9 6v12m6-12v12" stroke-width="3"/></symbol>
+  <symbol id="i-stop" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-volume" viewBox="0 0 24 24"><path d="M4 9h4l4-4v14l-4-4H4Zm11 0a4 4 0 0 1 0 6m2-9a8 8 0 0 1 0 12"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+  <symbol id="i-external" viewBox="0 0 24 24"><path d="M13 5h6v6m0-6-9 9m7-1v6H5V7h6"/></symbol>
+  <symbol id="i-retry" viewBox="0 0 24 24"><path d="M5 11a7 7 0 1 1 2 6M5 6v5h5"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="6" y="10" width="12" height="10" rx="2"/><path d="M9 10V7a3 3 0 0 1 6 0v3m-3 4v2"/></symbol>
+  <symbol id="i-terminal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m7 9 3 3-3 3m6 0h4"/></symbol>
+  <symbol id="i-follow" viewBox="0 0 24 24"><path d="M6 4v16m12-16v16M9 12h6m-2-3 3 3-3 3"/></symbol>
+<symbol id="i-undo" viewBox="0 0 24 24"><path d="M9 5 4 10l5 5M4 10h9a6 6 0 0 1 6 6v3"/></symbol>
+<symbol id="i-redo" viewBox="0 0 24 24"><path d="m15 5 5 5-5 5m5-5h-9a6 6 0 0 0-6 6v3"/></symbol>
+<symbol id="i-cursor" viewBox="0 0 24 24"><path d="m5 3 14 10-7 1-3 7Z"/></symbol>
+<symbol id="i-pen" viewBox="0 0 24 24"><path d="m4 16-1 5 5-1L20 8l-4-4Zm10-10 4 4"/></symbol>
+<symbol id="i-beat" viewBox="0 0 24 24"><path d="M6 3v18m0-16h10l-3 4 3 4H6"/></symbol>
+<symbol id="i-erase" viewBox="0 0 24 24"><path d="m4 14 10-10 7 7-10 10H7Zm5-5 7 7M11 21h10"/></symbol>
+<symbol id="i-magnet" viewBox="0 0 24 24"><path d="M6 4v9a6 6 0 0 0 12 0V4h-4v9a2 2 0 0 1-4 0V4ZM6 8h4m4 0h4"/></symbol>
+<symbol id="i-keyboard" viewBox="0 0 24 24"><path d="M3 6h18v12H3ZM6 10h1m3 0h1m3 0h1m3 0h1M6 14h1m3 0h8"/></symbol>
+<symbol id="i-range" viewBox="0 0 24 24"><path d="M4 4v16m16-16v16M7 8h10M7 16h10m-8-6-2 2 2 2m6-4 2 2-2 2"/></symbol>
+<symbol id="i-bars" viewBox="0 0 24 24"><path d="M4 4v16m8-16v16m8-16v16M4 12h16"/></symbol>
+<symbol id="i-more" viewBox="0 0 24 24"><path d="M5 12h.01M12 12h.01M19 12h.01"/></symbol>
+<symbol id="i-start" viewBox="0 0 24 24"><path d="M5 4v16m4-14 10 6-10 6Z"/></symbol>
+</svg>
+
+<div class="shell">
+  <aside class="rail" aria-label="工作区导航">
+    <div class="brand-mark" role="img" aria-label="Astra Studio"><img src="assets/astra-logo-v6.png" width="36" height="36" alt="" aria-hidden="true" draggable="false" style="display:block;width:36px;height:36px;object-fit:contain;flex:none"></div>
+    <div class="rail-links" role="group" aria-label="项目操作">
+      <button class="rail-button active" data-do="new" aria-label="新建转谱" title="新建转谱"><svg><use href="#i-plus"/></svg></button>
+      <button class="rail-button" data-do="chooseProject" aria-label="打开项目" title="打开项目"><svg><use href="#i-folder"/></svg></button>
+      <button class="rail-button" data-do="recent" aria-label="最近项目" title="最近项目"><svg><use href="#i-clock"/></svg></button>
+    </div>
+    <div class="rail-links rail-help">
+      <button class="rail-button" data-do="appPreferences" aria-label="设置" title="设置：外观、音频输出、保存与恢复、快捷键"><svg><use href="#i-settings"/></svg></button>
+      <button id="ncm-tool-button" class="rail-button" data-do="ncmTool" aria-label="NCM 音频转换" title="NCM 音频转换"><svg><use href="#i-convert"/></svg></button>
+      <button class="rail-button" data-do="help" aria-label="使用说明" title="使用说明"><svg><use href="#i-help"/></svg></button>
+    </div>
+  </aside>
+
+  <div class="stage">
+    <header class="topbar">
+      <div class="identity"><strong>Astra Studio</strong><span class="top-separator"></span><span id="breadcrumb">新建转谱</span></div>
+      <div class="header-actions">
+        <span class="local-status"><span></span>本机工作区</span>
+        <button class="quiet icon-label" data-do="logs"><svg><use href="#i-terminal"/></svg><span>日志</span></button>
+      </div>
+    </header>
+    <main id="workspace" tabindex="-1"></main>
+    <footer id="transport" class="transport" hidden aria-label="试听控制">
+      <div class="transport-source"><svg><use href="#i-track"/></svg><select id="source" aria-label="试听来源"></select></div>
+      <div class="play-controls">
+        <button id="play" class="play-button" data-do="playPause" aria-label="播放" title="播放"><svg><use href="#i-play"/></svg></button>
+        <button class="stop-button" data-do="stop" aria-label="停止" title="停止 · 小键盘 0"><svg><use href="#i-stop"/></svg></button>
+      </div>
+      <output id="time">0:00</output><input id="seek" type="range" min="0" max="0" step="0.01" aria-label="试听进度"><output id="duration">0:00</output>
+      <details id="volume-popup" class="volume volume-popover"><summary id="volume-summary" aria-label="音量，展开调整" title="音量 · 点击调整"><svg><use href="#i-volume"/></svg><span class="volume-muted-mark" aria-hidden="true">×</span></summary><div class="volume-popup-panel"><div id="volume-percent"><label for="volume">音量 <output id="volume-value">65%</output></label><input id="volume" type="range" min="0" max="100" value="65" aria-label="试听音量；0 为静音"></div></div></details>
+      <div id="musical-transport" hidden></div>
+      <button type="button" id="transport-fold" class="transport-fold" aria-expanded="true" aria-controls="transport" title="收起走带"><svg><use href="#i-chevron"/></svg></button>
+    </footer>
+  </div>
+</div>
+<div id="rhythm-context-menu" role="menu" hidden></div>
+<dialog id="dialog" class="dialog" aria-labelledby="dialog-title"></dialog>
+<dialog id="ncm-dialog" class="dialog" aria-labelledby="ncm-title">
+  <header class="dialog-head"><h2 id="ncm-title">NCM 音频转换</h2><button type="button" class="icon-button" data-do="ncmClose" aria-label="关闭转换工具"><svg><use href="#i-close"/></svg></button></header>
+  <div class="dialog-body ncm-body">
+    <p class="form-note">在本机提取原有的 FLAC 或 MP3 音频，保留源文件。</p>
+    <div class="ncm-output">
+      <div class="ncm-output-label"><span>输出目录</span><strong class="truncate" id="ncm-output-path"></strong></div>
+      <button type="button" class="secondary" data-do="ncmChooseOutput"><svg><use href="#i-folder"/></svg>选择目录</button>
+    </div>
+    <div class="ncm-queue-head"><h3>转换队列 <span id="ncm-count">0</span></h3><div>
+      <button type="button" class="quiet" data-do="ncmClear" disabled>清空</button>
+      <button type="button" class="secondary" data-do="ncmChooseFiles" autofocus><svg><use href="#i-plus"/></svg>添加 NCM</button>
+    </div></div>
+    <ul id="ncm-queue" class="ncm-queue" aria-label="所选 NCM 文件"></ul>
+    <p id="ncm-empty" class="ncm-empty">添加一个或多个 .ncm 文件开始转换。</p>
+    <div id="ncm-progress-area" hidden><progress id="ncm-progress" max="1" value="0" aria-label="NCM 转换进度"></progress><p id="ncm-status" role="status"></p><p id="ncm-background-note" class="form-note" hidden>关闭此窗口后，转换会在后台继续。</p></div>
+    <p id="ncm-error" class="form-error" role="alert" hidden></p>
+  </div>
+  <footer class="dialog-foot ncm-foot">
+    <button type="button" class="secondary" data-do="ncmOpenOutput" disabled><svg><use href="#i-folder"/></svg>打开输出目录</button>
+    <button type="button" class="secondary" data-do="ncmCancel" hidden>停止剩余队列</button>
+    <button type="button" class="primary" data-do="ncmStart" disabled><svg><use href="#i-convert"/></svg>开始转换</button>
+  </footer>
+</dialog>
+<dialog id="gpu-choice" class="dialog" aria-labelledby="gpu-title"></dialog>
+<dialog id="logs" class="dialog log-dialog" aria-labelledby="logs-title">
+  <div class="dialog-head"><h2 id="logs-title">运行日志</h2><button class="icon-button" data-do="closeLogs" aria-label="关闭日志"><svg><use href="#i-close"/></svg></button></div>
+  <pre id="log-lines" tabindex="0">处理步骤会显示在这里。</pre>
+  <div class="dialog-foot"><button class="secondary" data-do="openLog" disabled>打开日志文件</button><button class="primary" data-do="closeLogs">完成</button></div>
+</dialog>
+<div class="sr-only" id="announcement" role="status" aria-live="polite"></div>
+<div id="review-toast" class="review-toast" role="status" hidden></div>
+</body>
+</html>

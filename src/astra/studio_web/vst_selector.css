@@ -1,0 +1,113 @@
+.vst-slot{padding:8px 10px 10px;border-bottom:1px solid var(--c-n-200)}
+.vst-slot-title{margin-bottom:4px;color:var(--c-n-600);font-size:11px}
+.vst-slot-trigger{width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;text-align:left;background:var(--c-n-0);border:1px solid var(--c-n-200);border-radius:8px;padding:6px 8px;color:var(--c-n-800)}
+.vst-slot-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vst-slot-arrow{color:var(--c-a-600);margin-left:auto}
+.vst-slot-trigger[aria-expanded=true]{border-color:var(--c-a-400)}
+.vst-slot-picker{position:fixed;z-index:90;display:flex;flex-direction:column;gap:7px;overflow:auto;padding:9px;background:var(--c-n-0);color:var(--c-n-800);border:1px solid var(--c-n-200);border-radius:10px;box-shadow:0 8px 22px color-mix(in srgb,var(--c-n-800) 20%,transparent);box-sizing:border-box}
+.vst-slot-picker[hidden],.vst-slot-actions[hidden]{display:none}
+.vst-slot-search,.vst-slot-sort{width:100%;box-sizing:border-box}
+.vst-slot-sort button{flex:1}
+.vst-slot-group{border-top:1px solid var(--c-n-150);padding:4px 0}
+.vst-slot-group>summary{padding:5px;cursor:pointer;font-size:12px}
+.vst-slot-group .vst-slot-choice{display:block;width:100%;text-align:left;padding:5px 9px}
+.vst-slot-choice[aria-pressed=true]{color:var(--c-a-700);background:var(--c-n-100)}
+.vst-slot-actions{display:flex;flex-wrap:wrap;justify-content:space-between;border-top:1px solid var(--c-n-200);padding-top:5px}
+.vst-slot-empty,.vst-slot-status{font-size:12px;margin:2px 0;color:var(--c-n-600);overflow-wrap:anywhere}
+.vst-slot-status{margin-top:4px}
+
+/* Instrument row + fixed inserts. Hover/selected/pressed states only; no new focus ring. */
+.vst-slot-row{display:flex;align-items:center;gap:6px;min-width:0}
+.vst-slot-row>.vst-slot-trigger{flex:1 1 auto;width:auto;min-width:0}
+.vst-slot-panel,.vst-insert-bypass,.vst-insert-editor{flex:0 0 auto;display:inline-grid;place-items:center;box-sizing:border-box;width:28px;height:28px;min-width:0;min-height:0;padding:0;border:0;border-radius:var(--r-chip,8px);background:var(--ui-inset,var(--c-n-100));color:var(--ui-text-3,var(--c-n-600));box-shadow:none;cursor:pointer}
+.vst-slot-panel svg,.vst-insert-bypass svg,.vst-insert-editor svg{width:16px;height:16px;pointer-events:none}
+.vst-slot-panel.is-live,.vst-insert-editor[aria-pressed=true]{background:var(--ui-accent-soft,var(--c-n-100));color:var(--ui-accent-ink,var(--c-a-700))}
+:is(.vst-slot-panel,.vst-insert-bypass,.vst-insert-editor,.vst-insert-trigger):hover:not(:disabled){box-shadow:inset 0 0 0 1px var(--ui-accent-line,var(--c-a-400))}
+:is(.vst-slot-panel,.vst-insert-bypass,.vst-insert-editor):disabled{opacity:.42;cursor:default}
+.vst-slot-none{display:block;width:100%;text-align:left;padding:5px 9px}
+.vst-slot-none[aria-pressed=true],.vst-insert-none[aria-pressed=true]{color:var(--ui-text-3,var(--c-n-600))}
+.vst-inserts{margin-top:10px;min-width:0}
+.vst-insert-list{display:flex;flex-direction:column;gap:4px}
+.vst-insert{display:grid;grid-template-columns:14px minmax(0,1fr) 24px 24px;align-items:center;gap:4px;min-width:0}
+.vst-insert .vst-insert-bypass,.vst-insert .vst-insert-editor{width:24px;height:24px;border-radius:var(--r-dense,6px)}
+.vst-insert .vst-insert-bypass svg,.vst-insert .vst-insert-editor svg{width:14px;height:14px}
+.vst-insert-index{font:10px/1 var(--ui-font-num,sans-serif);font-variant-numeric:tabular-nums;text-align:center;color:var(--ui-text-3,var(--c-n-600))}
+.vst-insert-trigger{display:flex;align-items:center;gap:6px;box-sizing:border-box;min-width:0;width:100%;height:24px;min-height:0;padding:0 8px;border:0;border-radius:var(--r-dense,6px);background:var(--ui-inset,var(--c-n-100));color:var(--ui-text,var(--c-n-800));font-size:12px;text-align:left;box-shadow:none}
+.vst-insert-trigger[aria-expanded=true]{background:var(--ui-surface,var(--c-n-0));box-shadow:inset 0 0 0 1.5px var(--ui-accent,var(--c-a-500))}
+.vst-insert-name{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vst-insert[data-state=empty] .vst-insert-name{color:var(--ui-text-3,var(--c-n-600))}
+.vst-insert.bypassed .vst-insert-name{opacity:.55}
+.vst-insert-bypass[aria-pressed=true]{background:var(--ui-warn-soft,var(--c-n-100));color:var(--ui-warn,var(--c-n-800))}
+.vst-insert-tag{flex:0 0 auto;padding:1px 5px;border-radius:999px;font-size:10px;line-height:1.3;background:var(--ui-line-soft,var(--c-n-150));color:var(--ui-text-2,var(--c-n-600))}
+.vst-insert-tag.warn{background:var(--ui-danger-soft,var(--c-n-100));color:var(--ui-danger,#b4232a)}
+.vst-insert[data-state=missing] .vst-insert-trigger,.vst-insert[data-state=unavailable] .vst-insert-trigger{box-shadow:inset 0 0 0 1px var(--ui-danger-line,#e6a3a6)}
+.vst-insert-tag[hidden],.vst-insert-latency[hidden],.vst-insert-note[hidden],.vst-insert-picker[hidden]{display:none}
+.vst-insert-latency,.vst-insert-note{margin:5px 0 0;font-size:11px;color:var(--ui-text-3,var(--c-n-600));overflow-wrap:anywhere}
+.vst-insert-latency{font-variant-numeric:tabular-nums}
+.vst-insert-choices{display:flex;flex-direction:column;gap:2px;border-top:1px solid var(--ui-line-soft,var(--c-n-150));padding-top:4px}
+.vst-insert-choice{display:flex;flex-direction:column;align-items:flex-start;gap:1px;width:100%;height:auto;text-align:left;padding:5px 9px}
+.vst-insert-choice-name{overflow-wrap:anywhere}
+.vst-insert-meta,.vst-insert-why{font-size:11px;color:var(--ui-text-3,var(--c-n-600))}
+.vst-insert-why{color:var(--ui-danger,#b4232a)}
+.vst-insert-choice:disabled{opacity:.62;cursor:default}
+
+/* Compact sidebar rack; the plugin picker keeps its independent popover styles. */
+.studio-ui .editor-side #editor-vst-slot{padding:7px 9px 8px}
+#editor-vst-slot .vst-slot-row{gap:5px}
+#editor-vst-slot .vst-slot-caption,.editor-instrument-fader label{
+  flex:none;color:var(--ui-text-3,var(--c-n-600));font-size:11px;white-space:nowrap
+}
+#editor-vst-slot .vst-slot-trigger,#editor-vst-slot .vst-slot-panel{height:27px;min-height:0}
+#editor-vst-slot .vst-slot-trigger{padding:0 7px;gap:5px}
+#editor-vst-slot .vst-slot-panel{width:27px;padding:0}
+#editor-vst-slot .vst-inserts{margin-top:4px}
+#editor-vst-slot .vst-inserts-head{display:flex;align-items:center;gap:5px;justify-content:space-between;min-width:0}
+#editor-vst-slot :is(.vst-inserts-fold,.vst-inserts-add){
+  display:inline-flex;align-items:center;gap:5px;height:24px;min-height:0;padding:0 6px;
+  border:0;border-radius:var(--r-dense,6px);background:transparent;color:var(--ui-text-2,var(--c-n-700));
+  font-size:11px;white-space:nowrap;box-shadow:none
+}
+#editor-vst-slot .vst-inserts-fold{padding-inline-start:2px;min-width:0}
+#editor-vst-slot .vst-inserts-count{font:10px/1 var(--ui-font-num,sans-serif);font-variant-numeric:tabular-nums;color:var(--ui-text-3,var(--c-n-600))}
+#editor-vst-slot .vst-inserts-add{color:var(--ui-accent-ink,var(--c-a-700));background:var(--ui-accent-softer,var(--c-n-150))}
+#editor-vst-slot .vst-inserts-add:disabled{opacity:.5}
+#editor-vst-slot :is(.vst-inserts-fold,.vst-inserts-add):hover:not(:disabled){background:var(--ui-accent-soft,var(--c-n-150))}
+#editor-vst-slot :is(.vst-inserts-fold,.vst-inserts-add):focus-visible{outline:2px solid var(--ui-focus,var(--c-a-500));outline-offset:1px}
+#editor-vst-slot .vst-inserts-chevron{
+  flex:none;width:5px;height:5px;border:solid currentColor;border-width:0 1px 1px 0;transform:rotate(-45deg)
+}
+#editor-vst-slot .vst-inserts-fold[aria-expanded=true] .vst-inserts-chevron{transform:rotate(45deg)}
+#editor-vst-slot .vst-insert-list:not([hidden]){margin-top:4px}
+#editor-vst-slot :is(.vst-insert,.vst-insert-list)[hidden]{display:none}
+#editor-vst-slot .vst-insert[data-state=empty]{grid-template-columns:14px minmax(0,1fr)}
+#editor-vst-slot .vst-insert[data-state=empty] :is(.vst-insert-bypass,.vst-insert-editor){display:none}
+
+/* The slider and its live dB readout are one row, not a second panel. */
+#volume-popup[hidden],.editor-instrument-fader[hidden]{display:none}
+.studio-ui #editor-vst-slot .editor-instrument-fader{
+  display:grid;grid-template-columns:auto minmax(0,1fr) 50px;align-items:center;gap:6px;min-width:0;
+  padding:0;margin-top:4px;min-height:23px;border:0
+}
+.studio-ui #editor-vst-slot .editor-instrument-fader[hidden]{display:none}
+#instrument-gain-value{font:var(--fw-medium,600) 11px/1.3 var(--ui-font-num,sans-serif);text-align:end;font-variant-numeric:tabular-nums;color:var(--ui-text,var(--c-n-800));white-space:nowrap}
+#instrument-gain-db{display:block;width:100%;min-width:0;margin:0;height:19px;appearance:none;background:transparent;cursor:pointer}
+#instrument-gain-db:focus-visible{outline:2px solid var(--ui-focus,var(--c-a-500));outline-offset:1px;border-radius:4px}
+#instrument-gain-db::-webkit-slider-runnable-track{height:4px;border-radius:4px;background:var(--ui-line,var(--c-n-200))}
+#instrument-gain-db::-webkit-slider-thumb{appearance:none;height:14px;width:13px;margin-top:-5px;border-radius:3px;border:1px solid var(--ui-accent-line,var(--c-a-500));background:var(--ui-accent,var(--c-a-600))}
+.vst-fx-preference{display:flex;align-items:center;gap:6px;font-size:12px}
+.vst-fx-preference select{flex:1;min-width:0}
+
+/* Bypass status text (生效/绕过) replaces the power icon; fixed width so state changes never shift the row. */
+#editor-vst-slot .vst-insert:not([data-state=empty]){grid-template-columns:14px minmax(0,1fr) 36px 24px}
+.vst-insert .vst-insert-bypass{width:36px;padding:0 4px;font:var(--fw-medium,600) 11px/1 var(--ui-font,sans-serif);white-space:nowrap}
+.vst-insert-bypass-text{pointer-events:none}
+
+/* Instrument + FX rack: one native disclosure, compact and stable. */
+.vst-rack{min-width:0;max-width:100%;border:1px solid var(--ui-line,var(--c-n-200));border-radius:var(--r-chip,8px);padding:0 8px 8px;background:transparent}
+.vst-rack:not([open]){padding-bottom:0}
+.vst-rack-title{display:flex;align-items:center;gap:6px;height:28px;cursor:pointer;list-style:none;font:var(--fw-medium,600) 12px/1 var(--ui-font,sans-serif);color:var(--ui-text-2,var(--c-n-700));user-select:none}
+.vst-rack-title::-webkit-details-marker{display:none}
+.vst-rack-title::before{content:'▸';width:10px;font-size:10px;color:var(--ui-text-3,var(--c-n-600))}
+.vst-rack[open]>.vst-rack-title::before{content:'▾'}
+.vst-rack-title:hover{color:var(--ui-text,var(--c-n-800))}
+.vst-rack-title:focus-visible{outline:2px solid var(--ui-focus,var(--c-a-500));outline-offset:1px;border-radius:4px}

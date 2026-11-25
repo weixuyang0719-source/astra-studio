@@ -1,0 +1,58 @@
+/* 15 CSS px. Application only; OS text/native chrome stay native. */
+:root {
+ --astra-cursor-arrow: url("cursors/arrow.svg") 2 1, url("cursors/arrow.png") 2 1, default;
+ --astra-cursor-pen: url("cursors/pen.svg") 2 12, url("cursors/pen.png") 2 12, crosshair;
+ --astra-cursor-beat: url("cursors/beat.svg") 2 12, url("cursors/beat.png") 2 12, crosshair;
+ --astra-cursor-erase: url("cursors/erase.svg") 3 11, url("cursors/erase.png") 3 11, crosshair;
+ --astra-cursor-range: url("cursors/range.svg") 4 4, url("cursors/range.png") 4 4, crosshair;
+ --astra-cursor-grab: url("cursors/grab.svg") 7 6, url("cursors/grab.png") 7 6, grab;
+ --astra-cursor-grabbing: url("cursors/grabbing.svg") 7 6, url("cursors/grabbing.png") 7 6, grabbing;
+ --astra-cursor-resize-x: url("cursors/resize-x.svg") 8 8, url("cursors/resize-x.png") 8 8, ew-resize;
+ --astra-cursor-velocity: url("cursors/velocity.svg") 8 8, ns-resize;
+ --astra-cursor-resize-y: url("cursors/resize-y.svg") 8 8, url("cursors/resize-y.png") 8 8, ns-resize;
+ --astra-cursor-blocked: url("cursors/blocked.svg") 8 8, url("cursors/blocked.png") 8 8, not-allowed;
+ --astra-cursor-copy: url("cursors/copy.svg") 2 1, url("cursors/copy.png") 2 1, copy;
+ --astra-cursor-zoom-in: url("cursors/zoom-in.svg") 6 6, url("cursors/zoom-in.png") 6 6, zoom-in;
+ --astra-cursor-zoom-out: url("cursors/zoom-out.svg") 6 6, url("cursors/zoom-out.png") 6 6, zoom-out;
+ --astra-cursor-pointer: url("cursors/pointer.svg") 7 1, url("cursors/pointer.png") 7 1, pointer;
+}
+:root[data-cursor-theme="system"] {
+ --astra-cursor-arrow: default;
+ --astra-cursor-pen: crosshair;
+ --astra-cursor-beat: crosshair;
+ --astra-cursor-erase: crosshair;
+ --astra-cursor-range: crosshair;
+ --astra-cursor-grab: grab;
+ --astra-cursor-grabbing: grabbing;
+ --astra-cursor-resize-x: ew-resize;
+ --astra-cursor-resize-y: ns-resize;
+ --astra-cursor-blocked: not-allowed;
+ --astra-cursor-copy: copy;
+ --astra-cursor-zoom-in: zoom-in;
+ --astra-cursor-zoom-out: zoom-out;
+ --astra-cursor-pointer: pointer;
+}
+@media (forced-colors: active), (prefers-contrast: more) { :root {
+ --astra-cursor-arrow: default;
+ --astra-cursor-pen: crosshair;
+ --astra-cursor-beat: crosshair;
+ --astra-cursor-erase: crosshair;
+ --astra-cursor-range: crosshair;
+ --astra-cursor-grab: grab;
+ --astra-cursor-grabbing: grabbing;
+ --astra-cursor-resize-x: ew-resize;
+ --astra-cursor-resize-y: ns-resize;
+ --astra-cursor-blocked: not-allowed;
+ --astra-cursor-copy: copy;
+ --astra-cursor-zoom-in: zoom-in;
+ --astra-cursor-zoom-out: zoom-out;
+ --astra-cursor-pointer: pointer;
+}}
+
+body.studio-ui {cursor:var(--astra-cursor-arrow,default)}
+#ruler-playhead,.editor-wave-surface #waveform-canvas {cursor:var(--astra-cursor-grab,grab)}
+/* Shared interactive language, including icons nested inside controls. */
+body.studio-ui :is(button,a[href],summary,select,[role="button"],[data-do],input[type="range"],input[type="checkbox"],input[type="radio"],label[for]) {cursor:var(--astra-cursor-pointer,pointer)!important}
+body.studio-ui :is(button,a[href],summary,[role="button"],[data-do]) :is(svg,use,path,span,strong) {cursor:inherit!important}
+body.studio-ui :is(button:disabled,input:disabled,select:disabled,[aria-disabled="true"]) {cursor:var(--astra-cursor-arrow,default)!important}
+body.studio-ui :is(input:not([type="range"]):not([type="checkbox"]):not([type="radio"]):not([type="button"]):not([type="submit"]):not(:disabled),textarea,[contenteditable="true"]) {cursor:text!important}

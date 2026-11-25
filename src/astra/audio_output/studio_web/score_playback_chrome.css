@@ -1,0 +1,66 @@
+/* SPDX-License-Identifier: GPL-3.0-only
+ * Spacing, glyphs and control order ported from MuseScore Studio 4.6.5.
+ */
+@font-face{font-family:MuseScore465Transport;src:url("musescore465/MusescoreIcon.ttf") format("truetype");font-display:block}
+.ast-sp-slot{position:relative;flex:none;margin-inline-start:auto}
+.astra-native-score-tools:has(.ast-sp-slot:not([hidden]):not([data-dock=float])) .astra-native-history,
+.astra-native-score-tools:has(.ast-sp-dock-spacer:not([hidden])) .astra-native-history{margin-inline-start:0}
+.ast-sp-slot[data-floating=true]{inline-size:0;block-size:30px}
+.ast-sp-slot[data-floating=true]>.ast-sp-main{display:none}
+.ast-sp-slot[data-dragging=true]>.ast-sp-main{opacity:.48}
+.ast-sp-toolbar{color:var(--ui-text,#303030);--ast-sp-base:var(--ui-surface,#f8f8f8);--ast-sp-line:#bebec3;--ast-sp-accent:#2766c2;--ast-sp-hover:#dfdfec;font:13px/1.3 "Segoe UI",sans-serif;user-select:none}
+.ast-sp-main,.ast-sp-commands,.ast-sp-clock,.ast-sp-measure,.ast-sp-speed-row{display:flex;align-items:center}
+.ast-sp-main{block-size:30px;white-space:nowrap;gap:6px}
+.ast-sp-commands{height:26px;gap:4px;padding-inline-end:6px;border-inline-end:1px solid var(--ast-sp-line)}
+.ast-sp-toolbar .ast-sp-button{display:inline-grid;appearance:none;place-items:center;position:relative;box-sizing:border-box;min-width:0;border:1px solid transparent;border-radius:3px;width:30px;height:30px;padding:0;background:transparent;color:inherit;line-height:1;cursor:default}
+.ast-sp-toolbar .ast-sp-button:disabled,.ast-sp-toolbar input:disabled,.ast-sp-toolbar summary[aria-disabled=true],
+.ast-sp-settings-item:disabled{opacity:.42}
+.ast-sp-toolbar .ast-sp-button:is(:enabled,:not([aria-disabled=true])):not(:disabled):hover,.ast-sp-toolbar summary[aria-disabled=false]:hover{background:var(--ast-sp-hover)}
+.ast-sp-toolbar .ast-sp-button[aria-pressed=true],.ast-sp-toolbar details[open]>.ast-sp-button{background:var(--ast-sp-accent);color:white}
+.ast-sp-toolbar .ast-sp-button:focus-visible,.ast-sp-toolbar input:focus-visible,.ast-sp-toolbar summary:focus-visible{outline:1px solid var(--ast-sp-accent);outline-offset:0}
+.ast-sp-toolbar .ast-sp-button[data-sp-action=grip]{width:24px;cursor:move;touch-action:none}
+.ast-sp-toolbar .ast-sp-icon{font:400 16px/1 MuseScore465Transport}
+.ast-sp-toolbar .ast-sp-clock{width:64px;justify-content:center;font-variant-numeric:tabular-nums}
+.ast-sp-toolbar .ast-sp-clock input,.ast-sp-toolbar .ast-sp-measure input{display:inline-block;flex:none;box-sizing:border-box;width:17px;min-width:0;height:23px;padding:0;border:1px solid transparent;border-radius:2px;background:transparent;color:inherit;font:inherit;text-align:center}
+.ast-sp-toolbar .ast-sp-clock input:first-child{width:9px;text-align:right}
+.ast-sp-toolbar .ast-sp-clock input:last-child{width:10px}
+.ast-sp-toolbar .ast-sp-measure input:first-child{width:26px;text-align:right}
+.ast-sp-toolbar .ast-sp-measure input:last-child{width:20px;text-align:left}
+.ast-sp-toolbar .ast-sp-clock input:focus,.ast-sp-toolbar .ast-sp-measure input:focus{background:#fff}
+.ast-sp-toolbar .ast-sp-tempo{width:60px;white-space:nowrap;text-align:center;font-variant-numeric:tabular-nums}
+.ast-sp-pop{position:relative;display:block}
+.ast-sp-pop summary,.ast-sp-pitch summary{list-style:none}
+.ast-sp-pop summary::-webkit-details-marker,.ast-sp-pitch summary::-webkit-details-marker{display:none}
+.ast-sp-popup{position:absolute;z-index:90;right:0;top:calc(100% + 4px);display:grid;min-width:182px;padding:4px;border:1px solid var(--ast-sp-line);border-radius:3px;background:var(--ast-sp-base);box-shadow:0 2px 6px #1112;color:var(--ui-text,#303030)}
+.ast-sp-popup hr{border:0;border-top:1px solid var(--ast-sp-line);margin:3px 0}
+.ast-sp-pitch summary,.ast-sp-toolbar .ast-sp-settings-item{display:block;width:100%;text-align:start;padding:5px 8px;border:0;border-radius:2px;background:transparent;font:inherit;color:inherit;min-height:0}
+.ast-sp-toolbar .ast-sp-settings-item:enabled:hover,.ast-sp-pitch summary:hover{background:var(--ast-sp-hover)}
+.ast-sp-settings-item[aria-pressed=true]::before{content:"✓ ";color:var(--ast-sp-accent)}
+.ast-sp-settings-item[aria-pressed=false]::before{content:" "}
+.ast-sp-speed-pop{width:282px;padding:8px}
+.ast-sp-speed-pop p{margin:0 0 5px}
+.ast-sp-speed-pop .ast-sp-speed-row>span{display:none}
+.ast-sp-speed-row{gap:10px;justify-content:space-between}
+.ast-sp-speed-row input[type=range],.ast-sp-lower>input[type=range]{accent-color:#5f6378;min-width:0;flex:1}
+.ast-sp-lower>input[type=range]{accent-color:var(--ui-time,#7254e8);height:14px;cursor:pointer}
+.ast-sp-speed-number{display:flex;align-items:center;gap:2px}
+.ast-sp-speed-number input{box-sizing:border-box;width:55px;padding:1px 2px;font:inherit}
+.ast-sp-float-page{margin:0;background:#f8f8f8;min-width:0;overflow:hidden}
+.ast-sp-float-page .ast-sp-toolbar{padding:8px 12px 8px 4px;box-sizing:border-box;border:1px solid #a1a1a7;border-radius:3px;inline-size:100vw;min-block-size:100vh}
+.ast-sp-floating .ast-sp-main{justify-content:space-between}
+.ast-sp-floating .ast-sp-commands{border:0;padding:0}
+.ast-sp-floating .ast-sp-lower{display:grid;gap:6px;margin-inline-start:29px;margin-top:5px}
+.ast-sp-floating .ast-sp-lower>input{width:100%;margin:0}
+.ast-sp-floating .ast-sp-popup{right:auto;left:0}
+
+.ast-sp-floating .ast-sp-popup{max-height:248px;overflow-y:auto}
+
+/* In-window docking, same drop hint as the score input toolbar (DockToolBar / DropController). */
+.ast-sp-dock-spacer{flex:none;margin-inline-start:auto;pointer-events:none;box-sizing:border-box}
+.ast-sp-slot[data-dock=float]{position:fixed;z-index:43;margin:0;padding:3px 8px 3px 2px;box-sizing:border-box;
+  background:var(--ui-surface,#f8f8f8);border:1px solid #a1a1a7;border-radius:5px;box-shadow:0 8px 24px #1e214b38}
+.ast-sp-slot[data-dock-dragging]{cursor:move;user-select:none}
+.ast-sp-slot[data-dock-dragging] .ast-sp-main{pointer-events:none}
+.ast-sp-slot[data-dock-dragging] [data-sp-action=grip]{pointer-events:auto}
+.ast-sp-dock-preview{position:fixed;z-index:42;box-sizing:border-box;pointer-events:none;border:2px solid #357df1;
+  border-radius:4px;background:rgba(54,128,246,.27)}

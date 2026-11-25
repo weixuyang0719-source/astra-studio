@@ -1,0 +1,115 @@
+[
+  {
+    "artifact": "astra_editor_core.dll",
+    "release_path": "runtime/src/astra/astra_editor_core.dll",
+    "sha256": "66c5a73ee5d5a40995930e641997fb751beae838da03918e6b647d158c00f4c1",
+    "source": "editor-core",
+    "evidence": "Formal 4 release seal E7D8839F. Shipped DLL hash matches original CMake Release output from the editor-core tree. Only pulse_commands.cpp differs from the earlier audited editor source; exact source SHA-256 4fa4f44dd36dae8f0db43f9ad4b001c5d4d61d431a2d1f7e0d209a8f7ba4ca08."
+  },
+  {
+    "artifact": "astra_kept_endpoint.dll",
+    "release_path": "runtime/src/astra/audio_output/_native/astra_kept_endpoint.dll",
+    "sha256": "e952a03a9fbac96fe8e31b2911b835c4b5bc72c5f6337e945497b42568f9a6e6",
+    "source": "kept-endpoint",
+    "evidence": "Matched original output, overlay SHA receipt and packaged Formal 3 state."
+  },
+  {
+    "artifact": "native_transport_panel.dll",
+    "release_path": "runtime/src/astra/audio_output/_native/native_transport_panel.dll",
+    "sha256": "63748714e16260eb8226e04870718d694e1b24e4d9c693ecfe3dc87329950e5b",
+    "source": "transport-panel",
+    "evidence": "Matched original DLL beside its translation unit and cl entry."
+  },
+  {
+    "artifact": "astra_audio_core.dll",
+    "release_path": "runtime/src/astra/audio_output/_native/astra_audio_core.dll",
+    "sha256": "d633d1b4a58ca5590e794f7397503f46d75b90ebf971130efb443eb7749f1583",
+    "source": "audio-core",
+    "evidence": "Matched original build_fix.cmd artifact and build log."
+  },
+  {
+    "artifact": "astra_stream_cache.dll",
+    "release_path": "runtime/src/astra/audio_output/_native/astra_stream_cache.dll",
+    "sha256": "a26461ae93a3a32885df41bed545640975bcd913b6accb39cc110f06614d75e2",
+    "source": "stream-cache",
+    "evidence": "Matched original compile.cmd artifact and SHA receipt."
+  },
+  {
+    "artifact": "astra_midi_scheduler.dll",
+    "release_path": "runtime/src/astra/audio_output/_native/astra_midi_scheduler.dll",
+    "sha256": "41aff2ce6c3ea3a0c4f9f3ae0eabcd64064284144b1d3784076d67402529aec5",
+    "source": "audio-components",
+    "evidence": "Matched original native build artifact; silent-route integration receipt pairs changed scheduler source checksum and binary."
+  },
+  {
+    "artifact": "astra_midi_winmm.dll",
+    "release_path": "runtime/src/astra/audio_output/_native/astra_midi_winmm.dll",
+    "sha256": "371af8ca68bc168f72086df9002d0b7bd737f4680b728ecf743fd40ece5798a2",
+    "source": "audio-components",
+    "evidence": "Matching historic build artifact adjacent to sources and build recipes."
+  },
+  {
+    "artifact": "astra_pcm_loader.dll",
+    "release_path": "runtime/src/astra/audio_output/_native/astra_pcm_loader.dll",
+    "sha256": "61363100dfe33d985b742b1eee435baf7b8812bde1c3d69aa2be8bed6b6a9271",
+    "source": "audio-components",
+    "evidence": "Matching historic build artifact adjacent to sources and build recipes."
+  },
+  {
+    "artifact": "astra_tempo_cache.dll",
+    "release_path": "runtime/src/astra/audio_output/_native/astra_tempo_cache.dll",
+    "sha256": "9e32b964f56f145e2ac644e620ab88e2bbecb514109b417de9a4849aee22fcf2",
+    "source": "audio-components",
+    "evidence": "Matching historic build artifact adjacent to sources and build recipes."
+  },
+  {
+    "artifact": "astra_wasapi_host.dll",
+    "release_path": "runtime/src/astra/audio_output/_native/astra_wasapi_host.dll",
+    "sha256": "33ab92ca5ed25cc0d50beb089d65312a693792812fc25f86d03735e8b10d5838",
+    "source": "audio-components",
+    "evidence": "Matching historic build artifact adjacent to sources and build recipes."
+  },
+  {
+    "artifact": "astra_recovery_recycle.dll",
+    "release_path": "runtime/src/astra/astra_recovery_recycle.dll",
+    "sha256": "d13e17d33ce8dd2cfe7104cb0dbe2804137fac5dc995c36c69e7152e044a8fef",
+    "source": "recovery-recycle",
+    "evidence": "Matched original CMake Release output and CMakeCache source path."
+  },
+  {
+    "artifact": "astra_instrument_start.dll",
+    "release_path": "runtime/src/astra/vst_host/_native/astra_instrument_start.dll",
+    "sha256": "c228efe7eeae84f31368e3043bfaed888240e0d668cc10bde83ab433cdd83303",
+    "source": "instrument-preflight",
+    "evidence": "Matched original CMake Release output and CMakeCache source path."
+  },
+  {
+    "artifact": "astra_vst_host.dll",
+    "release_path": "runtime/src/astra/vst_host/_native/astra_vst_host.dll",
+    "sha256": "d4657d3d8d0048d06c8b463dd38cb43d3bb96e61627bad9926c40be3ac988fbf",
+    "source": "vst-host",
+    "evidence": "Matched original CMake Release output and source/SDK roots."
+  },
+  {
+    "artifact": "astra_vst_isolated_fx_host.dll",
+    "release_path": "runtime/src/astra/vst_host/_native/astra_vst_isolated_fx_host.dll",
+    "sha256": "16f1d814145d004e69f5f3c34273092a27070965eb57ba0471eb66b106f72dad",
+    "source": "vst-isolated-fx",
+    "evidence": "Matched exact installed Formal 4 and original build output. All shipped host sources compared with build workspace; single corresponding-source delta in PLAYBACK-DIRTY.patch. Public DLL follows documented debug-path redaction.",
+    "portable_sha256": "16f1d814145d004e69f5f3c34273092a27070965eb57ba0471eb66b106f72dad"
+  },
+  {
+    "artifact": "astra_vst_rt_bridge.dll",
+    "release_path": "runtime/src/astra/vst_host/_native/astra_vst_rt_bridge.dll",
+    "sha256": "1e2729455c0999aea4af3ad9fcb30729ae29869f535085e64cea77b9317b9666",
+    "source": "vst-rt-bridge",
+    "evidence": "Matched original build.cmd artifact; source documented alongside original .text comparison."
+  },
+  {
+    "artifact": "AstraMuseScoreBasic.vst3",
+    "release_path": "runtime/src/astra/vst_host/builtin/AstraMuseScoreBasic.vst3/Contents/x86_64-win/AstraMuseScoreBasic.vst3",
+    "sha256": "0ea3a99a1fb90ce0f13feb99c0e6cabf20b02e1de185d8764404639073e14869",
+    "source": "musescore-basic",
+    "evidence": "Matched original CMake Release output, PDB location and bundled soundfont SHA separately."
+  }
+]

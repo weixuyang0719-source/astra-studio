@@ -1,0 +1,8 @@
+/* Draft buffer only: all edited text and styles live in MuseScore's document. */
+.astra-native-text-edit.astra-native-rich-text:not([hidden]){display:grid;gap:4px;padding:6px 10px;border-top:1px solid var(--ns-line,#e1e2ef)}
+.astra-rich-controls,.astra-rich-draft{display:flex;align-items:center;gap:5px;flex-wrap:wrap;min-width:0}
+.astra-rich-role{margin-inline-end:4px;color:var(--ns-fg2,#514f69);font-size:13px;font-weight:650}
+.astra-rich-controls button,.astra-rich-draft button{flex:none;min-height:24px;padding:2px 8px;border:1px solid var(--ns-line,#e1e2ef);border-radius:4px;background:#fff;color:var(--ns-fg,#29283f);font:inherit}
+.astra-rich-controls button[aria-pressed=true]{background:var(--ns-on,#e9e7f9)}
+.astra-rich-draft textarea{box-sizing:border-box;flex:1;min-width:180px;max-width:560px;min-height:36px;max-height:120px;resize:vertical;border:1px solid var(--ns-line,#e1e2ef);border-radius:4px;padding:4px 7px;color:inherit;font:inherit}
+.astra-native-rich-text :is(button,textarea):focus-visible{outline:2px solid var(--ns-focus,#375da5);outline-offset:1px}

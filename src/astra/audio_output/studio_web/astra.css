@@ -1,0 +1,20 @@
+/* Astra stylesheet entry. Cascade is explicit:
+   legacy  – module structure from earlier rounds, kept in its historical load order (colors already tokenized)
+   system  – tokens.css + components.css: the shared design system. It wins over legacy by layer order,
+             so components stay low-specificity and nothing new needs !important.
+   Unlayered rules (inline style attributes, RAW-only output_status.css) still sit above both. */
+@layer legacy, system;
+@import url("style.css") layer(legacy);
+@import url("note_inspector.css") layer(legacy);
+@import url("workbench.css") layer(legacy);
+@import url("project_editor.css") layer(legacy);
+@import url("refinement.css") layer(legacy);
+@import url("transport_layout.css") layer(legacy);
+@import url("kawaii_theme.css") layer(legacy);
+@import url("stem_workspace.css") layer(legacy);
+@import url("cursors.css") layer(legacy);
+@import url("preferences.css") layer(legacy);
+@import url("tokens.css") layer(system);
+@import url("components.css") layer(system);
+
+@import url("roll_lanes.css") layer(system);

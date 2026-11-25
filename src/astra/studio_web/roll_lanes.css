@@ -1,0 +1,53 @@
+/* Controller layout: one piano-roll viewport, with its horizontal control at the bottom. */
+.studio-ui .midi-editor .midi-roll {min-height:80px}
+.studio-ui .midi-editor #roll-scroll::-webkit-scrollbar:horizontal {display:none}
+.studio-ui .midi-editor .roll-time-scrollbar {
+  flex:none; padding-left:52px; background:var(--ui-inset); border-top:1px solid var(--ui-line-soft);
+}
+/* A proportional range thumb controls the existing scroller; it never creates a second viewport. */
+.studio-ui .midi-editor #roll-time-scroll {
+  appearance:none; display:block; width:100%; height:14px; margin:0; padding:0;
+  background:var(--ui-inset); border:0; border-radius:0; cursor:pointer;
+}
+.studio-ui .midi-editor #roll-time-scroll::-webkit-slider-thumb {
+  appearance:none; width:var(--roll-thumb-width,100%); height:12px;
+  background:var(--c-n-400); border:3px solid var(--ui-inset); border-radius:7px;
+}
+.studio-ui .midi-editor #roll-time-scroll:hover::-webkit-slider-thumb {background:var(--c-n-500)}
+.studio-ui .midi-editor #roll-time-scroll:disabled {cursor:default}
+.studio-ui .midi-editor #roll-time-scroll:disabled::-webkit-slider-thumb {background:var(--c-n-200)}
+.studio-ui .midi-editor .roll-lane-divider {
+  position:relative; height:7px; flex:none; background:var(--ui-inset);
+  cursor:var(--astra-cursor-resize-y,ns-resize); touch-action:none;
+}
+.studio-ui .midi-editor .roll-lane-divider::after {
+  content:""; position:absolute; top:3px; left:calc(50% - 14px); width:28px;
+  height:1px; background:var(--c-n-400); pointer-events:none;
+}
+.studio-ui .midi-editor .roll-lane-divider:hover {background:var(--c-a-100)}
+.studio-ui .midi-editor :is(.roll-lane-divider,#roll-time-scroll,.roll-lane-fold):focus-visible {
+  outline:2px solid var(--ui-focus,var(--ui-accent)); outline-offset:-2px;
+}
+.studio-ui .midi-editor .roll-lane-divider[hidden] {display:none}
+.studio-ui .midi-editor :is(#velocity-lane,#pedal-lane) {
+  height:var(--lane-height); flex:0 1 auto; grid-template-rows:minmax(0,1fr);
+}
+.studio-ui .midi-editor #velocity-lane {min-height:40px}
+.studio-ui .midi-editor #pedal-lane {min-height:53px}
+.studio-ui .midi-editor :is(#velocity-lane,#pedal-lane)[data-folded="true"] {
+  height:25px; min-height:25px; flex:none;
+}
+.studio-ui .midi-editor :is(#velocity-lane,#pedal-lane)[data-folded="true"] :is(canvas,small) {display:none}
+.studio-ui .midi-editor :is(#velocity-lane,#pedal-lane)>span {padding:0}
+.studio-ui .midi-editor .roll-lane-fold {
+  display:flex; align-items:center; justify-content:center; gap:3px; width:100%;
+  height:24px; padding:0; border:0; border-radius:0; background:none;
+  color:inherit; font:inherit; cursor:pointer;
+}
+.studio-ui .midi-editor .roll-lane-fold:hover {background:var(--c-a-100)}
+.studio-ui .midi-editor .roll-lane-fold+small {display:block;line-height:1}
+.studio-ui .midi-editor .roll-lane-chevron {
+  width:5px; height:5px; border:solid currentColor; border-width:0 1px 1px 0;
+  transform:translateY(-1px) rotate(45deg);
+}
+.studio-ui .midi-editor [aria-expanded="false"]>.roll-lane-chevron {transform:rotate(-45deg)}

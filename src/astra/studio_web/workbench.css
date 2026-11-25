@@ -1,0 +1,241 @@
+/* Operate surface: compact controls around real audio, MIDI and printed scores. */
+:root { --rail-w:56px; --head-h:48px; --transport-h:64px; --sidebar-w:190px; }
+::selection { background:color-mix(in srgb,var(--c-a-300) 25.9%,transparent); color:var(--text); }
+::-webkit-scrollbar-corner { background:var(--work); }
+input,textarea { caret-color:var(--accent); }
+.rail { padding-top:10px; gap:17px; }
+.brand-mark { width:32px; height:32px; border-radius:8px; }
+.rail-button { width:36px; height:36px; border-radius:7px; }
+.topbar { padding:0 20px; }
+.identity strong { font-size:14px; }
+.identity #breadcrumb { font-size:12px; }
+.header-actions { font-size:12px; }
+.topbar .quiet { min-height:32px; padding:4px 6px; }
+.workbench.session { width:100%; max-width:none; height:100%; min-height:0; padding:0; margin:0; display:flex; flex-direction:column; }
+.workbench .session-head { flex:none; margin:0; padding:14px 20px; min-height:80px; gap:10px 20px; border-bottom:1px solid var(--soft-line); align-items:center; }
+.workbench .session-title { flex:1 1 260px; min-width:0; }
+.workbench .session-title h1 { font-size:20px; line-height:1.35; font-weight:650; letter-spacing:-.02em; }
+.workbench .session-title p { font-size:12px; margin-top:4px; color:var(--muted); }
+.workbench .session-actions { flex:0 1 auto; max-width:100%; gap:5px; }
+.workbench .session-actions button { min-height:34px; padding:6px 10px; font-size:12px; }
+.workbench .session-actions .quiet { border-color:transparent; }
+.workbench .session-actions svg { width:16px; height:16px; }
+.workbench .session-actions .compact-tempo { display:none; }
+.workbench > .job { flex:none; margin:10px 20px; }
+.workbench-grid { display:grid; grid-template-columns:var(--sidebar-w) minmax(0,1fr); min-width:0; min-height:0; flex:1; }
+.instrument-sidebar { display:flex; flex-direction:column; padding:18px 10px 12px; border-right:1px solid var(--soft-line); background:var(--c-n-900); min-width:0; min-height:0; overflow:auto; }
+.sidebar-heading { display:flex; align-items:center; justify-content:space-between; padding:0 8px 10px; }
+.sidebar-heading h2 { font-size:13px; font-weight:600; }
+.sidebar-heading > span { font-size:12px; color:var(--muted); font-variant-numeric:tabular-nums; }
+.instrument-list { display:grid; gap:5px; }
+.instrument-item { display:flex; align-items:center; text-align:left; gap:10px; width:100%; padding:12px 9px; border:1px solid transparent; border-radius:6px; background:transparent; }
+.instrument-item > svg:first-child { width:19px; height:19px; color:var(--piano); }
+.instrument-item.guitar > svg:first-child { color:var(--guitar); }
+.instrument-item > svg:last-child { width:14px; height:14px; color:var(--muted); margin-left:auto; }
+.instrument-item span { display:grid; gap:3px; }
+.instrument-item strong { font-size:14px; font-weight:600; }
+.instrument-item small { font-size:11px; color:var(--muted); font-variant-numeric:tabular-nums; }
+.instrument-item:hover { background:var(--surface); }
+.instrument-item[aria-pressed=true] { background:var(--c-n-900); border-color:var(--c-n-800); }
+.instrument-item.guitar[aria-pressed=true] { background:var(--c-n-900); border-color:var(--c-n-800); }
+.sidebar-section { margin-top:23px; padding:0 7px; }
+.sidebar-section h3 { font-size:12px; color:var(--muted); font-weight:500; margin-bottom:8px; }
+.sidebar-section p { font-size:12px; line-height:1.65; margin-bottom:8px; }
+.audition-source { display:flex; align-items:center; gap:9px; width:100%; padding:8px 3px; background:transparent; border:0; text-align:left; font-size:12px; }
+.audition-source svg { width:16px; height:16px; color:var(--muted); }
+.audition-source:hover,.audition-source[aria-pressed=true] { color:var(--accent); }
+.audition-source[aria-pressed=true] svg { color:var(--accent); }
+.sidebar-action.quiet { min-height:32px; padding:5px 0; font-size:12px; justify-content:flex-start; text-align:left; }
+.sidebar-action svg { width:15px; height:15px; }
+.sidebar-bottom { margin-top:auto; padding:26px 8px 0; color:var(--muted); font-size:11px; }
+.sidebar-bottom > span { display:flex; align-items:center; gap:6px; margin-bottom:5px; }
+.sidebar-bottom svg { width:13px; height:13px; }
+.sidebar-bottom p { font-size:11px; }
+.editor-pane { display:flex; flex-direction:column; min-width:0; min-height:0; padding:0 18px 12px; }
+.workbench .tabs { gap:22px; margin:0 0 14px; flex:none; }
+.workbench .tabs button { min-height:45px; font-size:13px; font-weight:600; }
+.view-description { margin-left:auto; color:var(--muted); font-size:11px; white-space:nowrap; }
+.workbench .session-body { display:flex; flex-direction:column; flex:1; min-height:0; overflow:auto; }
+.workbench[data-view=notes] .session-body { overflow:visible; }
+.view-toolbar { display:flex; align-items:center; justify-content:space-between; gap:10px; flex:none; margin:0 0 16px; }
+.view-toolbar > div { display:grid; gap:3px; }
+.view-toolbar strong { font-size:15px; font-weight:600; }
+.view-toolbar span { font-size:12px; color:var(--muted); }
+.toolbar-shortcut { display:flex; align-items:center; gap:6px; }
+kbd { font:11px/1.4 'Segoe UI','Microsoft YaHei UI',sans-serif; color:var(--muted); background:var(--c-n-900); border:1px solid var(--line); border-radius:4px; padding:2px 5px; }
+.track-stack { flex:none; border-radius:6px; }
+.track-ruler,.track-row { grid-template-columns:172px minmax(0,1fr); }
+.track-ruler { height:32px; }
+.track-row { min-height:134px; }
+.track-controls { display:flex; flex-direction:column; justify-content:center; gap:11px; padding:12px; background:var(--c-n-900); border-right:1px solid var(--line); }
+.track-name { padding:0; gap:9px; background:transparent; border:0; width:100%; min-height:36px; }
+.track-name:hover,.track-name[aria-pressed=true] { background:transparent; }
+.track-name > svg { width:18px; height:18px; color:var(--muted); }
+.track-name strong { font-size:13px; font-weight:600; }
+.track-name small { margin-top:3px; }
+.piano .track-name > svg { color:var(--piano); }
+.guitar .track-name > svg { color:var(--guitar); }
+.track-actions { display:flex; align-items:center; gap:5px; }
+.track-actions .quiet { font-size:11px; min-height:28px; padding:4px 7px; }
+.track-play { display:grid; place-items:center; width:29px; height:28px; border:1px solid var(--c-n-800); border-radius:5px; background:var(--c-n-900); color:var(--text); }
+.track-play svg { width:15px; height:15px; }
+.track-play:hover { background:var(--c-n-800); }
+.track-play[aria-pressed=true] { color:var(--c-n-900); background:var(--accent); border-color:var(--accent); }
+.clip { min-height:134px; }
+.track-row.original .clip { color:var(--c-n-400); background:var(--c-n-900); }
+.track-row.piano .clip { background:var(--c-n-900); }
+.track-row.guitar .clip { background:var(--c-n-900); }
+.clip:hover { filter:brightness(1.13); }
+.clip:focus-visible { outline-offset:-3px; }
+.clip svg.wave { inset:17% 0; height:66%; stroke-width:1.1; }
+.clip .playhead { position:absolute; height:100%; }
+.track-row.is-selected .track-controls { background:var(--c-n-900); }
+.track-row.is-selected .track-name strong { color:var(--accent); }
+.track-hint { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:14px; flex-wrap:wrap; font-size:12px; color:var(--muted); }
+.track-hint .secondary { font-size:12px; min-height:33px; }
+.midi-bar { gap:7px 12px; margin:0 0 10px; }
+.midi-bar > select { width:190px; font-size:12px; min-height:33px; }
+.midi-tools { gap:4px; }
+.midi-tools .segments { margin-right:2px; }
+.midi-tools .segments button { min-height:28px; font-size:11px; padding:3px 7px; }
+.midi-tools .secondary,.midi-tools .quiet { min-height:29px; padding:4px 7px; font-size:11px; }
+.midi-tools input { width:54px; }
+.midi-tools svg { width:14px; height:14px; }
+.midi-editor { min-height:200px; border-radius:5px; }
+.note-inspector { margin-top:9px; min-height:58px; padding:8px 11px; border-radius:5px; background:var(--c-n-900); }
+.note-inspector-heading { min-width:68px; }
+.note-inspector-heading strong { font-size:13px; }
+.note-inspector-values { gap:6px 16px; }
+.midi-footer { font-size:11px; gap:3px; line-height:1.7; }
+.midi-footer > span:last-child { color:var(--muted); }
+.score-bar { flex:none; gap:7px 12px; }
+.score-bar select { width:165px; min-height:33px; font-size:12px; }
+.score-tools { flex-wrap:wrap; gap:5px; }
+.score-tools .secondary { min-height:30px; padding:4px 8px; font-size:12px; }
+.score-tools .icon-button { width:30px; height:30px; }
+.score-tools span { min-width:43px; font-size:12px; }
+#score-zoom-label { min-width:41px; text-align:center; color:var(--muted); font-size:12px; font-variant-numeric:tabular-nums; }
+.paper-area { display:block; flex:1; min-height:220px; padding:20px; overflow:auto; border-radius:5px; background:var(--c-n-900); text-align:center; }
+.paper-area img { width:min(100%,790px); max-width:100%; margin:0 auto; box-shadow:0 5px 20px color-mix(in srgb,var(--c-n-900) 33.3%,transparent); }
+.score-hint { flex:none; font-size:11px; margin-top:8px; color:var(--muted); }
+.analysis-warnings { padding:10px 12px; border:1px solid var(--c-n-800); border-radius:6px; margin-bottom:12px; background:var(--c-n-900); }
+.analysis-warnings summary { cursor:pointer; font-size:12px; color:var(--c-w-300); }
+.analysis-warnings ul { margin:10px 0 0; padding-left:18px; font-size:12px; color:var(--c-n-200); line-height:1.75; overflow-wrap:anywhere; }
+.tempo-fit-row { display:flex; align-items:center; gap:10px; margin:12px 0; flex-wrap:wrap; }
+.tempo-fit-row span { color:var(--muted); font-size:12px; }
+.tempo-fit-row .secondary { font-size:12px; min-height:32px; }
+.file-summary { font-size:12px; }
+.roll-meter-panel { flex:none; padding:8px 10px; margin-bottom:8px; border:1px solid var(--soft-line); border-radius:6px; display:flex; align-items:center; gap:12px; color:var(--muted); font-size:12px; }
+.roll-meter-panel.active { display:block; border-color:var(--c-g-600); background:var(--c-n-900); }
+.roll-meter-controls { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.roll-meter-controls strong { color:var(--text); margin-right:4px; }
+.roll-meter-controls label,.harmony-engine-label { display:flex; align-items:center; gap:6px; color:var(--muted); font-size:12px; }
+.roll-meter-controls .control,.harmony-engine-label .control { width:auto; min-height:30px; padding:4px 8px; font-size:12px; }
+.roll-meter-panel button { min-height:30px; padding:5px 9px; font-size:12px; }
+.roll-meter-status { margin:8px 0 0; line-height:1.5; color:var(--c-g-300); }
+.roll-meter-panel.active + .midi-editor #midi-canvas,.roll-meter-panel.active + .midi-editor #ruler-canvas { cursor:crosshair; }
+.file-group { flex:none; }
+.surface-note strong { display:block; font-size:15px; color:var(--text); margin-bottom:6px; }
+.surface-note p { font-size:13px; margin:0 auto 14px; max-width:45ch; }
+.transport { padding:0 20px; gap:12px; }
+.transport-source { width:145px; max-width:145px; flex:none; }
+.transport-source select { font-size:12px; }
+.transport output { font-size:12px; font-variant-numeric:tabular-nums; }
+.transport .play-button { width:36px; height:36px; border-radius:6px; }
+.transport .stop-button { width:32px; height:34px; border-radius:6px; }
+.transport .volume input { width:65px; }
+.import-session .workbench-grid { display:block; }
+.import-session .editor-pane { padding:0; }
+.import-session .session-head { align-items:center; }
+.import-session .session-title h1 { font-size:23px; }
+.home { max-width:940px; padding-top:30px; }
+.home .page-heading h1 { font-size:27px; }
+.home .page-heading p { font-size:13px; }
+@media (min-width:1600px) { :root { --sidebar-w:212px; } .editor-pane { padding-left:24px; padding-right:24px; } .workbench .session-head { padding-left:24px; padding-right:24px; } .track-row,.clip { min-height:152px; } }
+@media (max-width:1150px) { :root { --sidebar-w:166px; } .editor-pane { padding:0 12px 10px; } .workbench .session-head { padding:12px 16px; } .workbench .session-title h1 { font-size:18px; } .sidebar-section { padding:0 4px; } .sidebar-action.quiet { font-size:11px; } .view-description { display:none; } .track-ruler,.track-row { grid-template-columns:146px minmax(0,1fr); } .track-controls { padding:10px; } .note-inspector-values { gap:6px 10px; } }
+@media (max-width:900px) { .workbench .session-head { flex-direction:row; } .workbench .session-title { flex:1 1 100%; max-width:100%; } .workbench .session-actions { justify-content:flex-start; } .workbench.session { min-height:620px; } .instrument-sidebar { padding:14px 7px 10px; } .sidebar-bottom { display:none; } .midi-footer > span:last-child { display:none; } .toolbar-shortcut { display:none!important; } }
+@media (max-width:700px) { :root { --rail-w:46px; } .workbench-grid { display:flex; flex-direction:column; } .instrument-sidebar { flex:none; display:block; padding:8px 12px; overflow:visible; border-right:0; border-bottom:1px solid var(--soft-line); } .sidebar-heading,.sidebar-section,.sidebar-bottom { display:none; } .instrument-list { display:flex; gap:6px; } .instrument-item { padding:7px 10px; width:auto; gap:8px; } .instrument-item span { display:flex; align-items:center; gap:7px; } .instrument-item > svg:last-child { display:none; } .instrument-item strong { font-size:12px; } .instrument-item small { font-size:11px; } .editor-pane { flex:1; } .workbench .tabs { gap:20px; margin-bottom:10px; } .workbench .tabs button { min-height:38px; font-size:12px; } .workbench .session-head { padding:10px 12px; gap:8px; } .workbench .session-title h1 { font-size:17px; } .workbench .session-actions button { font-size:11px; min-height:30px; padding:5px 7px; } .workbench .session-actions { gap:3px; } .workbench.session { min-height:710px; } .track-ruler,.track-row { grid-template-columns:124px minmax(0,1fr); } .track-controls { padding:8px; } .track-actions { gap:2px; } .track-actions .quiet { padding:3px 5px; } .track-row,.clip { min-height:112px; } .note-inspector { flex-wrap:wrap; } .score-tools { gap:3px; } .paper-area { padding:12px; } .transport { gap:6px; padding:8px 10px; } .transport-source { width:96px; min-width:0; } .transport-source > svg { display:none; } .transport .volume { display:none; } .transport #seek { min-width:65px; } .home { width:calc(100% - 28px); } }
+@media (prefers-reduced-motion:no-preference) { .instrument-item,.track-play,.audition-source { transition:background-color 150ms ease-out,color 150ms ease-out; } }
+@media (max-width:700px) { .workbench .session-actions .compact-tempo { display:inline-flex; } }
+
+/* Project views share the title, tab strip and playback controls. */
+.studio-ui { --rail-w:44px; --head-h:42px; --transport-h:46px; }
+.studio-ui.project-open .topbar { display:none; }
+.studio-ui .rail-button { width:34px; height:34px; }
+.studio-ui .workbench.session { min-height:0; }
+.studio-ui .workbench .session-head { padding:5px 12px; min-height:42px; gap:4px 12px; background:var(--work); }
+.studio-ui .workbench .session-title { display:flex; align-items:center; flex:1 1 190px; width:auto; gap:10px; }
+.studio-ui .workbench .session-title h1 { font-size:17px; line-height:24px; }
+.studio-ui .workbench .project-facts { margin:0; gap:5px; flex:none; }
+.studio-ui .workbench .project-facts .status-token { font-size:12px; }
+.studio-ui .workbench .session-actions .compact-tempo { display:inline-flex; }
+.studio-ui .workbench .session-actions button { min-height:30px; padding:3px 7px; }
+.studio-ui .workbench-grid { display:grid; grid-template-columns:minmax(0,1fr); }
+.studio-ui .editor-pane { padding:0 12px 8px; }
+.view-navigation { display:flex; min-width:0; align-items:center; gap:8px; flex:none; margin-bottom:5px; border-bottom:1px solid var(--line); }
+.studio-ui .view-navigation .tabs { margin:0; border:0; gap:15px; flex:1 1 auto; }
+.studio-ui .view-navigation .tabs button { min-height:34px; font-size:13px; padding-block:3px; }
+.view-instruments { display:flex; gap:4px; flex-wrap:wrap; }
+.view-instruments button { min-height:29px; padding:2px 6px; }
+.rhythm-source { position:relative; flex:none; color:var(--muted); font-size:12px; }
+.rhythm-source summary { cursor:pointer; padding:6px; }
+.rhythm-source > div { position:absolute; z-index:10; right:0; width:min(300px,75vw); border:1px solid var(--line); background:var(--surface); padding:10px; }
+.rhythm-source p { margin:0 0 7px; }
+.studio-ui .workbench .job { margin:3px 12px; padding:6px 10px; }
+.studio-ui .workbench .job .phase-steps { display:none; }
+.studio-ui .workbench .transport,.studio-ui .transport { min-height:46px; padding:4px 10px; gap:8px; }
+.studio-ui .transport .volume { display:flex; }
+.studio-ui .transport .volume input { width:48px; }
+.studio-ui .transport .play-button,.studio-ui .transport .stop-button { height:32px; }
+.studio-ui .home { max-width:760px; }
+.studio-ui .home .drop { display:block; padding:20px; min-height:0; border-radius:6px; }
+.studio-ui .home .drop-main { align-items:flex-start; }
+.studio-ui .home .drop-notation { display:none; }
+.studio-ui .home .drop-icon,.studio-ui .home .tile-icon { background:var(--c-n-800); }
+.studio-ui .home .tile-icon.guitar { background:var(--c-n-800); }
+.studio-ui .home .tile[aria-pressed=true] { background:var(--surface); border-color:var(--c-n-700); }
+.studio-ui button.primary:disabled { background:var(--c-n-800); border-color:transparent; color:var(--muted); }
+.studio-ui .topbar,.studio-ui .transport { background:var(--rail); }
+.studio-ui .home .recent-grid { grid-template-columns:1fr; }
+.studio-ui .home .recent-card { min-height:0; border-radius:4px; padding:8px 12px; }
+.studio-ui .workbench .track-stack { border-radius:0; }
+.studio-ui .workbench .track-row,.studio-ui .workbench .clip { min-height:108px; }
+.studio-ui .midi-tools .follow-button[aria-pressed=true] { border-color:var(--accent); background:var(--c-n-800); }
+.studio-ui .playhead { background:var(--c-t-300); }
+.studio-ui .clip .playhead { background:none; border-left-color:var(--c-t-300); }
+.studio-ui .rail-button.active { background:var(--c-n-800); border-color:var(--c-n-700); }
+.studio-ui .control { background:var(--ink); }
+.studio-ui .segments button[aria-pressed=true] { background:var(--c-n-800); color:var(--text); }
+.studio-ui .score-bar { margin-bottom:5px; }
+.studio-ui .score-review-layout { flex:1; min-height:0; align-items:stretch; gap:8px; }
+.studio-ui .ornament-review { border-radius:4px; padding:9px; background:var(--surface); }
+.score-extra { flex:none; font-size:12px; color:var(--muted); margin-bottom:6px; }
+.score-disclosures { display:flex; align-items:flex-start; flex-wrap:wrap; gap:0 16px; }
+.score-extra summary { cursor:pointer; padding:5px 0; }
+.score-extra[open] > div { display:flex; flex-wrap:wrap; align-items:center; gap:6px; padding:6px 0; }
+.score-extra .score-chord-controls,.score-extra .review-actions { margin:0; }
+.studio-ui .score-review-layout:not(:has(.ornament-disclosure[open])) { grid-template-columns:minmax(0,1fr); }
+.ornament-disclosure > summary { cursor:pointer; padding:5px 0; color:var(--muted); font-size:12px; }
+.ornament-disclosure:not([open]) { grid-column:1 / -1; }
+.studio-ui .score-review-layout:has(.ornament-disclosure:not([open])) { grid-template-rows:auto minmax(0,1fr); }
+.studio-ui .paper-area img { box-shadow:none; }
+.studio-ui .file-row { border:0; border-radius:0; border-bottom:1px solid var(--soft-line); }
+.studio-ui .file-group { margin-block:6px 12px; }
+.studio-ui .file-group h3 { background:var(--surface); }
+.files-header { display:flex; flex-wrap:wrap; gap:8px; align-items:flex-start; }
+.files-header .analysis-warnings { margin:0; padding:5px 8px; max-width:min(560px,100%); }
+.studio-ui .workbench:is([data-view=notes],[data-view=score]) .session-actions [data-do=reexport] { background:var(--surface); border-color:var(--line); color:var(--text); }
+.studio-ui .workbench:is([data-view=notes],[data-view=score]) .session-actions [data-do=reexport]:hover { background:var(--raised); }
+@media(max-width:800px) {
+  .studio-ui .workbench[data-view] .session-title { flex:1 0 100%; }
+  .studio-ui .view-navigation { flex-wrap:wrap; }
+  .studio-ui .transport-source { width:106px; }
+}
+@media(max-width:800px) {
+  .studio-ui .workbench .session-title { flex-wrap:wrap; }
+  .studio-ui .workbench .session-title h1 { flex:1 0 100%; max-width:100%; }
+}
+@media(max-height:560px) {
+  .studio-ui .workbench[data-view=notes] .editor-pane { overflow:auto; }
+  .studio-ui .workbench[data-view=notes] .session-body { overflow:visible; flex:none; }
+}

@@ -1,0 +1,64 @@
+/* Astra score canvas, read/edit state and status bar. */
+.astra-native-score{--ns-line:#e2e5f1;--ns-sep:#d5d7e3;--ns-soft:#f8f8fc;--ns-hover:#f0eff8;--ns-on:#eae7fa;--ns-on-line:#c7bce7;--ns-on-fg:#34276a;--ns-accent:#755bc9;--ns-fg:#28283f;--ns-fg2:#505068;color:var(--ns-fg)}
+.astra-native-score button[data-native-score]{min-height:30px;padding:4px 10px;border:1px solid var(--ns-line);background:#fff;border-radius:7px;color:var(--ns-fg);font-size:12px;white-space:nowrap}
+.astra-native-score button[data-native-score]:disabled{opacity:.44}
+.astra-native-score button[data-native-score][aria-disabled=true]{opacity:.62}
+.astra-native-score button[data-native-score]:disabled[aria-disabled=true]{opacity:.44}
+.astra-native-score button[data-native-score][aria-pressed=true]{background:var(--ns-on);border-color:var(--ns-on-line);color:var(--ns-on-fg)}
+.astra-native-score button:focus-visible,.astra-native-score summary:focus-visible{outline:2px solid var(--ns-accent);outline-offset:1px}
+.astra-native-score [hidden],.astra-native-score-tools button[hidden],.astra-native-score .astra-native-paper canvas[hidden]{display:none!important}
+
+/* C: canvas with document tab strip */
+.astra-native-canvas{display:flex;flex-direction:column;min-width:0;min-height:0}
+.astra-native-doc-tabs{flex:none;display:flex;align-items:flex-end;height:24px;padding-inline-start:4px;background:var(--ns-soft);border-bottom:1px solid var(--ns-line)}
+.astra-native-doc-tab{display:flex;align-items:center;height:23px;max-width:240px;padding:0 12px;box-sizing:border-box;background:#f0f1f7;border:1px solid var(--ns-line);border-bottom:0;border-radius:5px 5px 0 0;font-size:12px;color:var(--ns-fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.astra-native-score .astra-native-paper{flex:1;min-height:0;overflow:auto;background:#f0f1f7;display:block;border:0;text-align:start;justify-items:normal;
+  will-change:scroll-position}
+.astra-native-score .astra-native-paper canvas{display:block;margin:18px auto;max-width:none;height:auto;border:0;outline:0;box-shadow:0 1px 3px #25224429;user-select:none}
+/* A page turn moves the live canvas to another slot; the browser must not
+   scroll the view along with it (scroll anchoring), or the view jumps a page. */
+.astra-native-score .astra-native-paper>canvas.astra-native-live{overflow-anchor:none}
+/* MuseScore overscroll: spacers above/below and side room around every page. */
+.astra-native-score .astra-native-paper>.astra-native-overscroll-top,.astra-native-score .astra-native-paper>.astra-native-overscroll-bottom{display:block;position:static!important;left:auto!important;transform:none!important;float:none!important;margin:0!important;padding:0;pointer-events:none}
+.astra-native-score .astra-native-paper>canvas.astra-native-live,.studio-ui .astra-native-score .astra-native-paper>.astra-native-page{margin-left:var(--astra-ovx,auto)!important;margin-right:var(--astra-ovx,auto)!important}
+.astra-native-score .astra-native-paper>.astra-native-overscroll-edge{position:absolute;top:0;width:1px;height:1px;pointer-events:none;visibility:hidden}
+/* Pages left to right: one row; only the first page carries the overscroll margin. */
+.astra-native-score .astra-native-paper.is-horizontal{white-space:nowrap}
+.astra-native-score .astra-native-paper.is-horizontal>canvas.astra-native-live,.studio-ui .astra-native-score .astra-native-paper.is-horizontal>.astra-native-page{
+  display:inline-block;vertical-align:top;margin:18px 16px!important}
+.studio-ui .astra-native-score .astra-native-paper.is-horizontal>.is-first-page.is-first-page{margin-left:var(--astra-ovx,16px)!important}
+/* The page raster carries MuseScore's own page edge and margin: no extra frame. */
+/* ...and its margin is painted in exactly this colour (the worker's page
+   surround), so the area around the pages must match it to the pixel. */
+.studio-ui .astra-native-score .astra-native-paper.paper-area{background:#f0f1f7!important;box-shadow:none}
+.studio-ui .astra-native-score .astra-native-paper>canvas.astra-native-live,
+.studio-ui .astra-native-score .astra-native-paper>.astra-native-page{box-shadow:none!important;border-radius:0!important}
+.studio-ui .astra-native-score .astra-native-paper>img.astra-native-page[src]{background:transparent}
+/* Pages other than the live one: same size and frame as the live canvas. */
+.studio-ui .astra-native-score .astra-native-paper img.astra-native-page{display:block;margin:18px auto;width:var(--astra-page-w,960px);max-width:none;height:auto;
+  background:#fff;border:0;border-radius:0;box-shadow:0 1px 3px #25224429;user-select:none;-webkit-user-drag:none}
+.astra-native-score.is-input .astra-native-paper canvas{cursor:crosshair}
+
+/* Status bar: native status text | page + zoom controls */
+.astra-native-statusbar{display:flex;align-items:center;height:28px;box-sizing:border-box;padding-inline-start:12px;font-size:12px;color:var(--ns-fg2)}
+.astra-native-score-status{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.astra-native-zoom{display:flex;align-items:center;gap:4px;height:100%;padding:0 8px 0 12px;border-inline-start:1px solid var(--ns-line)}
+.astra-native-zoom button[data-native-score]{min-height:24px;height:24px;width:24px;padding:0;border-color:transparent;background:transparent;border-radius:3px;font-size:15px;line-height:1}
+.astra-native-zoom button[data-native-score]:not(:disabled):hover{background:var(--ns-hover)}
+.astra-native-zoom .astra-native-zoom-label{width:auto!important;min-width:44px;font-size:12px!important;font-variant-numeric:tabular-nums}
+.astra-native-pages{min-width:40px;text-align:center;font-variant-numeric:tabular-nums}
+.astra-native-sep{width:1px;height:14px;margin:0 4px;background:var(--ns-line)}
+
+/* Tuplet / meter popovers (existing native forms). */
+.astra-native-rhythm-menu{position:relative;font:inherit}
+.astra-native-rhythm-popover{position:fixed;z-index:40;min-width:194px;padding:6px;background:#fff;color:#253347;border:1px solid #c1cde0;border-radius:5px;box-shadow:0 4px 10px #18304026}
+.astra-rhythm-quick{display:grid;grid-template-columns:repeat(8,1fr);margin-bottom:6px}
+.astra-native-rhythm-popover form,.astra-native-rhythm-popover label{display:flex;align-items:center;gap:4px}
+.astra-native-rhythm-popover label{flex-direction:column;align-items:flex-start;font-size:11px}
+.astra-native-rhythm-popover input,.astra-native-rhythm-popover select{box-sizing:border-box;width:52px;color:inherit}
+.astra-native-rhythm-popover form button{align-self:flex-end;white-space:nowrap}
+
+/* A native note-input shadow is transparent glyph ink, not a paper thumbnail. */
+.studio-ui .astra-native-score .astra-native-paper img.astra-native-shadow-note{
+  background:transparent;box-shadow:none;border:0;border-radius:0;max-width:none;margin:0;padding:0;pointer-events:none
+}

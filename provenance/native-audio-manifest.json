@@ -1,0 +1,65 @@
+{
+  "base_runtime": "2f8479ed8bb2f54d",
+  "component_abi": 1,
+  "core_abi": 2,
+  "files": [
+    {
+      "name": "astra_audio_core.dll",
+      "sha256": "d633d1b4a58ca5590e794f7397503f46d75b90ebf971130efb443eb7749f1583",
+      "size": 154624
+    },
+    {
+      "name": "astra_kept_endpoint.dll",
+      "sha256": "1a662af480c594bb632d6fd682b4ff165765a3ce1c0acc6a0b88e514216e7a60",
+      "size": 137728
+    },
+    {
+      "name": "astra_midi_scheduler.dll",
+      "sha256": "41aff2ce6c3ea3a0c4f9f3ae0eabcd64064284144b1d3784076d67402529aec5",
+      "size": 171520
+    },
+    {
+      "name": "astra_midi_winmm.dll",
+      "sha256": "371af8ca68bc168f72086df9002d0b7bd737f4680b728ecf743fd40ece5798a2",
+      "size": 30208
+    },
+    {
+      "name": "astra_pcm_loader.dll",
+      "sha256": "61363100dfe33d985b742b1eee435baf7b8812bde1c3d69aa2be8bed6b6a9271",
+      "size": 21504
+    },
+    {
+      "name": "astra_portaudio_host.dll",
+      "sha256": "658c9e3d021cc118813964806d03c3ab5ad5abbb4854340ed30a807b7ee0e6aa",
+      "size": 177152
+    },
+    {
+      "name": "astra_stream_cache.dll",
+      "sha256": "a26461ae93a3a32885df41bed545640975bcd913b6accb39cc110f06614d75e2",
+      "size": 155648
+    },
+    {
+      "name": "astra_tempo_cache.dll",
+      "sha256": "9e32b964f56f145e2ac644e620ab88e2bbecb514109b417de9a4849aee22fcf2",
+      "size": 87040
+    },
+    {
+      "name": "astra_wasapi_host.dll",
+      "sha256": "33ab92ca5ed25cc0d50beb089d65312a693792812fc25f86d03735e8b10d5838",
+      "size": 27648
+    },
+    {
+      "name": "native_transport_panel.dll",
+      "sha256": "e0b705373f53fbc31291788eee9c2c104d14b6006d9aa57d48ca969e97cdaf13",
+      "size": 169472
+    }
+  ],
+  "scope": "Integrated desktop candidate: one native transport and stable DAC state",
+  "sources": {
+    "native\\audio_core\\memory_midi_scheduler.inl": "cf256781c52c9e512618b494b31ca87b0dfb257e2c69e75e28f766a6ec8af8df",
+    "native\\audio_core\\midi_scheduler.cpp": "1465e26bca361e5157a6c55285a9edfc49402560bdaaa869358753c6581746d0",
+    "native\\audio_core\\midi_scheduler.h": "8fc7f3dc67f8ba5ac979a05b2ef963edeac920a9943a9d64d3cfb76770c8e783",
+    "native\\audio_core\\portaudio_host.cpp": "2af47e62ab1390adad607025f5f2a7f93a77568878344ba738ac4e9231aec74d",
+    "native\\kept_endpoint.cpp": "3c3fcc91f311f69a8f0ec8ce28928d84b449f40381db516860c42c98bf6e63e8"
+  }
+}

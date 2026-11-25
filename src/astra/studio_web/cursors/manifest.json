@@ -1,0 +1,100 @@
+{
+  "arrow": {
+    "hotspot": [
+      2,
+      1
+    ],
+    "fallback": "default"
+  },
+  "pen": {
+    "hotspot": [
+      2,
+      12
+    ],
+    "fallback": "crosshair"
+  },
+  "beat": {
+    "hotspot": [
+      2,
+      12
+    ],
+    "fallback": "crosshair"
+  },
+  "erase": {
+    "hotspot": [
+      3,
+      11
+    ],
+    "fallback": "crosshair"
+  },
+  "range": {
+    "hotspot": [
+      4,
+      4
+    ],
+    "fallback": "crosshair"
+  },
+  "grab": {
+    "hotspot": [
+      7,
+      6
+    ],
+    "fallback": "grab"
+  },
+  "grabbing": {
+    "hotspot": [
+      7,
+      6
+    ],
+    "fallback": "grabbing"
+  },
+  "resize-x": {
+    "hotspot": [
+      8,
+      8
+    ],
+    "fallback": "ew-resize"
+  },
+  "resize-y": {
+    "hotspot": [
+      8,
+      8
+    ],
+    "fallback": "ns-resize"
+  },
+  "blocked": {
+    "hotspot": [
+      8,
+      8
+    ],
+    "fallback": "not-allowed"
+  },
+  "copy": {
+    "hotspot": [
+      2,
+      1
+    ],
+    "fallback": "copy"
+  },
+  "zoom-in": {
+    "hotspot": [
+      6,
+      6
+    ],
+    "fallback": "zoom-in"
+  },
+  "zoom-out": {
+    "hotspot": [
+      6,
+      6
+    ],
+    "fallback": "zoom-out"
+  },
+  "pointer": {
+    "hotspot": [
+      7,
+      1
+    ],
+    "fallback": "pointer"
+  }
+}

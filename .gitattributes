@@ -1,0 +1,2 @@
+# Preserve the original runtime bytes for the source-provenance digests.
+* -text

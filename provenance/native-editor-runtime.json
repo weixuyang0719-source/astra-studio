@@ -1,0 +1,12 @@
+{
+  "editor_core": {
+    "path": "astra_editor_core.dll",
+    "sha256": "e672fd6f59d55bcd57c888d84e24b451e632f0e13540f3ce5a3dc7cff6f78c43",
+    "source_tree": "native/editor_core",
+    "build_artifact": "cubase-pedals-to-length-native-20261119/build/Release/astra_editor_core.dll"
+  },
+  "recovery": {
+    "path": "astra_recovery_recycle.dll",
+    "sha256": "d13e17d33ce8dd2cfe7104cb0dbe2804137fac5dc995c36c69e7152e044a8fef"
+  }
+}

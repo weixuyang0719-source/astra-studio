@@ -1,0 +1,7 @@
+MuseScore Studio 4.6.5, commit 653f38d8ea80ebd2b084c2b5e5521a32b00983c7
+Source: https://github.com/musescore/MuseScore/tree/653f38d8ea80ebd2b084c2b5e5521a32b00983c7
+MusescoreIcon.ttf: byte-identical to src/framework/ui/data/MusescoreIcon.ttf at the pinned source.
+SHA-256: e580240856cb4f4e67abc3455ea4a3d0ae5d2829a5e25826513b7932fa98921f
+Icon mappings and UI action metadata originate from iconcodes.h, notationuiactions.cpp, official shortcut XML
+and MuseScore simplified Chinese locale. Copyright (C) MuseScore BVBA / MuseScore Limited and contributors.
+Original glyph outlines unmodified. See MuseScore-LICENSE.txt and the candidate worker/source notices.

@@ -1,0 +1,315 @@
+.vst-slot{padding:8px 10px 10px;border-bottom:1px solid var(--ui-line-soft,var(--c-n-200))}
+.vst-slot-title{margin-bottom:4px;color:var(--ui-text-3,var(--c-n-600));font-size:11px}
+.vst-slot-inst{display:flex;flex-direction:column;gap:4px;min-width:0}
+.vst-slot-caption{font-size:10.5px;font-weight:500;color:var(--ui-text-3,var(--c-n-500));line-height:1.2;letter-spacing:.02em;white-space:nowrap}
+
+/* Unified Instrument split pill: [ Plugin Name ▾ | 🎹 ] */
+.vst-slot-row{
+  display:flex;align-items:stretch;min-width:0;height:30px;box-sizing:border-box;
+  border-radius:var(--r-ctl,8px);border:1px solid var(--ui-line,var(--c-n-200));
+  background:var(--ui-surface,var(--c-n-0));overflow:hidden;
+  box-shadow:0 1px 2px color-mix(in srgb,#2b2f5a 4%,transparent);
+  transition:border-color var(--dur-fast,90ms) ease,box-shadow var(--dur-fast,90ms) ease;
+}
+.vst-slot-row:hover{border-color:var(--ui-accent-line,var(--c-a-300))}
+.vst-slot-row:has(.vst-slot-trigger[aria-expanded=true]){
+  border-color:var(--ui-accent,var(--c-a-600));
+  box-shadow:0 0 0 2px color-mix(in srgb,var(--ui-accent,var(--c-a-600)) 14%,transparent);
+}
+.vst-slot-trigger{
+  flex:1 1 auto;width:auto;min-width:0;height:100%;min-height:0;
+  display:flex;align-items:center;justify-content:space-between;gap:5px;
+  padding:0 7px 0 9px;border:0;border-radius:0;background:transparent;
+  color:var(--ui-text,var(--c-n-800));font-size:12px;font-weight:500;text-align:left;
+  box-shadow:none;cursor:pointer;
+}
+.vst-slot-trigger:hover{background:var(--ui-accent-softer,var(--c-a-50))}
+.vst-slot-name{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vst-slot-arrow{
+  flex:none;width:6px;height:6px;margin:0 2px 2px auto;font-size:0;color:transparent;
+  border-right:1.4px solid var(--ui-text-3,var(--c-n-500));
+  border-bottom:1.4px solid var(--ui-text-3,var(--c-n-500));
+  transform:rotate(45deg);transition:transform 140ms ease,border-color 120ms ease;
+}
+.vst-slot-trigger[aria-expanded=true] .vst-slot-arrow{
+  border-color:var(--ui-accent,var(--c-a-600));transform:rotate(-135deg) translate(-1px,-1px);
+}
+.vst-slot-panel{
+  flex:0 0 30px;width:30px;height:100%;min-width:0;min-height:0;padding:0;
+  display:inline-grid;place-items:center;box-sizing:border-box;
+  border:0;border-left:1px solid var(--ui-line-soft,var(--c-n-150));border-radius:0;
+  background:var(--ui-inset,var(--c-n-50));color:var(--ui-text-2,var(--c-n-600));
+  box-shadow:none;cursor:pointer;
+}
+.vst-slot-panel svg{width:15px;height:15px;pointer-events:none}
+.vst-slot-panel:hover:not(:disabled){background:var(--ui-accent-soft,var(--c-a-100));color:var(--ui-accent-ink,var(--c-a-700))}
+.vst-slot-panel.is-live{
+  background:var(--ui-accent,var(--c-a-600));color:#ffffff;border-left-color:var(--ui-accent,var(--c-a-600));
+}
+.vst-slot-panel.is-live:hover:not(:disabled){background:var(--ui-accent-hover,var(--c-a-700));color:#ffffff}
+.vst-slot-panel:disabled{opacity:.38;cursor:default}
+
+/* Plugin & effect picker popovers */
+.vst-slot-picker{position:fixed;z-index:90;display:flex;flex-direction:column;gap:7px;overflow:auto;padding:9px;background:var(--ui-surface,var(--c-n-0));color:var(--ui-text,var(--c-n-800));border:1px solid var(--ui-line,var(--c-n-200));border-radius:12px;box-shadow:var(--shadow-pop,0 8px 22px color-mix(in srgb,var(--c-n-800) 20%,transparent));box-sizing:border-box}
+.vst-slot-picker[hidden],.vst-slot-actions[hidden]{display:none}
+.vst-slot-search,.vst-slot-sort{width:100%;box-sizing:border-box}
+.vst-slot-sort button{flex:1}
+.vst-slot-group{border-top:1px solid var(--ui-line-soft,var(--c-n-150));padding:4px 0}
+.vst-slot-group>summary{padding:5px;cursor:pointer;font-size:12px}
+.vst-slot-group .vst-slot-choice{display:block;width:100%;text-align:left;padding:5px 9px}
+.vst-slot-choice[aria-pressed=true]{color:var(--ui-accent-ink,var(--c-a-700));background:var(--ui-accent-softer,var(--c-a-50))}
+.vst-slot-actions{display:flex;flex-wrap:wrap;justify-content:space-between;border-top:1px solid var(--ui-line-soft,var(--c-n-150));padding-top:5px}
+.vst-slot-empty,.vst-slot-status{font-size:11.5px;margin:2px 0;color:var(--ui-text-2,var(--c-n-600));overflow-wrap:anywhere}
+.vst-slot-status{margin-top:6px;padding:5px 8px;border-radius:var(--r-dense,6px);background:var(--ui-inset,var(--c-n-50))}
+.vst-slot-status>button{margin-inline-start:8px;min-height:22px;font-size:11px}
+.vst-slot-status[hidden],.vst-slot-status>button[hidden]{display:none}
+.vst-slot-none{display:block;width:100%;text-align:left;padding:5px 9px}
+.vst-slot-none[aria-pressed=true],.vst-insert-none[aria-pressed=true]{color:var(--ui-text-3,var(--c-n-600))}
+
+/* Insert FX chain section */
+.vst-inserts{
+  margin-top:8px;padding-top:8px;border-top:1px solid var(--ui-line-soft,var(--c-n-150));min-width:0;
+}
+.vst-inserts-head{display:flex;align-items:center;gap:6px;justify-content:space-between;min-width:0}
+.vst-inserts-fold,.vst-inserts-add{
+  display:inline-flex;align-items:center;gap:5px;height:22px;min-height:0;padding:0 6px;
+  border:0;border-radius:var(--r-pill,999px);background:transparent;
+  color:var(--ui-text-2,var(--c-n-600));font-size:11px;font-weight:500;white-space:nowrap;
+  box-shadow:none;cursor:pointer;
+}
+.vst-inserts-fold{padding:0 5px 0 2px;border-radius:6px;min-width:0}
+.vst-inserts-fold:hover:not(:disabled){background:var(--ui-inset,var(--c-n-50));color:var(--ui-text,var(--c-n-800))}
+.vst-inserts-count{
+  display:inline-flex;align-items:center;justify-content:center;height:16px;padding:0 5px;
+  border-radius:var(--r-pill,999px);background:var(--ui-inset,var(--c-n-100));
+  font:500 10px/1 var(--ui-font-num,sans-serif);font-variant-numeric:tabular-nums;
+  color:var(--ui-text-3,var(--c-n-500));
+}
+.vst-inserts-add{
+  padding:0 8px;color:var(--ui-accent-ink,var(--c-a-700));
+  background:var(--ui-accent-softer,var(--c-a-50));
+  border:1px solid color-mix(in srgb,var(--ui-accent-line,var(--c-a-300)) 70%,transparent);
+}
+.vst-inserts-add:hover:not(:disabled){background:var(--ui-accent-soft,var(--c-a-100));border-color:var(--ui-accent-line,var(--c-a-300))}
+.vst-inserts-add:disabled{opacity:.42;cursor:default}
+:is(.vst-inserts-fold,.vst-inserts-add):focus-visible{outline:2px solid var(--ui-focus,var(--c-a-500));outline-offset:1px}
+.vst-inserts-chevron{
+  flex:none;width:5px;height:5px;margin-left:1px;
+  border:solid currentColor;border-width:0 1.4px 1.4px 0;
+  transform:rotate(-45deg);opacity:.7;
+  transition:transform 240ms cubic-bezier(.34,1.36,.5,1),color 150ms ease,opacity 150ms ease;
+}
+.vst-inserts-fold[aria-expanded=true] .vst-inserts-chevron{
+  transform:rotate(45deg) translate(-1px,-1px);color:var(--ui-accent,var(--c-a-600));opacity:1;
+}
+.vst-inserts.is-open .vst-inserts-count{
+  background:var(--ui-accent-softer,var(--c-a-50));color:var(--ui-accent-ink,var(--c-a-700));
+}
+
+/* Fresh breezy drawer motion for 插入效果器 empty slots & latency footer */
+.vst-insert-list{display:flex;flex-direction:column;gap:0;margin-top:1px}
+.vst-insert-wrap{
+  display:grid;grid-template-rows:1fr;opacity:1;
+  transition:grid-template-rows 240ms cubic-bezier(.22,1,.36,1) calc(var(--stagger,0) * 26ms),
+             opacity 200ms cubic-bezier(.2,.8,.2,1) calc(var(--stagger,0) * 26ms);
+}
+.vst-insert-wrap.is-folded{
+  grid-template-rows:0fr;opacity:0;pointer-events:none;
+  transition:grid-template-rows 190ms cubic-bezier(.4,0,.2,1) 0ms,
+             opacity 140ms ease 0ms;
+}
+.vst-insert-inner{overflow:hidden;min-height:0}
+.vst-insert{
+  display:grid;grid-template-columns:12px minmax(0,1fr);align-items:center;gap:5px;min-width:0;
+  margin-top:5px;transform:translateY(0) scale(1);transform-origin:top center;
+  transition:transform 240ms cubic-bezier(.22,1,.36,1) calc(var(--stagger,0) * 26ms);
+}
+.vst-insert-wrap.is-folded .vst-insert{
+  transform:translateY(-5px) scale(.985);
+  transition:transform 170ms cubic-bezier(.4,0,.2,1) 0ms;
+}
+.vst-inserts-meta-wrap{
+  display:grid;grid-template-rows:1fr;opacity:1;
+  transition:grid-template-rows 240ms cubic-bezier(.22,1,.36,1) 60ms,opacity 200ms ease 60ms;
+}
+.vst-inserts-meta-wrap.is-folded{
+  grid-template-rows:0fr;opacity:0;pointer-events:none;
+  transition:grid-template-rows 170ms cubic-bezier(.4,0,.2,1) 0ms,opacity 120ms ease 0ms;
+}
+.vst-inserts-meta-inner{overflow:hidden;min-height:0}
+@media (prefers-reduced-motion:reduce){
+  .vst-inserts-chevron,.vst-insert-wrap,.vst-insert,.vst-inserts-meta-wrap{transition:none!important}
+}
+.vst-insert-index{
+  font:500 10px/1 var(--ui-font-num,sans-serif);font-variant-numeric:tabular-nums;
+  text-align:center;color:var(--ui-text-disabled,var(--c-n-400));user-select:none;
+}
+.vst-insert:not([data-state=empty]) .vst-insert-index{color:var(--ui-text-3,var(--c-n-500))}
+.vst-insert-strip{
+  display:flex;align-items:stretch;min-width:0;height:28px;box-sizing:border-box;
+  border-radius:var(--r-ctl,8px);border:1px solid var(--ui-line-soft,var(--c-n-150));
+  background:var(--ui-surface,var(--c-n-0));overflow:hidden;
+  box-shadow:0 1px 2px color-mix(in srgb,#2b2f5a 3%,transparent);
+  transition:border-color 110ms ease,background-color 110ms ease,box-shadow 110ms ease,opacity 110ms ease;
+}
+.vst-insert:not([data-state=empty]):not(.bypassed) .vst-insert-strip:hover{
+  border-color:var(--ui-accent-line,var(--c-a-300));
+}
+.vst-insert.bypassed .vst-insert-strip{
+  background:var(--ui-inset,var(--c-n-50));
+  border-color:var(--ui-line-soft,var(--c-n-150));
+  box-shadow:none;
+}
+.vst-insert[data-state=empty] .vst-insert-strip{
+  height:25px;background:transparent;border:1px dashed var(--ui-line,var(--c-n-200));box-shadow:none;
+}
+.vst-insert[data-state=empty] .vst-insert-strip:hover{
+  background:var(--ui-accent-softer,var(--c-a-50));border-color:var(--ui-accent-line,var(--c-a-300));
+}
+.vst-insert[data-state=empty] :is(.vst-insert-bypass,.vst-insert-editor){display:none}
+.vst-insert[data-state=missing] .vst-insert-strip,
+.vst-insert[data-state=unavailable] .vst-insert-strip{
+  border-color:var(--ui-danger-line,var(--c-r-300));
+}
+.vst-insert-strip:has(.vst-insert-trigger[aria-expanded=true]){
+  border-color:var(--ui-accent,var(--c-a-600));
+  box-shadow:0 0 0 2px color-mix(in srgb,var(--ui-accent,var(--c-a-600)) 14%,transparent);
+}
+
+/* Bypass power toggle (Left of insert strip) */
+.vst-insert-bypass{
+  flex:0 0 26px;width:26px;height:100%;min-width:0;min-height:0;padding:0;
+  display:inline-grid;place-items:center;box-sizing:border-box;
+  border:0;border-right:1px solid var(--ui-line-soft,var(--c-n-150));border-radius:0;
+  background:var(--ui-accent-softer,var(--c-a-50));color:var(--ui-accent,var(--c-a-600));
+  box-shadow:none;cursor:pointer;
+}
+.vst-insert-bypass svg{width:13px;height:13px;pointer-events:none}
+.vst-insert-bypass:hover:not(:disabled){background:var(--ui-accent-soft,var(--c-a-100));color:var(--ui-accent-ink,var(--c-a-700))}
+.vst-insert-bypass[aria-pressed=true]{
+  background:var(--ui-warn-soft,var(--c-w-100));color:var(--ui-warn,var(--c-w-700));
+}
+.vst-insert-bypass[aria-pressed=true]:hover:not(:disabled){
+  background:color-mix(in srgb,var(--ui-warn-soft,var(--c-w-100)) 70%,var(--ui-warn-line,var(--c-w-300)));
+}
+.vst-insert-bypass:disabled{opacity:.38;cursor:default}
+
+/* Plugin selector body (Center of insert strip) */
+.vst-insert-trigger{
+  flex:1 1 auto;min-width:0;width:100%;height:100%;min-height:0;
+  display:flex;align-items:center;gap:4px;padding:0 6px;
+  border:0;border-radius:0;background:transparent;
+  color:var(--ui-text,var(--c-n-800));font-size:11.5px;font-weight:500;text-align:left;
+  box-shadow:none;cursor:pointer;
+}
+.vst-insert:not([data-state=empty]) .vst-insert-trigger:hover{background:var(--ui-accent-softer,var(--c-a-50))}
+.vst-insert-name{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vst-insert[data-state=empty] .vst-insert-name{color:var(--ui-text-disabled,var(--c-n-400));font-size:11px;font-weight:400;text-align:center}
+.vst-insert.bypassed .vst-insert-name{color:var(--ui-text-3,var(--c-n-500));text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--ui-warn,var(--c-w-700)) 45%,transparent)}
+.vst-insert-tag{
+  flex:0 0 auto;padding:1px 4px;border-radius:4px;font-size:9.5px;font-weight:600;line-height:1.25;
+  background:var(--ui-line-soft,var(--c-n-150));color:var(--ui-text-2,var(--c-n-600));
+}
+.vst-insert-tag.is-bypass{background:var(--ui-warn-soft,var(--c-w-100));color:var(--ui-warn,var(--c-w-700))}
+.vst-insert-tag.warn{background:var(--ui-danger-soft,var(--c-r-100));color:var(--ui-danger,var(--c-r-700))}
+
+/* Open VST Effect Editor button (Right of insert strip) */
+.vst-insert-editor{
+  flex:0 0 26px;width:26px;height:100%;min-width:0;min-height:0;padding:0;
+  display:inline-grid;place-items:center;box-sizing:border-box;
+  border:0;border-left:1px solid var(--ui-line-soft,var(--c-n-150));border-radius:0;
+  background:var(--ui-inset,var(--c-n-50));color:var(--ui-text-2,var(--c-n-600));
+  box-shadow:none;cursor:pointer;
+}
+.vst-insert-editor svg{width:14px;height:14px;pointer-events:none}
+.vst-insert-editor:hover:not(:disabled){background:var(--ui-accent-soft,var(--c-a-100));color:var(--ui-accent-ink,var(--c-a-700))}
+.vst-insert-editor[aria-pressed=true]{
+  background:var(--ui-accent,var(--c-a-600));color:#ffffff;border-left-color:var(--ui-accent,var(--c-a-600));
+}
+.vst-insert-editor[aria-pressed=true]:hover:not(:disabled){background:var(--ui-accent-hover,var(--c-a-700));color:#ffffff}
+.vst-insert-editor:disabled{opacity:.35;cursor:default}
+
+.vst-insert-tag[hidden],.vst-insert-latency[hidden],.vst-insert-note[hidden],.vst-insert-picker[hidden]{display:none}
+.vst-insert-latency,.vst-insert-note{margin:5px 0 0;font-size:10.5px;color:var(--ui-text-3,var(--c-n-500));overflow-wrap:anywhere}
+.vst-insert-latency{font-variant-numeric:tabular-nums}
+.vst-insert-choices{display:flex;flex-direction:column;gap:2px;border-top:1px solid var(--ui-line-soft,var(--c-n-150));padding-top:4px}
+.vst-insert-choice{display:flex;flex-direction:column;align-items:flex-start;gap:1px;width:100%;height:auto;text-align:left;padding:5px 9px}
+.vst-insert-choice-name{overflow-wrap:anywhere}
+.vst-insert-meta,.vst-insert-why{font-size:11px;color:var(--ui-text-3,var(--c-n-600))}
+.vst-insert-why{color:var(--ui-danger,var(--c-r-700))}
+.vst-insert-choice:disabled{opacity:.62;cursor:default}
+
+/* Compact sidebar container */
+.studio-ui .editor-side #editor-vst-slot{padding:8px 8px 6px;border-bottom:1px solid var(--ui-line-soft,var(--c-n-150))}
+.editor-instrument-fader label{flex:none;color:var(--ui-text-3,var(--c-n-500));font-size:11px;white-space:nowrap}
+
+/* Integrated VST Instrument volume fader (always nested cleanly inside .vst-rack) */
+#volume-popup[hidden],.editor-instrument-fader[hidden]{display:none}
+.studio-ui .vst-slot .editor-instrument-fader{
+  display:grid;grid-template-columns:auto minmax(0,1fr) 44px;align-items:center;gap:7px;min-width:0;
+  padding:0;margin-top:8px;min-height:22px;border:0;
+}
+.studio-ui .vst-slot .editor-instrument-fader[hidden]{display:none}
+#instrument-gain-value{
+  font:500 11px/1.3 var(--ui-font-num,sans-serif);text-align:end;
+  font-variant-numeric:tabular-nums;color:var(--ui-text-2,var(--c-n-600));white-space:nowrap;
+}
+.studio-ui .vst-slot #instrument-gain-db{
+  --fader-pct:90.9%;
+  display:block;width:100%;min-width:0;margin:0;height:18px;appearance:none;background:transparent;cursor:pointer;
+}
+.studio-ui .vst-slot #instrument-gain-db:focus-visible{outline:2px solid var(--ui-focus,var(--c-a-500));outline-offset:1px;border-radius:4px}
+.studio-ui .vst-slot #instrument-gain-db::-webkit-slider-runnable-track{
+  height:4px;border-radius:999px;
+  background:linear-gradient(90deg,var(--ui-accent,var(--c-a-600)) 0 var(--fader-pct),var(--ui-sunken,var(--c-n-150)) var(--fader-pct) 100%);
+}
+.studio-ui .vst-slot #instrument-gain-db::-webkit-slider-thumb{
+  appearance:none;height:13px;width:13px;margin-top:-4.5px;border-radius:50%;
+  border:2px solid var(--ui-accent,var(--c-a-600));background:#ffffff;
+  box-shadow:0 1px 3px color-mix(in srgb,#2b2f5a 22%,transparent);
+  transition:transform 100ms ease,box-shadow 100ms ease;
+}
+.studio-ui .vst-slot #instrument-gain-db:hover::-webkit-slider-thumb{
+  transform:scale(1.1);
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--ui-accent,var(--c-a-600)) 16%,transparent);
+}
+.vst-fx-preference{display:flex;align-items:center;gap:6px;font-size:12px}
+.vst-fx-preference select{flex:1;min-width:0}
+
+/* Instrument + FX rack base card (used in Notes sidebar & Score Mixer) */
+.vst-rack{
+  min-width:0;max-width:100%;border:1px solid var(--ui-line,var(--c-n-200));
+  border-radius:var(--r-lg,12px);padding:0 10px 10px;
+  background:var(--ui-surface,var(--c-n-0));
+}
+.vst-rack:not([open]){padding-bottom:0}
+.vst-rack-title{
+  display:flex;align-items:center;gap:6px;height:32px;cursor:pointer;list-style:none;
+  font:600 12px/1 var(--ui-font-round,var(--ui-font,sans-serif));
+  color:var(--ui-text,var(--c-n-800));user-select:none;
+}
+.vst-rack-title::-webkit-details-marker{display:none}
+.vst-rack-title::before{
+  content:'';flex:none;width:5px;height:5px;margin:0 2px;
+  border-right:1.5px solid var(--ui-text-3,var(--c-n-500));
+  border-bottom:1.5px solid var(--ui-text-3,var(--c-n-500));
+  transform:rotate(-45deg);transition:transform 180ms cubic-bezier(.34,1.36,.5,1),border-color 120ms ease;
+}
+.vst-rack[open]>.vst-rack-title::before{transform:rotate(45deg) translate(-1px,-1px);border-color:var(--ui-accent,var(--c-a-600))}
+.vst-rack-label{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.vst-rack-led{
+  flex:none;width:7px;height:7px;border-radius:50%;
+  background:var(--ui-line-strong,var(--c-n-300));
+  transition:background-color 150ms ease,box-shadow 150ms ease;
+}
+.vst-rack[data-vst-state=ready] .vst-rack-led{
+  background:var(--ui-accent,var(--c-a-600));
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--ui-accent,var(--c-a-600)) 18%,transparent);
+}
+.vst-rack[data-vst-state=busy] .vst-rack-led,
+.vst-rack[data-vst-state=warn] .vst-rack-led{
+  background:var(--ui-sakura,var(--c-w-400));
+  box-shadow:0 0 0 3px color-mix(in srgb,var(--ui-sakura,var(--c-w-400)) 22%,transparent);
+}
+.vst-rack-title:hover{color:var(--ui-accent-ink,var(--c-a-700))}
+.vst-rack-title:focus-visible{outline:2px solid var(--ui-focus,var(--c-a-500));outline-offset:1px;border-radius:6px}

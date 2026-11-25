@@ -1,0 +1,67 @@
+{
+  "reference_worker_sha256": "dceff43d4b8fd93c786b598f505675895652b04eddeaae3421b6a64e30a79d19",
+  "reference_musescore_commit": "653f38d8ea80ebd2b084c2b5e5521a32b00983c7",
+  "official_release": "https://github.com/musescore/MuseScore/releases/tag/v4.6.5",
+  "provenance_method": "Exact reference binary hash; six source translation units traced to MSVC records; original release base checked against its official Git blob tree.",
+  "reference_object_sha256": {
+    "consoleapp.cpp.obj": "e82d90d2d0a243e2ac4a48caec5d9e6f039df0bb71ca3b54c975dc1dfb9ecf92",
+    "astra-notation-unity.obj": "28b6c9a2f6cac2525758c9ee41a4c3843aedaba0cac04e3f84ba62d4750e1f65",
+    "astra-notation-paint.obj": "d2c3af77de33cc97574cf9394517385fb0461fbf85c7967b8dd0f4b9c1ca2e8f",
+    "astra-notation-range.obj": "b9b9d7e1929a03afff986df7a6705a6cc66161bcc355e09167712e501a313faf",
+    "compatmidirenderinternal.cpp.obj": "8f8c1914ab2bc425e27771a3ebbdc123b941cad3dd0fcbfc962d7a7353c241b3",
+    "main.cpp.obj": "8c708f938f3424c59b5b100f01ad94ca4f65dc6b0be7334b995c6a1bf9ec3ec2"
+  },
+  "upstream_build_tree_files": 9387,
+  "upstream_build_tree_bytes": 388809805,
+  "exact_overlay_files": {
+    "src/app/internal/consoleapp.cpp": "4ee6c12a924aa0bdb56a73069247e209b184f819b48ad42fef7a3bef85aa22d9",
+    "src/app/internal/astra_native_inspector_domains.h": "4291c9fa2a0f55b1e05f3739eeab51d3123629e59011e81901dba1b7db51aeef",
+    "src/app/internal/astra_native_musicxml_export.h": "7abb7e863a464189a5fa026e3338b89349877981e46bc59af71da9e757926465",
+    "src/app/internal/astra_native_palette_bridge.h": "4e0c057859c9f80ef4f6fa98fcf0b35ce4c43950040475d1602d109710e3a872",
+    "src/app/internal/astra_native_probe.h": "97e9d0d5e59419c8a079a7e5ced2a7f7b00a4e4b93d562bb6e5f55939bcda18f",
+    "src/app/internal/astra_native_rich_text.h": "6bd2e3a7182c995ce4a104f550e9b533bf0fe0217ebaf251a77144e955d848a2",
+    "src/app/internal/astra_native_saved_identity.h": "ddfba9b4bfd5d9d4840639045e9fb330743e0dc96eda63fe72f150022e141ce5",
+    "src/app/internal/astra_native_vector.h": "55fc81d53d3d778876ae3e5edd4fa52622e7bec1bb5efa8238cedc1656a7fefc",
+    "src/app/internal/astra_pointer_context.h": "ca6f3c08d6cc6fe1fe6ec70ef764dc171fb4f6b1df29b2ec6ba641ccdbe212cc",
+    "src/notation/internal/notationinteraction.cpp": "179cbe778b71334124fe48a586e6a597467642a9b0d1b71b7f697f37c1ec46e4",
+    "src/notation/internal/notationpainting.cpp": "b8922315de6fefe751fb1069124bbf6bc217ae2c90ed979ffa75e536f42a1ff4",
+    "src/notation/utilities/scorerangeutilities.cpp": "65f5d9c9ac9cad1d671bcd392d00948c1eadbdc09df2ffbd2bb8d90a9a34d327",
+    "src/notation/internal/astra_pointer_context.h": "ca6f3c08d6cc6fe1fe6ec70ef764dc171fb4f6b1df29b2ec6ba641ccdbe212cc",
+    "src/notation/utilities/astra_pointer_context.h": "ca6f3c08d6cc6fe1fe6ec70ef764dc171fb4f6b1df29b2ec6ba641ccdbe212cc",
+    "src/engraving/compat/midi/compatmidirenderinternal.cpp": "3a48c7c84d9aac26716f8d9102d9fbcf7ee6142dc765899604a681881b0bb655",
+    "src/app/main.cpp": "49c1871410598b495ee5db1864522430384d2881baeb79f18ba92b500ddc2d1a"
+  },
+  "cmake_integration_sha256": "f2b03b1119fc0c50aac34009648954ca81f8365d69ad5bdd5cd19899b653c91d",
+  "base_upstream_verified_blobs": 9367,
+  "base_upstream_untracked_paths": [],
+  "base_upstream_newline_only": [
+    "buildscripts/ci/windows/build.bat",
+    "buildscripts/ci/windows/install_qt_6_2_11.bat",
+    "buildscripts/ci/windows/package.bat",
+    "buildscripts/ci/windows/setup.bat",
+    "buildscripts/ci/windows/sign.bat",
+    "buildscripts/ci/windows/sign_test.bat",
+    "buildscripts/packaging/Windows/PortableApps/App/AppInfo/Launcher/MuseScorePortable.ini",
+    "buildscripts/packaging/Windows/PortableApps/appinfo.ini.in",
+    "buildscripts/packaging/Windows/PortableApps/help.html",
+    "buildscripts/packaging/Windows/PortableApps/Other/Source/AppNamePortable.ini",
+    "buildscripts/packaging/Windows/PortableApps/Other/Source/LauncherLicense.txt",
+    "buildscripts/packaging/Windows/PortableApps/Other/Source/Readme.txt",
+    "buildscripts/tools/cmake_wrapper.bat",
+    "ninja_build.bat",
+    "src/framework/audio/thirdparty/lame/lame.bat",
+    "src/framework/audio/thirdparty/opusenc/libopusenc-0.2.1/win32/genversion.bat",
+    "tools/fonttools/smufl2sym.bat"
+  ],
+  "base_upstream_source_differences": [
+    "src/app/internal/consoleapp.cpp",
+    "src/app/main.cpp"
+  ],
+  "base_upstream_overlay_replaced": [
+    "src/app/internal/consoleapp.cpp",
+    "src/app/internal/astra_native_probe.h"
+  ],
+  "zlib_1_2_8_source_sha256": "36658cb768a54c1d4dec43c3116c27ed893e88b02ecfcb44f2166f9c0b7f2a0d",
+  "zlib_reference_rebuild_test": "MSVC x64 recompiled zlibstat with upstream AMD64 assembly and Windows minizip helper.",
+  "build_validation": "MSVC x64 CMake generation with a source-built zlib dependency; worker full compilation not rerun."
+}

@@ -1,0 +1,6 @@
+/* Text fields shared by the stock palette bridge and score. */
+.astra-native-catalogue-search{box-sizing:border-box;width:100%;min-height:26px;margin:0;padding:2px 8px;border:1px solid var(--ns-line,#e2e5f1);border-radius:4px;background:#fff;font:inherit;font-size:12px;color:var(--ns-fg,#28283f)}
+.astra-native-catalogue-search:focus-visible{outline:2px solid var(--ns-accent,#755bc9);outline-offset:-1px}
+.astra-native-catalogue-notice{box-sizing:border-box;min-height:24px;margin:0;padding:4px 10px;border-top:1px solid var(--ns-line,#e2e5f1);font-size:11px;line-height:16px;color:var(--ns-fg2,#505068)}
+.astra-native-catalogue-group-name{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.astra-native-text-edit:not([hidden]){display:flex;align-items:center;gap:6px;padding:4px 10px}.astra-native-text-edit input{max-width:28rem;flex:1}

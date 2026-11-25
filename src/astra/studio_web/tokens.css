@@ -1,0 +1,142 @@
+/* Astra design tokens (2026-11-17 bold revision) — single source for color, type, spacing, shape and motion.
+   Generated palette (design_system.py, OKLCH): n = lavender-gray neutral, a = azure-indigo action, t = time violet,
+   g = sky (former green ramp), r = crimson danger, w = sakura (former amber ramp). No green/yellow status marks. */
+:root,.studio-ui{
+  --c-n-0:#ffffff;
+  --c-n-25:#fafbfe;
+  --c-n-50:#f5f6fc;
+  --c-n-100:#eceff8;
+  --c-n-150:#e4e7f0;
+  --c-n-200:#d9dce9;
+  --c-n-300:#c4c7d3;
+  --c-n-400:#a7aab7;
+  --c-n-500:#878a96;
+  --c-n-600:#6d707b;
+  --c-n-700:#565964;
+  --c-n-800:#41434e;
+  --c-n-900:#2b2d37;
+  --c-a-50:#f3f7ff;
+  --c-a-100:#e8effe;
+  --c-a-150:#dce8fe;
+  --c-a-200:#ccddfe;
+  --c-a-300:#acc7fe;
+  --c-a-400:#89aaee;
+  --c-a-500:#6188da;
+  --c-a-600:#436bc4;
+  --c-a-700:#3455a0;
+  --c-a-800:#25407c;
+  --c-a-900:#172b59;
+  --c-t-50:#f7f5ff;
+  --c-t-100:#efedff;
+  --c-t-150:#e7e3fe;
+  --c-t-200:#dcd7fb;
+  --c-t-300:#c7c1eb;
+  --c-t-400:#aba3d7;
+  --c-t-500:#8c80be;
+  --c-t-600:#7264a7;
+  --c-t-700:#5b4f87;
+  --c-t-800:#453b68;
+  --c-t-900:#2f274a;
+  --c-g-50:#eff9fe;
+  --c-g-100:#def3ff;
+  --c-g-150:#d4ebf8;
+  --c-g-200:#c7e1f0;
+  --c-g-300:#adcdde;
+  --c-g-400:#89b1c7;
+  --c-g-500:#6192ac;
+  --c-g-600:#407894;
+  --c-g-700:#316077;
+  --c-g-800:#23495c;
+  --c-g-900:#143240;
+  --c-r-50:#fef4f4;
+  --c-r-100:#ffe9e9;
+  --c-r-150:#fedfde;
+  --c-r-200:#fecfcf;
+  --c-r-300:#f3b5b5;
+  --c-r-400:#df9395;
+  --c-r-500:#c66c70;
+  --c-r-600:#ad4d54;
+  --c-r-700:#8c3c42;
+  --c-r-800:#6d2b30;
+  --c-r-900:#4d1b1f;
+  --c-w-50:#fef3f8;
+  --c-w-100:#ffe8f1;
+  --c-w-150:#feddea;
+  --c-w-200:#f6d1df;
+  --c-w-300:#e6b9cb;
+  --c-w-400:#cf99af;
+  --c-w-500:#b47490;
+  --c-w-600:#9b5776;
+  --c-w-700:#7d445e;
+  --c-w-800:#603348;
+  --c-w-900:#442131;
+
+  /* ---- Semantic roles (components use these, never palette steps directly) ---- */
+  color-scheme:light;
+  --ui-bg:var(--c-n-25);
+  --ui-bg-wash:linear-gradient(180deg,#f7f8ff 0%,#f6f5fc 46%,#f8f7fb 100%); /* static, no animation */
+  --ui-rail:transparent;
+  --ui-surface:var(--c-n-0);
+  --ui-inset:var(--c-n-50);
+  --ui-sunken:var(--c-n-100);
+  --ui-warm:#fdfcfb;                /* inspector paper (accepted earlier; kept) */
+  --ui-line:var(--c-n-200);
+  --ui-line-soft:var(--c-n-150);
+  --ui-line-strong:var(--c-n-300);
+  --ui-text:var(--c-n-800);
+  --ui-text-2:var(--c-n-600);
+  --ui-text-3:var(--c-n-500);
+  --ui-text-disabled:var(--c-n-400);
+  --ui-accent:var(--c-a-600);       /* azure-indigo: the one action color */
+  --ui-accent-hover:var(--c-a-700);
+  --ui-accent-press:var(--c-a-800);
+  --ui-accent-soft:var(--c-a-100);
+  --ui-accent-softer:var(--c-a-50);
+  --ui-accent-line:var(--c-a-300);
+  --ui-accent-ink:var(--c-a-700);
+  --ui-accent-grad:linear-gradient(135deg,var(--c-a-500) 0%,var(--c-a-600) 55%,#5a5fc8 100%);
+  --ui-on-accent:#ffffff;
+  --ui-focus:var(--c-a-500);
+  --ui-time:var(--c-t-600);         /* playhead, L/R, loop only */
+  --ui-time-soft:var(--c-t-100);
+  --ui-time-line:var(--c-t-300);
+  --ui-sakura:var(--c-w-400);       /* small decorative accent, never inside the note grid */
+  /* status: no green / yellow. ready = accent + check, pending/review = sakura + dot, error = crimson + "!" */
+  --ui-ok:var(--c-a-700); --ui-ok-soft:var(--c-a-50); --ui-ok-line:var(--c-a-200);
+  --ui-warn:var(--c-w-700); --ui-warn-soft:var(--c-w-100); --ui-warn-line:var(--c-w-300);
+  --ui-danger:var(--c-r-700); --ui-danger-soft:var(--c-r-100); --ui-danger-line:var(--c-r-300);
+  --ui-info:var(--c-g-700); --ui-info-soft:var(--c-g-100); --ui-info-line:var(--c-g-300);
+  --ui-piano:var(--c-a-500);
+  --ui-guitar:var(--c-w-500);
+  --ui-original:var(--c-n-500);
+
+  /* ---- Type ---- */
+  --ui-font:AstraSans,"Microsoft YaHei UI","Segoe UI",sans-serif;
+  --ui-font-round:"Astra Rounded CN",AstraSans,"Microsoft YaHei UI",sans-serif;
+  --ui-font-num:"Segoe UI",AstraSans,sans-serif;
+  --fs-2xs:10px; --fs-xs:11px; --fs-sm:12px; --fs-md:13px; --fs-lg:15px; --fs-xl:17px; --fs-2xl:26px;
+  --lh-tight:1.3; --lh:1.5; --lh-read:1.65;
+  --fw-regular:400; --fw-medium:500; --fw-strong:600;
+
+  /* ---- Space, shape, size ---- */
+  --sp-1:2px; --sp-2:4px; --sp-3:6px; --sp-4:8px; --sp-5:12px; --sp-6:16px; --sp-7:20px; --sp-8:24px; --sp-9:32px;
+  --r-xs:4px; --r-sm:6px; --r-md:8px; --r-lg:12px; --r-xl:14px; --r-pill:999px;
+  /* radius tiers by function: shell cards soft, data & dense tools crisp */
+  --r-shell:14px; --r-panel:10px; --r-ctl:8px; --r-dense:6px; --r-chip:4px;
+  --ctl-xs:24px; --ctl-sm:28px; --ctl-md:30px; --ctl-lg:36px;
+  --icon-sm:14px; --icon-md:16px; --icon-lg:18px;
+  --shadow-1:0 1px 2px color-mix(in srgb,#2b2f5a 6%,transparent);
+  --shadow-2:0 2px 4px color-mix(in srgb,#2b2f5a 4%,transparent),0 8px 24px color-mix(in srgb,#2b2f5a 7%,transparent);
+  --shadow-pop:0 14px 36px color-mix(in srgb,#2b2f5a 16%,transparent),0 2px 6px color-mix(in srgb,#2b2f5a 8%,transparent);
+  --shadow-accent:0 4px 14px color-mix(in srgb,var(--c-a-600) 30%,transparent);
+  --ring:0 0 0 2px var(--ui-surface),0 0 0 4px var(--ui-focus);
+  --dur-fast:90ms; --dur:140ms; --ease:cubic-bezier(.2,.7,.3,1);
+  --z-pop:140; --z-toast:1100;
+
+  /* ---- Legacy aliases ---- */
+  --ink:var(--ui-bg); --rail:var(--c-n-50); --work:var(--ui-surface); --surface:var(--ui-inset); --raised:var(--ui-surface);
+  --line:var(--ui-line); --soft-line:var(--ui-line-soft); --text:var(--ui-text); --muted:var(--ui-text-2); --dim:var(--ui-text-2);
+  --accent:var(--ui-accent); --piano:var(--ui-piano); --guitar:var(--ui-guitar);
+  --ui-border:var(--ui-line-strong); --ui-selection:var(--ui-accent-soft); --ui-radius:var(--r-md); --ui-control:var(--ctl-md);
+  --aurora-lilac:var(--ui-time); --aurora-cyan:var(--c-g-500); --aurora-pink:var(--c-w-500);
+}
