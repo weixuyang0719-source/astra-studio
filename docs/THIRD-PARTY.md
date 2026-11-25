@@ -10,6 +10,17 @@
 - Qt/PySide/Shiboken/WebEngine、Python 及其他 PyPI 依赖不从本仓库再分发；开发者自行经官方发行渠道取得并遵守各自条款。编译谱面和 Python GUI 的 Qt 版本不同。
 - 本项目代码不携带经商业 DAW 安装的二进制、驱动或厂商模型。旧项目兼容路径中出现的产品名称不表示隶属或授权其资源。
 
-## 不随源代码分发
+## 模型权重声明
 
-模型权重和运行时依赖与源代码授权分别处理。钢琴分轨 X-LANCE 权重的作者来源是 <https://huggingface.co/chenxie95/xlance-msr-ckpt>；DuET 权重有独立的非商业条款。现有 BS-Roformer-SW 吉他权重未确认原始再分发许可，本仓库不提供该权重或镜像下载。不要把模型当作 GPL 项目代码。内置钢琴的 MS Basic.sf3 也不附带；使用自己的合规资源。
+本源码仓库不托管、不镜像、不随 Git 提交或 GitHub Release 分发模型权重。模型权重不属于 Astra Studio 的 GPL-3.0-only 授权范围。需要运行相应功能时，请从下列上游取得对应权重，并遵守该权重发布时的条款。软件源码可用的许可证不自动适用于同名模型的权重。
+
+| 模型 | Astra Studio 中的用途 | 上游与权重条款 |
+| --- | --- | --- |
+| DuET | 把钢琴演奏 MIDI 转成谱面 | [Wayne42/DuET 模型卡](https://huggingface.co/Wayne42/DuET)标注权重为 [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/)；使用时须遵守署名及非商业限制。 |
+| Transkun 2.0 | 把钢琴音频转为演奏 MIDI | [Transkun 作者仓库与模型卡入口](https://github.com/Yujia-Yan/Transkun)列有不同的 checkpoint；取得权重前请核对所选版本的条款，不以软件的 MIT 标识替代权重许可。 |
+| X-LANCE 钢琴分轨 | 从混音中提取钢琴轨（`bs_keys_xlancer.ckpt`） | [X-LANCE 作者的权重页](https://huggingface.co/chenxie95/xlance-msr-ckpt)；本项目不授予该权重的再分发或商业使用许可。 |
+| BS-RoFormer-SW 吉他分轨 | 可选的吉他轨提取 | 未核实当前所用权重的原始再分发许可；本仓库不提供该权重或镜像下载。 |
+
+## 其他不随源码分发的资源
+
+内置钢琴使用的 MS Basic.sf3 音色库不随源码提供；请自行取得有权使用的资源。其他运行时依赖的获取方式见 [Windows 构建说明](BUILD-WINDOWS.md)。
