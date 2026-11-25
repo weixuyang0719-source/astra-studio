@@ -55,7 +55,7 @@ Astra Studio 是一个在本机运行的扒谱与编辑工具。它把音频分�
 | [DuET](https://huggingface.co/Wayne42/DuET) | 将钢琴演奏 MIDI 转成可编辑的乐谱 |
 | [MuseScore Studio](https://github.com/musescore/MuseScore/releases/tag/v4.6.5) | 乐谱排版、显示与编辑引擎 |
 
-**钢琴卷帘：** 样子和操作习惯参考了 [Cubase 的钢琴卷帘](https://www.steinberg.help/r/cubase-pro/16.0/en/cubase_nuendo/topics/midi_editors/midi_editors_key_editor_r.html)。我按这些操作自己写了一套，没用 Cubase 的代码，也没做源码逆向。
+**钢琴卷帘：** 样子和操作习惯参考了 [Cubase 的钢琴卷帘](https://www.steinberg.help/r/cubase-pro/16.0/en/cubase_nuendo/topics/midi_editors/midi_editors_key_editor_r.html)。实现时借助了 AI 工具，没有使用或逆向 Cubase 源码。
 
 本仓库不分发上述模型权重。模型代码的许可证不一定适用于权重，获取前请核对对应条款。
 
